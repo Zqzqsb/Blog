@@ -1,5 +1,5 @@
 ---
-title: 快速排序&&归并排序
+title: 快速排序AND归并排序
 categories: 算法
 ---
 
