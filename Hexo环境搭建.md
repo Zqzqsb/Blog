@@ -6,6 +6,7 @@ tag:
 	- hexo 安装
 	- nginx 静态代理	
 date: "2022-2-3"
+cover: "封面.jpg"
 ---
 
 + 安装git

@@ -1,7 +1,7 @@
 ---
 title: 快速排序AND归并排序
 categories: 算法
-cover: ""
+cover: "封面.gif"
 date: "2022-1-10"
 ---
 
