@@ -1,14 +1,11 @@
 ---
-
 title: Hexo*Butterfly 并使用nginx做静态代理
-
 categories: 博客建设
-
 tag: 
 
 	- hexo 安装
 	- nginx 静态代理	
-
+date: "2022-2-3"
 ---
 
 + 安装git

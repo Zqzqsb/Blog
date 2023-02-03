@@ -1,6 +1,8 @@
 ---
 title: 快速排序AND归并排序
 categories: 算法
+cover: ""
+date: "2022-1-10"
 ---
 
 # 快速排序 
