@@ -9,14 +9,16 @@ cover: "封面.jpg"
 description: "本文介绍了hexo博客搭建的过程。"
 ---
 
-+ 安装git
+# 安装hexo框架并且使用nginx做静态代理
+
+## 安装git
 
 ```shell
 yum install git
 git --version
 ```
 
-+ 下载nodejs 改名 并建立链接
+## 下载nodejs 改名 并建立链接
 
 ```shell
 cd /
@@ -31,20 +33,20 @@ sudo ln -s /Apps/nodejs/bin/npm /usr/local/bin/
 sudo ln -s /Apps/nodejs/bin/node /usr/local/bin/
 ```
 
-+ 安装 n
+## 安装 n
 
 ```shell
 npm install -g n
 ```
 
-+ 安装hexo  建立软链接
+## 安装hexo  建立软链接
 
 ```shell
 sudo npm install hexo-cli -g
 sudo ln -s /Apps/nodejs/lib/node_modules/hexo-cli/bin/hexo /usr/local/bin/hexo
 ```
 
-+ 测试
+## 测试
 
 ```shell
 node -v
@@ -52,7 +54,7 @@ npm -v
 hexo -v
 ```
 
-+ 创建hexo目录  初始化 安装主题和渲染器 生成静态public目录
+## 创建hexo目录  初始化 安装主题和渲染器 生成静态public目录
 
 ```shell
 mkdir hexo 
@@ -65,14 +67,15 @@ npm install hexo-renderer-pug hexo-renderer-stylus --save
 hexo g
 ```
 
-+ 安装nginx
+## 安装nginx
 
 ```shell
 yum install -y nginx
 ```
 
-+ 配置nginx 在/etc/nginx/nignx.conf 中修改root的位置
-+ 在nignx.conf 中配置ssl
+## 配置nginx 在/etc/nginx/nignx.conf 中修改root的位置
+
+## 在nignx.conf 中配置ssl
 
 
 ```shell
