@@ -1,8 +1,9 @@
 ## conda 使用
 
-+ conda -v
++ conda -V
 + conda info -e
 + conda create --name TestE python=3.8
++ conda remove -n TestE --all
 + conda activate TestE
 + conda deactivate
 + conda config --set auto_activate_base false
