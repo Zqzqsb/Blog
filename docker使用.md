@@ -1,3 +1,10 @@
+---
+title: docker的基本使用
+categories: docker
+date: 2022-7-11
+cover: "封面.png"
+description: "本文记录了docker的基本命令。"
+---
 # docker使用
 
 + docker command --help
