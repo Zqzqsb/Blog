@@ -2,7 +2,7 @@
 title: JavaScript Array
 categories: JavaScript
 date: "2022-7-11"
-cover: "js_array.jpg"
+cover: "封面.jpg"
 description: "本文参照MDN文档对js中的数组做出了解释"
 ---
 
