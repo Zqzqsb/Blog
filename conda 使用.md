@@ -7,3 +7,4 @@
 + conda deactivate
 + conda config --set auto_activate_base false
   + 取消自动激活base 使用系统自带python环境
+
