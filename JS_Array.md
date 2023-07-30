@@ -2,7 +2,7 @@
 title: JavaScript Array
 categories: JavaScript
 date: "2022-7-11"
-cover: "封面.png"
+cover: "js_array.jpg"
 description: "本文参照MDN文档对js中的数组做出了解释"
 ---
 
@@ -314,7 +314,7 @@ console.log(arr1);
     // 移除 3 个元素，然后将后续元素插入到那个位置上。
     ```
 
-+  reverse() 逆序
++ reverse() 逆序
 
 + flat() 展平
 
@@ -334,6 +334,16 @@ console.log(arr1);
 
   + 对每函数执行r回调函数
   + 会使用for...of进行属性检查
+
++ reduce((acc , curV , curI , arr) => {op} , initV)
+
+  + reduce接受一个回调函数这个回调函数会从数组的第一个位置开始执行直到数组的最后一个位置
+    + 对于这个函数的参数 acc指定的累加器的当前值 curV是数组当前值 curI是数组当前下标 arr是这个数组本身
+    + 如果只需要传递部分内容 例如只关心累加器和当前元素下标 应这样进行参数传递(acc , _ , curl) 即间隔的位置的参数不可以省略
+    + initV规定额acc的初始值
+
+  + 这个函数的返回结果会作为reduce的最终返回结果
+
 
 
 
