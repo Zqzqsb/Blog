@@ -1,0 +1,163 @@
+{
+  "main": {
+    "id": "aeae0ecb0009063a",
+    "type": "split",
+    "children": [
+      {
+        "id": "a4f43d25b9c7dbdb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a09b4ca698d920c6",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1225d6b364d68ff8",
+    "type": "split",
+    "children": [
+      {
+        "id": "1f79a99439295a83",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "14c5db71542747b5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "5530eb5507ef2743",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "3e752e3e181bd81b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "1131cd427e6d353c",
+    "type": "split",
+    "children": [
+      {
+        "id": "356af62948b87ea8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "47ff315d50dac243",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e2d59a782ab5078f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8859bc10c3fb63cb",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "447a34c88fb0e20c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "a09b4ca698d920c6",
+  "lastOpenFiles": [
+    "JS_Array.md",
+    "算法_快速排序AND归并排序/封面.gif",
+    "算法_高精度.md",
+    "算法_背包问题及优化原理.md",
+    "算法_离散化.md",
+    "算法_最长非重子序列.md",
+    "算法_快速排序AND归并排序.md",
+    "算法_区间合并.md",
+    "算法_二分查找.md",
+    "算法_前缀和&&差分.md",
+    "Hexo_环境搭建.md",
+    "docker_使用.md",
+    "使用snapshot的轻节点模式.md",
+    "Vue3_指令.md",
+    "Web_VerifyCode.md",
+    "Vue_Cli.md",
+    "conda_使用.md",
+    "fabric中的账本快照.md",
+    "算法_二分查找/右区间端点.png"
+  ]
+}
