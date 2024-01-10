@@ -1,9 +1,12 @@
 ---
 title: JavaScript Array
-categories: JavaScript
+categories:
+  - JavaScript
 date: 2022-7-11
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/JS_Array/%E5%B0%81%E9%9D%A2.png
 description: 本文参照MDN文档对js中的数组做出了解释
+tags:
+  - JavaScript
 ---
 
 # JS array

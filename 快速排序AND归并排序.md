@@ -1,5 +1,5 @@
 ---
-title: 快速排序AND归并排序
+title: 快速排序&&归并排序
 categories: 算法
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95_%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8FAND%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/%E5%B0%81%E9%9D%A2.gif
 date: 2022-1-10

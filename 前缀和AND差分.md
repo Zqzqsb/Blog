@@ -1,9 +1,13 @@
 ---
 title: 前缀和&&差分
-categories: 算法
+categories:
+  - 算法
 date: 2022-2-11
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B0%81%E9%9D%A2.png
 description: 本文讲述了基础算法中前缀和和差分的相关内容。
+tags:
+  - 基础算法
+  - 前缀和
 ---
 
 # 前缀和&&差分
