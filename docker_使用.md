@@ -2,8 +2,8 @@
 title: docker的基本使用
 categories: docker
 date: 2022-7-11
-cover: "封面.png"
-description: "本文记录了docker的基本命令。"
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/docker_%E4%BD%BF%E7%94%A8/%E5%B0%81%E9%9D%A2.png
+description: 本文记录了docker的基本命令。
 ---
 # docker使用
 

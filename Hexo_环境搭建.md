@@ -1,12 +1,9 @@
 ---
 title: Hexo*Butterfly 并使用nginx做静态代理
 categories: 博客建设
-# tag: 
-# 	- hexo 安装
-# 	- nginx 静态代理	
-date: "2022-2-3"
-cover: "封面.jpg"
-description: "本文介绍了hexo博客搭建的过程。"
+date: 2022-2-3
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/Hexo_%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/%E5%B0%81%E9%9D%A2.jpg
+description: 本文介绍了hexo博客搭建的过程。
 ---
 
 # 安装hexo框架并且使用nginx做静态代理

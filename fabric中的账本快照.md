@@ -8,11 +8,11 @@
 
 + 以peer channel join的方式从创世块加入通道。 这是默认的加入方式，新peer将维护channel中的所有区块。
 
-  ![image-20230809155919048](/Users/zq/Library/Application Support/typora-user-images/image-20230809155919048.png)
+  ![peer_channel_join](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/peer_channel_join.png)
 
 + 以snapshot方式加入通道。 新peer不再维护snapshot之前的区块
 
-  ![image-20230809155952332](/Users/zq/Library/Application Support/typora-user-images/image-20230809155952332.png)
+  ![join_by_snapshot](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/peer_channel_join_bySnapshot.png)
 
 ## 实验
 
@@ -23,11 +23,11 @@ cd test-network
 ./network.sh up createChannel -ca
 ```
 
-![image-20230809160212425](/Users/zq/Library/Application Support/typora-user-images/image-20230809160212425.png)
+![start_testNetwork](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/start_test_network.png)
 
 可以看到现在块高度是3。 下为状态图示。
 
-![image-20230809160250597](/Users/zq/Library/Application Support/typora-user-images/image-20230809160250597.png)
+![blocksize_3](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/blocksize_3.png)
 
 ### 2.部署和查询链码
 
@@ -39,7 +39,7 @@ cd test-network
 peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls true --cafile $ORDERER_CA -C mychannel -n mycc --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"Args":["set","name","Peter"]}'
 ```
 
-![image-20230809160845638](/Users/zq/Library/Application Support/typora-user-images/image-20230809160845638.png)
+![blocksize_7](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/blocksize_7.png)
 
 操作后链高变为7。
 
@@ -155,9 +155,9 @@ peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.exa
   CORE_PEER_ADDRESS=localhost:8051 peer channel getinfo -c mychannel
   ```
 
-  ![image-20230809161848315](/Users/zq/Library/Application Support/typora-user-images/image-20230809161848315.png)
+  ![code](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/join_by_snapshot_code.png)
 
-  ![image-20230809161823250](/Users/zq/Library/Application Support/typora-user-images/image-20230809161823250.png)
+  ![structure](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/join_by_snapshot_structure.png)
 
 ### 测试链码
 
@@ -173,7 +173,7 @@ peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.exa
   CORE_PEER_ADDRESS=localhost:8051 peer chaincode query -C mychannel -n mycc -c '{"Args":["get","name"]}'
   ```
 
-  ![image-20230809162031129](/Users/zq/Library/Application Support/typora-user-images/image-20230809162031129.png)
+  ![query_chaincode](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/query_chaincode.png)
 
 ​		结果正常。
 
@@ -183,9 +183,11 @@ peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.exa
   peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls true --cafile $ORDERER_CA -C mychannel -n mycc --peerAddresses localhost:8051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"Args":["set","name","Mary"]}'
   ```
 
-​						![image-20230809162323282](/Users/zq/Library/Application Support/typora-user-images/image-20230809162323282.png)
+​		结果正常。						
 
-​		结果正常。
+![query_res](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/query_result.png)
+
+
 
 + 进行新的查询(会创建新块)
 
@@ -199,19 +201,19 @@ peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.exa
 
 +  链状状态
 
-  ![image-20230809162816398](/Users/zq/Library/Application Support/typora-user-images/image-20230809162816398.png)
+  ![chain_status](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/chain_status.png)
 
 ### 同步块
 
 + 尝试同步快照之前的节点
 
-  ![image-20230809162956409](/Users/zq/Library/Application Support/typora-user-images/image-20230809162956409.png)
+  ![fetch_previousr](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/fetch_previous.png)
 
   不可行。
 
 + 只能同步快照之后的节点(7开始) 
 
-  ![image-20230809163057487](/Users/zq/Library/Application Support/typora-user-images/image-20230809163057487.png)
+  ![fetch_after_snapshot](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/%E7%AE%97%E6%B3%95/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/fetch_after_snapshot.png)
 
 ### 关闭网络
 
