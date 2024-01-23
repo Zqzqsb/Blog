@@ -2,11 +2,12 @@
 title: C++ 整数存储和位运算符
 date: 2024-2-23
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/C%2B%2B%E8%AF%AD%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/%E5%B0%81%E9%9D%A2.png
-catergories: C++基础
 tags:
   - 语法
   - 位运算
 description: 本文介绍了C++整数存储和位运算符
+categories:
+  - C++语法
 ---
 # 1. 二进制数
 
