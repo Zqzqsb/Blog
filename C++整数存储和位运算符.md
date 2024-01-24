@@ -1,7 +1,7 @@
 ---
 title: C++整数存储和位运算符
 date: 2024-2-23
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/C%2B%2B%E8%AF%AD%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/%E5%B0%81%E9%9D%A2.png
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/Cover.png
 tags:
   - 语法
   - 位运算
@@ -25,7 +25,7 @@ categories:
 ```
 
 这其中，0b 是二进制数前缀 , 二进制数第一位是符号位 0 / 1 分别代表 + / - 。d 是十进制后缀。
-![二进制](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/C%2B%2B%E8%AF%AD%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/%E4%BA%8C%E8%BF%9B%E5%88%B6.png)
+![二进制](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/Binary.png)
 
 # int 数据的存储方式
 

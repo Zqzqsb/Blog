@@ -3,7 +3,7 @@ title: 前缀和&&差分
 categories:
   - 算法
 date: 2022-2-11
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B0%81%E9%9D%A2.png
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B0%81%E9%9D%A2.png
 description: 本文讲述了基础算法中前缀和和差分的相关内容。
 tags:
   - 基础算法
@@ -26,11 +26,11 @@ S<sub>3</sub> = A<sub>1</sub> + A<sub>2</sub> + A<sub>3</sub>
 
 **则称 序列 S 为 序列 A 的 前缀和序列 , 而序列 A 为 序列 S 的 差分序列。**
 
-![前缀和示意](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%89%8D%E7%BC%80%E5%92%8C%E7%A4%BA%E6%84%8F.png)
+![前缀和示意](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%89%8D%E7%BC%80%E5%92%8C%E7%A4%BA%E6%84%8F.png)
 
 这个概念可以推广到二维序列 如图示
 
-![二维前缀和](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C.png)
+![二维前缀和](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C.png)
 
 ## 2. 前缀和 , 差分的作用
 
@@ -48,7 +48,7 @@ S<sub>3</sub> = A<sub>1</sub> + A<sub>2</sub> + A<sub>3</sub>
 
 例如 在图示中 要求 序列 A [4,8]部分的和 即 A4 + A5 + A6 + A7 + A8。 只需使用 S[8] - S[3]即可。
 
-![前缀和使用](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%89%8D%E7%BC%80%E5%92%8C%E4%BD%BF%E7%94%A8.png)
+![前缀和使用](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%89%8D%E7%BC%80%E5%92%8C%E4%BD%BF%E7%94%A8.png)
 
 S[8] = A0 + A1 + A2 + A3 + A4 + A5 + A6 + A7 + A8.
 
@@ -84,12 +84,12 @@ void preSum()
 
 - 二维前缀和的计算 S\[i][j] = S\[i-1][j] + S\[i][j-1] + A\[i][j] - S\[i-1][j-1]
 
-![二维前缀和的计算](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C%E7%9A%84%E8%AE%A1%E7%AE%97.png)
+![二维前缀和的计算](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C%E7%9A%84%E8%AE%A1%E7%AE%97.png)
 
 - 求(x1 , y1) -- (x2 , y2)的方形区块内的和
 - sum(A\[x1][y1]-A\[x2][y2]) = S\[x2][x1] - S\[x2][y1-1] - S\[x1-1][y2] + S\[x1-1][y1-1]
 
-![二维前缀和的使用](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C%E7%9A%84%E4%BD%BF%E7%94%A8.png)
+![二维前缀和的使用](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C%E7%9A%84%E4%BD%BF%E7%94%A8.png)
 
 ```c++
 const int N =1010;
@@ -134,7 +134,7 @@ void preSum2D()
 - 首先将该序列视为某个差分序列的前缀和序列 将原序列记为 A
 - 在 S 的某段 [L , R]加上 C 相当于在其原序列的 L 位置加上 C 在原序列的 R+1 位置减掉 C
 
-![差分](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B7%AE%E5%88%86.png)
+![差分](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B7%AE%E5%88%86.png)
 
 ```C++
 const int N = 10010;
@@ -197,7 +197,7 @@ void diff()
 - [x2+1 , y1] -= C
 - [x2+1 , y2+1] += C
 
-![二维差分](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Algorithm_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%B7%AE%E5%88%86.png)
+![二维差分](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%B7%AE%E5%88%86.png)
 
 ```C++
 const int N = 1010;
