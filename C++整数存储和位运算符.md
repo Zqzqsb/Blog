@@ -1,7 +1,7 @@
 ---
 title: C++整数存储和位运算符
 date: 2024-2-23
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/Cover.png
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/cover.png
 tags:
   - 语法
   - 位运算
