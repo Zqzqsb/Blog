@@ -1,6 +1,6 @@
 ---
 title: C++整数存储和位运算符
-date: 2024-2-23
+date: 2024-1-23
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/cover.png
 tags:
   - 语法
