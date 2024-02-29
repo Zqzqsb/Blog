@@ -35,7 +35,8 @@ cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/inter
 # 例题 石子合并
 
 **试一试**
-+ 石子合并
++ [石子合并](https://geniuscode.tech/problem/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E7%9F%B3%E5%AD%90%E5%90%88%E5%B9%B6)
+
 ## 状态表示
 
 `int f[N][N]` , `f[i][j]` 表示合并区间`[i , j]`内所有石子的最小代价。
