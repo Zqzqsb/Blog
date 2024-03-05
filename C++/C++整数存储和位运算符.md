@@ -1,13 +1,11 @@
 ---
-title: C++整数存储和位运算符
-date: 2024-1-23
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/cover.png
+title: c++整数存储和位运算符
+createTime: 2024-1-23
+
 tags:
   - 语法
   - 位运算
-description: 本文介绍了C++整数存储和位运算符
-categories:
-  - C++语法
+
 ---
 
 # 二进制数
@@ -29,7 +27,7 @@ categories:
 
 # int 数据的存储方式
 
-在 C++ 中, 整型包括
+在 c++ 中, 整型包括
 
 - short (2 字节)
 - int (4 字节)
@@ -56,13 +54,13 @@ categories:
    0b(1 0011)原 —> 0b(1 1100)反 —> ob(1 1101)补
   ```
 
-# C++ 位运算符
+# c++ 位运算符
 
-C++提供了下面这些操作来支持我们对二进制数的位(bit)进行操作。
+c++提供了下面这些操作来支持我们对二进制数的位(bit)进行操作。
 
 假定存在下面两个变量用来举例
 
-```C++
+```c++
 A = 0b(0011 1100) = (60)d
 
 B = 0b(0000 1101) = (13)d
@@ -85,7 +83,7 @@ B = 0b(0000 1101) = (13)d
 
 1≤n≤100000。0≤ 数列中元素的值 ≤10^9。
 
-```C++
+```c++
 #include<iostream>
 using namespace std;
 

@@ -1,10 +1,8 @@
 ---
 title: 前缀和&&差分
-categories:
-  - 算法
-date: 2022-2-11
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B0%81%E9%9D%A2.png
-description: 本文讲述了基础算法中前缀和和差分的相关内容。
+createTime: 2022-2-11
+
+
 tags:
   - 基础算法
   - 前缀和
@@ -136,7 +134,7 @@ void preSum2D()
 
 ![差分](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B7%AE%E5%88%86.png)
 
-```C++
+```c++
 const int N = 10010;
 int S[N] , A[N];
 
@@ -199,7 +197,7 @@ void diff()
 
 ![二维差分](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E4%BA%8C%E7%BB%B4%E5%B7%AE%E5%88%86.png)
 
-```C++
+```c++
 const int N = 1010;
 int S[N][N] , A[N][N];
 
