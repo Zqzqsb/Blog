@@ -5,6 +5,8 @@ createTime: 2022-7-11
 
 tags:
   - conda
+author: ZQ
+permalink: /conda/usage
 ---
 
 ## conda 使用

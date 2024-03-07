@@ -6,6 +6,8 @@ tags:
   - 语法
   - 位运算
 
+author: ZQ
+permalink: /cpp/bitop
 ---
 
 # 二进制数

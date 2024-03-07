@@ -1,12 +1,13 @@
 ---
 title: Fabric中的账本快照
-
 createTime: 2022-7-11
 
 
 tags:
   - Fabric
   - 区块链
+author: ZQ
+permalink: /fabric/snapshot
 ---
 
 ## fabric 中的账本快照

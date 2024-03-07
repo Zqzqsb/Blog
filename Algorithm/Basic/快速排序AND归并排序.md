@@ -3,6 +3,8 @@ title: 快速排序&&归并排序
 
 createTime: 2022-1-10
 
+author: ZQ
+permalink: /algorithm/basic/sort_algorithms
 ---
 
 # 快速排序

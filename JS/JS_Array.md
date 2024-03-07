@@ -5,6 +5,8 @@ createTime: 2022-7-11
 
 tags:
   - JavaScript
+author: ZQ
+permalink: /javascript/array
 ---
 
 # JS array

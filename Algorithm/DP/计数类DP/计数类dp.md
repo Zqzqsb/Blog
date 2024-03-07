@@ -7,6 +7,8 @@ tags:
 createTime: 2024-3-2
 
 
+author: ZQ
+permalink: /algorithm/dp/counting
 ---
 
 # 概念

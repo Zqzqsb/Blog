@@ -6,6 +6,8 @@ createTime: 2022-2-11
 tags:
   - 基础算法
   - 前缀和
+author: ZQ
+permalink: /algorithm/basic/presum
 ---
 
 # 前缀和&&差分

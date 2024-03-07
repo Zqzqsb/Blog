@@ -7,6 +7,8 @@ tags:
 createTime: 2024-2-28
 
 
+author: ZQ
+permalink: /algorithm/dp/interval_dp
 ---
 
 # 前言
