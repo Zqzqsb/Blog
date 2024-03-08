@@ -1,12 +1,12 @@
 ---
 title: Conda的基本使用
 createTime: 2022-7-11
-
-
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/conda_%E4%BD%BF%E7%94%A8/%E5%B0%81%E9%9D%A2.png
+description: 本文记录了conda的基本命令。
 tags:
   - conda
 author: ZQ
-permalink: /conda/usage
+permalink: /conda/usage/
 ---
 
 ## conda 使用

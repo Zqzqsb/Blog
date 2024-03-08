@@ -5,10 +5,10 @@ tags:
   - 动态规划
   - 计数dp
 createTime: 2024-3-2
-
-
+description: 本文以一个问题介绍了计数型dp的一般做法
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/count_dp/divide_demo.png
 author: ZQ
-permalink: /algorithm/dp/counting
+permalink: /algorithm/dp/counting/
 ---
 
 # 概念

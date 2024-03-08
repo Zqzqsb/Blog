@@ -1,13 +1,13 @@
 ---
 title: c++整数存储和位运算符
 createTime: 2024-1-23
-
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/cover.png
 tags:
   - 语法
   - 位运算
-
+description: 本文介绍了c++整数存储和位运算符
 author: ZQ
-permalink: /cpp/bitop
+permalink: /cpp/bitop/
 ---
 
 # 二进制数

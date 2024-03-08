@@ -5,10 +5,10 @@ tags:
   - 动态规划
   - 区间DP
 createTime: 2024-2-28
-
-
+description: 这篇文章介绍了动态规划的概念和划分方法。
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/interval_dp/interval_dp_demo.png
 author: ZQ
-permalink: /algorithm/dp/interval_dp
+permalink: /algorithm/dp/interval_dp/
 ---
 
 # 前言
