@@ -12,6 +12,9 @@ permalink: /algorithm/basic/presum/
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B0%81%E9%9D%A2.png)
 <br> 本文讲述了基础算法中前缀和和差分的相关内容。
 <!-- more -->
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%89%8D%E7%BC%80%E5%92%8C%26%26%E5%B7%AE%E5%88%86/%E5%B0%81%E9%9D%A2.png)
+<br> 本文讲述了基础算法中前缀和和差分的相关内容。
+<!-- more -->
 
 ## 1. 基本概念
 
