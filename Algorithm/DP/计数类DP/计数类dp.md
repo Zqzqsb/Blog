@@ -11,7 +11,7 @@ author: ZQ
 permalink: /algorithm/dp/counting/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/count_dp/divide_demo.png)
- 本文以一个问题介绍了计数型dp的一般做法
+<br> 本文以一个问题介绍了计数型dp的一般做法
 <!-- more -->
 
 ## 概念
