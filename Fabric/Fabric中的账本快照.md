@@ -9,8 +9,9 @@ tags:
 author: ZQ
 permalink: /fabric/snapshot/
 ---
-
-## fabric 中的账本快照
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/fabric_%E8%B4%A6%E6%9C%AC%E5%BF%AB%E7%85%A7/peer_channel_join_bySnapshot.png)
+ 本文记录了Fabric中账本快照的相关实验记录。
+<!-- more -->
 
 ## 介绍
 
