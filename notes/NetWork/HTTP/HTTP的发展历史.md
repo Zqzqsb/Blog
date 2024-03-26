@@ -32,7 +32,7 @@ GET /mypage.html
 
 可以参照  [RFC 1945](https://datatracker.ietf.org/doc/html/rfc1945)来核实本文的内容。一个典型的`HTTP 1.0` 请求
 
-```HTTP
+```http
 GET /mypage.html HTTP/1.0
 User-Agent: NCSA_Mosaic/2.0 (Windows 3.1)
 
