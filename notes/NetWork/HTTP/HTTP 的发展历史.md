@@ -1,4 +1,9 @@
-
+---
+title: HTTP 的发展历史
+createTime: 2024-3-26
+author: ZQ
+permalink: /NetWork/HTTP/history
+---
 ## HTTP 0.9
 
 最初版本的 `HTTP` 协议并没有版本号，后来它的版本号被定位在 0.9 以区分后来的版本。
