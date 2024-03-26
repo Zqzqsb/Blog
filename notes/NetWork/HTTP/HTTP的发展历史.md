@@ -10,7 +10,7 @@ author: ZQ
 
 ### 请求
 
-```HTTP
+```http
 GET /mypage.html
 ```
 
@@ -61,7 +61,7 @@ Content-Type: text/html
 
 ### 一个典型的 HTTP 连接
 
-```HTTP
+```http
 GET /static/img/header-background.png HTTP/1.1
 Host: developer.mozilla.org
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
