@@ -8,9 +8,6 @@ tags:
 author: ZQ
 permalink: /docker/usage/
 ---
-![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/docker_%E4%BD%BF%E7%94%A8/%E5%B0%81%E9%9D%A2.png)
-<br> 本文记录了docker的基本命令。
-<!-- more -->
 
 ## docker 使用
 
