@@ -10,6 +10,9 @@ cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/inter
 author: ZQ
 permalink: /algorithm/dp/interval_dp/
 ---
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/interval_dp/interval_dp_demo.png)
+<br> 这篇文章介绍了动态规划的概念和划分方法。
+<!-- more -->
 
 ## 前言
 

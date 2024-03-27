@@ -9,6 +9,9 @@ description: 本文介绍了c++整数存储和位运算符
 author: ZQ
 permalink: /cpp/bitop/
 ---
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/cover.png)
+<br> 本文介绍了c++整数存储和位运算符
+<!-- more -->
 
 ## 二进制数
 

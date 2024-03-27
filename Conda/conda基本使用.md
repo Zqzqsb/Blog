@@ -8,6 +8,9 @@ tags:
 author: ZQ
 permalink: /conda/usage/
 ---
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/conda_%E4%BD%BF%E7%94%A8/%E5%B0%81%E9%9D%A2.png)
+<br> 本文记录了conda的基本命令。
+<!-- more -->
 
 ## conda 使用
 
