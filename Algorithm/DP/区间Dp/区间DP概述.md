@@ -4,7 +4,7 @@ tags:
   - 算法
   - 动态规划
   - 区间DP
-createTime: 2024-2-28
+createTime: 2024-4-7
 description: 这篇文章介绍了动态规划的概念和划分方法。
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/interval_dp/interval_dp_demo.png
 author: ZQ
