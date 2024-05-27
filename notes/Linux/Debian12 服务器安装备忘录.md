@@ -10,6 +10,7 @@ permalink: /debian_server/
 ---
 <br> 本文记录debian12作为服务器的安装和配置过程
 <!-- more -->
+
 ## 前言
 
 本文记录自用的debian服务器的安装和配置过程。服务器的硬件配置如下。
@@ -24,6 +25,7 @@ permalink: /debian_server/
 | BackUp Drive | 日立 10TB * 2         |
 | CASE         | 半岛铁盒 F20            |
 | Power Supply | 利民TG1000 1000w      |
+
 ## 熟悉命令
 
 ### `fdisk`
