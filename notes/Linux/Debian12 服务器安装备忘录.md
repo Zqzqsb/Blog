@@ -289,8 +289,8 @@ sudo apt-get install btrfs-tools
 + 安装 `ssh server`不需要安装GUI
 + 安装过程不需要进行网络配置
 + 安装过程中会创建一个新的常规用户
-	+ 如果操作的是NISL Server `root`的密码是<p style="filter: blur(10px);"> `qqaazz@nisl.root`</p>
-	+ 如果操作的是NISL Server新用户名为 `installer` 密码为<p style="filter: blur(10px);">  `qqaazz@nisl.installer`</p>
+	+ 如果操作的是NISL Server `root`的密码是<p style="filter: blur(10px);">cannot tell you 😈</p>
+	+ 如果操作的是NISL Server新用户名为 `installer` 密码为<p style="filter: blur(10px);">  cannot tell you 😈 </p>
 + 系统安装在970 EVO中，自动分区，其他磁盘均为未挂载状态。
 ### 4. 配置基本网络
 
