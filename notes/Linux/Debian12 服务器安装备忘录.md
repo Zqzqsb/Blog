@@ -369,7 +369,7 @@ LC_TIME=en_US.UTF-8
 
 >`mdadm` 是 Linux 系统上用于管理软件 RAID 的一个强大工具。它允许用户创建、监控和管理各种类型的 RAID 阵列,包括 RAID 0、RAID 1、RAID 5、RAID 6 等。
 
-1. 创建RAID阵列,例子为一个RAID5阵列 包四个块设备人 整列会表现为一个统一的块设备md0
+1. 创建RAID阵列,例子为一个RAID5阵列 包四个块设备 阵列会表现为一个统一的块设备md0
 
 ```shell
 sudo mdadm --create /dev/md0 --level=5 --raid-devices=4 /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1
@@ -759,7 +759,7 @@ mount -a
 
 ### 10. 挂载额外的磁盘
 
-### data
+#### data
 
 + 使用`parted`为块设备`nvme0n1`分区 将整个磁盘分为一个主分区
 	+ 将得到分区`nvme0n1p1`
@@ -775,7 +775,7 @@ sudo mkfs.btrfs /dev/nvme0n1p1
 sudo mount /dev/nvme0n1p1 /data
 ```
 
-### hdd
+#### hdd
 
 `/hdd`是一个RAID0阵列，用于进行系统备份。
 
@@ -807,9 +807,9 @@ ARRAY /dev/md0 metadata=1.2 name=nisl-superman:0 UUID=8b0e391f:f36291d9:5acabf5b
 sudo mount /dev/md0 /hdd
 ```
 
-### 修改 `fstable`
+#### 修改 `fstable`
 
-修改后的fstable
+修改后的`fstable`
 
 ```shell
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
