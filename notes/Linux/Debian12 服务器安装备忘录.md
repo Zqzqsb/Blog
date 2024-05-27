@@ -50,7 +50,7 @@ permalink: /debian_server/
 1. 列出磁盘分区信息 `sudo parted -l`
 2. 进入交互式分区编辑模式 为特定设备分区 `sudo parted [dev/device_name]`
 
-### `madan`
+### `mdadm`
 
 >`mdadm` 是 Linux 系统上用于管理软件 RAID 的一个强大工具。它允许用户创建、监控和管理各种类型的 RAID 阵列,包括 RAID 0、RAID 1、RAID 5、RAID 6 等。
 
@@ -223,9 +223,9 @@ nvme0n1     259:4    0   3.7T  0 disk
 
 UUID的主要作用是提供一个在全局范围内唯一的标识符，用于唯一地标识一个特定的文件系统，这样即使存储设备的设备名（例如/dev/sda1、/dev/sdb2等）改变，系统也能通过UUID找到正确的设备。
 
-### `fstable`
+### `fstab`
 
-`/etc/fstable`用于实现系统启动时的自动挂载。
+`/etc/fstab`用于实现系统启动时的自动挂载。
 
 ```shell
 <设备>    <挂载点>    <文件系统类型>     <挂载参数>    <转储频率>    <自检顺序>
@@ -289,8 +289,8 @@ sudo apt-get install btrfs-tools
 + 安装 `ssh server`不需要安装GUI
 + 安装过程不需要进行网络配置
 + 安装过程中会创建一个新的常规用户
-	+ 如果操作的是NISL Server `root`的密码是 `qqaazz@nisl.root`
-	+ 如果操作的是NISL Server新用户名为 `installer` 密码为 `qqaazz@nisl.installer`
+	+ 如果操作的是NISL Server `root`的密码是<p style="filter: blur(10px);"> `qqaazz@nisl.root`</p>
+	+ 如果操作的是NISL Server新用户名为 `installer` 密码为<p style="filter: blur(10px);">  `qqaazz@nisl.installer`</p>
 + 系统安装在970 EVO中，自动分区，其他磁盘均为未挂载状态。
 ### 4. 配置基本网络
 
@@ -490,9 +490,9 @@ ARRAY /dev/md0 metadata=1.2 name=nisl-superman:0 UUID=8b0e391f:f36291d9:5acabf5b
 sudo mount /dev/md0 /hdd
 ```
 
-#### 修改 `fstable`
+#### 修改 `fstab`
 
-修改后的`fstable`
+修改后的`fstab`
 
 ```shell
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
