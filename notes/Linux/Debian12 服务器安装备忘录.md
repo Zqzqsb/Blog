@@ -1,5 +1,5 @@
 ---
-title: Linux 命令-进程
+title: Debian12 服务器安装备忘录
 createTime: 2024-5-27
 author: ZQ
 tags:
