@@ -2,7 +2,13 @@
 title: Linux 命令-进程
 createTime: 2024-4-25
 author: ZQ
+tags:
+	- linux
+description: linux进程相关。
+permalink: /linux_process/
 ---
+<br> linux进程相关。
+<!-- more -->
 
 ## ps
 
@@ -351,7 +357,8 @@ void* producer(void* arg) {
         pthread_mutex_lock(&mutex);
 
         products++;
-        printf("Produced one product, total number of products: %d\n", products);
+        printf("Produced one product, total number of products: %d
+", products);
 
         pthread_cond_signal(&cond);
         pthread_mutex_unlock(&mutex);
@@ -368,7 +375,8 @@ void* consumer(void* arg) {
         }
         
         products--;
-        printf("Consumed one product, total number of products: %d\n", products);
+        printf("Consumed one product, total number of products: %d
+", products);
 
         pthread_mutex_unlock(&mutex);
     }
