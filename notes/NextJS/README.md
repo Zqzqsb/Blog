@@ -1,1 +1,1 @@
-# 这些是 学习`NextJS`和 `React` 相关的笔记。
+这些是 学习`NextJS`和 `React` 相关的笔记。
