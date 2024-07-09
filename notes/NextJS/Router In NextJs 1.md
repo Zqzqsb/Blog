@@ -1,5 +1,5 @@
 ---
-title: LearnJS APP Route
+title: LearnJS APP Route 1
 createTime: 2024-7-8
 author: ZQ
 tags:
@@ -10,11 +10,14 @@ permalink: /NextJS_AppRouter/
 ---
 <br> NextJS App Router
 <!-- more -->
+
 ## 本篇笔记的结构
+
 + 文件定义路由
 + Page, layout 和 Template
 + 不同时机的重定向
 + 路由和导航的工作原理
+
 ## 文件定义路由
 
 Next.js使用基于文件系统的路由器，其中文件夹用于定义路由。
