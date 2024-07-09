@@ -3,7 +3,7 @@ title: Linux 命令-进程
 createTime: 2024-4-25
 author: ZQ
 tags:
-	- linux
+- linux
 description: linux进程相关。
 permalink: /linux_process/
 ---
