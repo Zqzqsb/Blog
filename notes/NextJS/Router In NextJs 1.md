@@ -6,7 +6,7 @@ tags:
   - react
   - NextJs
 description: NextJS App Router
-permalink: /NextJS_AppRouter/
+permalink: /NextJS_AppRouter1/
 ---
 <br> NextJS App Router
 <!-- more -->
