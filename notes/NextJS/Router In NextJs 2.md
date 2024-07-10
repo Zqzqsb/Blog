@@ -5,10 +5,10 @@ author: ZQ
 tags:
   - react
   - NextJs
-description: NextJS App Router
+description: This note records things about Streaming.
 permalink: /NextJS_AppRouter2/
 ---
-<br> NextJS App Router
+<br> This note records things about Streaming.
 <!-- more -->
 ## 本篇笔记的结构
 

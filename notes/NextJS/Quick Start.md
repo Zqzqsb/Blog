@@ -1,5 +1,5 @@
 ---
-title: LearnJS Quick Start
+title: Quick Start
 createTime: 2024-7-8
 author: ZQ
 tags:

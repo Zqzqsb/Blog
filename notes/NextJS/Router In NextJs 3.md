@@ -5,10 +5,10 @@ author: ZQ
 tags:
   - react
   - NextJs
-description: NextJS App Router
+description: This note records things about Redirecting.
 permalink: /NextJS_AppRouter3/
 ---
-<br> NextJS App Router
+<br> This note records things about Redirecting.
 <!-- more -->
 
 ## 重定向函数
