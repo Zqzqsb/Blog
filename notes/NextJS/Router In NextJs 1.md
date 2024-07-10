@@ -1,5 +1,5 @@
 ---
-title: LearnJS APP Route 1
+title: Basic Route
 createTime: 2024-7-8
 author: ZQ
 tags:
