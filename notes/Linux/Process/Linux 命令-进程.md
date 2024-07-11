@@ -5,7 +5,6 @@ author: ZQ
 tags:
 - linux
 description: linux进程相关。
-permalink: /linux_process/
 ---
 <br> linux进程相关。
 <!-- more -->

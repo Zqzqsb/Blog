@@ -5,7 +5,6 @@ author: ZQ
 tags:
 - linux
 description: linux文件特殊权限。
-permalink: /linux_file_permission/
 ---
 <br> linux文件特殊权限。
 <!-- more -->
