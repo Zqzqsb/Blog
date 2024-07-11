@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: This note records things about Parallel Routes.
-permalink: /NextJS_AppRouter6/
 ---
 <br> This note records things about Parallel Routes.
 <!-- more -->

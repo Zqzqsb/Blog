@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: NextJS 快速入门
-permalink: /NextJS_QuickStart/
 ---
 <br> NextJS 快速入门
 <!-- more -->

@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: This note records things about Redirecting.
-permalink: /NextJS_AppRouter3/
 ---
 <br> This note records things about Redirecting.
 <!-- more -->

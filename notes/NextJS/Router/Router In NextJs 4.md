@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: This note records things about Project Organization.
-permalink: /NextJS_AppRouter4/
 ---
 <br> This note records things about Project Organization.
 <!-- more -->

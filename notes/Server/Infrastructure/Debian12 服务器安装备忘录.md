@@ -7,7 +7,6 @@ tags:
   - server
   - linux
 description: 本文记录debian12作为服务器的安装和配置过程
-permalink: /server_build/
 ---
 <br> 本文记录debian12作为服务器的安装和配置过程
 <!-- more -->

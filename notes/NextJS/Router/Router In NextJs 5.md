@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: This note records things about Dynamic Route.
-permalink: /NextJS_AppRouter5/
 ---
 <br> This note records things about Dynamic Route.
 <!-- more -->

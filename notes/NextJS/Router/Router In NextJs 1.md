@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: This note records things about Route Basicr.
-permalink: /NextJS_AppRouter1/
 ---
 <br> This note records things about Route Basicr.
 <!-- more -->

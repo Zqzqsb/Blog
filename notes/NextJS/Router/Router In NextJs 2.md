@@ -6,7 +6,6 @@ tags:
   - react
   - NextJs
 description: This note records things about Streaming.
-permalink: /NextJS_AppRouter2/
 ---
 <br> This note records things about Streaming.
 <!-- more -->
