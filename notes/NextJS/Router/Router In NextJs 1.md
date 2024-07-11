@@ -58,7 +58,7 @@ export default function Page() {
 
 > Tips:
 - `.js`, `.jsx`, or `.tsx` file extensions can be used for Layouts.  
-- Only the root layout can contain `<html>` and `<body>` tags.  
+- **Only the root layout can contain `<html>` and `<body>` tags.**  
 - When a `layout.js` and `page.js` file are defined in the same folder, the layout will wrap the page.  
 - Layouts are [Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) by default but can be set to a [Client Component](https://nextjs.org/docs/app/building-your-application/rendering/client-components).  
 - Layouts can fetch data. View the [Data Fetching](https://nextjs.org/docs/app/building-your-application/data-fetching) section for more information.  
