@@ -3,10 +3,8 @@ title: HelloWorld With Golang
 createTime: 2024-7-15
 tags:
   - Golang
-cover: 
 description: 讲述了Go项目的基本结构。
 ---
-![cover]( )
 <br> 讲述了Go项目的基本结构。
 <!-- more -->
 

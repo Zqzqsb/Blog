@@ -3,10 +3,8 @@ title: Function in Golang.
 createTime: 2024-7-15
 tags:
   - Golang
-cover: 
 description: 笔记记录了Golang中的函数相关。
 ---
-![cover]( )
 <br> 笔记记录了Golang中的函数相关。
 <!-- more -->
 

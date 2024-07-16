@@ -3,10 +3,8 @@ title: Types in Golang
 createTime: 2024-7-15
 tags:
   - Golang
-cover: 
 description: 讲述了Go项目的数据类型和命名规则。
 ---
-![cover]( )
 <br> 讲述了Go项目的数据类型和命名规则。
 <!-- more -->
 
