@@ -1,15 +1,13 @@
 ---
-title: Hexo*Butterfly 并使用nginx做静态代理
-createTime: 2022-2-3
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/Hexo_%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/%E5%B0%81%E9%9D%A2.jpg
-description: 本文介绍了hexo博客搭建的过程。
+title: Git 命令图解
+createTime: 2024-8-2
+description: 本文参照了Learn Git Branch, 给出了git命令一些常用命令的图解。
 tags:
   - hexo
 author: ZQ
-permalink: /hexo/build/
+permalink: /git/graphIntro/
 ---
-![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/Hexo_%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/%E5%B0%81%E9%9D%A2.jpg)
-<br> 本文介绍了hexo博客搭建的过程。
+<br> 本文参照了Learn Git Branch, 给出了git命令一些常用命令的图解。
 <!-- more -->
 
 ## git branch
