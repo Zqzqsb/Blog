@@ -3,10 +3,10 @@ title: Linux 命令-进程
 createTime: 2024-4-25
 author: ZQ
 tags:
-	- linux
-description: linux进程相关。
+- linux
+description: linux进程相关命令。
 ---
-<br> linux进程相关。
+<br> linux进程相关命令。
 <!-- more -->
 
 ## ps
