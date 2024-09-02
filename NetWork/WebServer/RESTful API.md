@@ -2,6 +2,9 @@
 title: RESTful API
 createTime: 2024-8-22
 author: ZQ
+permalink: /network/webserver/restful/
+tags:
+  - web
 ---
 
 > 本文内容大多来自[阮一峰的博客](https://www.ruanyifeng.com/blog/2011/09/restful.html)

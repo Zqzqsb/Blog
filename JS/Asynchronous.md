@@ -1,5 +1,5 @@
 ---
-title: JavaScript 异步编程
+title: Asynchronous coding in javascript
 createTime: 2024-4-11
 description: 本文记录了JavaScript异步编程中的一些细节。
 tags:

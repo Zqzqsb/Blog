@@ -1,5 +1,5 @@
 ---
-title: JavaScript Array
+title: Details about array in javascript
 createTime: 2022-7-11
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Javascript/JS_Array/%E5%B0%81%E9%9D%A2.png
 description: 本文参照MDN文档对js中的数组做出了解释

@@ -3,8 +3,9 @@ title: Linux 文件-特殊权限
 createTime: 2024-7-1
 author: ZQ
 tags:
-- linux
+  - linux
 description: linux文件特殊权限。
+permalink: /Linux/Command/Privilege/
 ---
 <br> linux文件特殊权限。
 <!-- more -->

@@ -1,12 +1,12 @@
 ---
-title: Debian12 服务器安装备忘录
+title: Build Debian Server
 createTime: 2024-5-27
 author: ZQ
 tags:
-  - 备忘录
-  - server
   - linux
+  - 备忘录
 description: 本文记录debian12作为服务器的安装和配置过程
+permalink: /server/build/
 ---
 <br> 本文记录debian12作为服务器的安装和配置过程
 <!-- more -->
@@ -15,16 +15,16 @@ description: 本文记录debian12作为服务器的安装和配置过程
 
 本文记录自用的debian服务器的安装和配置过程。服务器的硬件配置如下。
 
-| 类别           | 型号                  |
+| 类别          | 型号                 |
 | ------------ | ------------------- |
 | CPU          | 12700k              |
 | Mother Board | z690                |
 | DRAM         | DDR4 16G * 2        |
 | System Drive | 970EVO 512G PCIE3.0 |
 | Data Drive   | Gloway 4TB PCIE4.0  |
-| BackUp Drive | 日立 10TB * 2         |
-| CASE         | 半岛铁盒 F20            |
-| Power Supply | 利民TG1000 1000w      |
+| BackUp Drive | 日立 10TB * 2        |
+| CASE         | 半岛铁盒 F20          |
+| Power Supply | 利民TG1000 1000w     |
 
 ## 熟悉命令
 

@@ -3,8 +3,9 @@ title: Linux 命令 - Rsync
 createTime: 2024-8-9
 author: ZQ
 tags:
-- linux
+  - linux
 description: Rsync命令的使用方式。
+permalink: /Linux/Command/Rsync/
 ---
 <br> Rsync命令的使用方式。
 <!-- more -->

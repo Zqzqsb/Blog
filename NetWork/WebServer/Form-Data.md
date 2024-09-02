@@ -2,8 +2,9 @@
 title: Form-Data
 createTime: 2024-8-26
 author: ZQ
-tag:
-- web
+tags:
+  - web
+permalink: /network/webserver/formdata/
 ---
 
 ## 概述

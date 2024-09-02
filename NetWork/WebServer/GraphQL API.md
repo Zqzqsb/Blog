@@ -2,6 +2,9 @@
 title: GraphQL API
 createTime: 2024-8-22
 author: ZQ
+permalink: /network/webserver/graphQL/
+tags:
+  - web
 ---
 
 ## 概述

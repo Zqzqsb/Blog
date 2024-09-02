@@ -2,9 +2,13 @@
 title: AJAX
 createTime: 2024-8-26
 author: ZQ
-tag:
-- web
+tags:
+  - web
+permalink: /network/webserver/ajax/
+description: 解读了ajax的起源和发展历史。
 ---
+<br> 解读了ajax的起源和发展历史。
+<!-- more -->
 
 ## 简介
 
@@ -162,4 +166,3 @@ axios.interceptors.response.use(response => {
 ### 其他功能
 
 `axios` 还支持取消请求、设置请求超时、传递请求头信息等功能，使得处理 HTTP 请求变得更加灵活和可靠。
-

@@ -1,8 +1,15 @@
 ---
-title: HTTP的发展历史
+title: History About Http
 createTime: 2024-3-26
 author: ZQ
+tags:
+  - http
+  - network
+description: 关于Http协议的发展历史。
+permalink: /network/http/history/
 ---
+<br> 关于Http协议的发展历史。
+<!-- more -->
 
 ## HTTP 0.9
 

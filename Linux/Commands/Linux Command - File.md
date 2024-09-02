@@ -3,8 +3,9 @@ title: Linux 命令 - 文件相关
 createTime: 2024-8-19
 author: ZQ
 tags:
-- linux
+  - linux
 description: linux文件相关命令。
+permalink: /Linux/Command/File/
 ---
 <br> linux文件相关命令。
 <!-- more -->
