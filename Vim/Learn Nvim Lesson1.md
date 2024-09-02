@@ -8,13 +8,6 @@ tags:
 description: 记录了学习nvim第一课学到的内容
 permalink: /vim/lesson1/
 ---
----
-## next steps!
-
-+ yank and paste
-+ command mode
-+ micro
-+ complex operations
 <br> 记录了学习nvim第一课学到的内容
 <!-- more -->
 
@@ -109,7 +102,6 @@ verb + conduct + obj
 - . : repeat edit
 - ; : repeat find
 
----
 ## next steps!
 
 + yank and paste
