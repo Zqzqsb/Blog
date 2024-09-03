@@ -1,5 +1,5 @@
 ---
-title: 区间DP概述
+title: Interval DP
 tags:
   - 算法
   - 动态规划

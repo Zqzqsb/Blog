@@ -1,5 +1,5 @@
 ---
-title: 动态规划概念
+title: Concepts About Dynamic Programming
 tags:
   - 算法
   - 动态规划

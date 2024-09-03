@@ -1,5 +1,5 @@
 ---
-title: 01背包详解
+title: 01 Bag
 tags:
   - 算法
   - 背包问题

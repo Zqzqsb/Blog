@@ -1,5 +1,5 @@
 ---
-title: 图的构建方式
+title: Construction of Graph
 categories:
   - 算法
 tags:
@@ -7,7 +7,7 @@ tags:
 createTime: 2024-7-6
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/GraphBuild/cover.png
 description: 本篇文章讲述的图的构建方式
-permalink: /algorithm/graph/build/
+permalink: /algorithm/graph/construct/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/GraphBuild/cover.png)
 <br> 本篇文章讲述的图的构建方式

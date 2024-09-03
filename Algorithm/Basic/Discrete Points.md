@@ -1,5 +1,5 @@
 ---
-title: 一维离散点问题
+title: Discrete Points In One-Demension
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/1D%20Discrete%20Point/cover.png
 tags:
   - 离散点

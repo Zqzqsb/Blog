@@ -1,5 +1,5 @@
 ---
-title: 背包问题变形
+title: Variant of Bag Problems
 tags:
   - 算法
   - 背包问题

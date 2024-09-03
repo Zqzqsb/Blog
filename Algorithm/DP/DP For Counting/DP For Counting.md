@@ -1,5 +1,5 @@
 ---
-title: 计数类dp
+title: DP For Counting
 tags:
   - 算法
   - 动态规划
