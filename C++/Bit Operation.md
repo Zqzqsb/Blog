@@ -1,5 +1,5 @@
 ---
-title: c++整数存储和位运算符
+title: Bit Operation in C++.
 createTime: 2024-1-23
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Cpp/BitOp/cover.png
 tags:
