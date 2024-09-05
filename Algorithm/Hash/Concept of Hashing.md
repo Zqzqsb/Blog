@@ -6,9 +6,11 @@ tags:
   - 图论
   - 哈希
 createTime: 2024-9-5
-# cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png
+cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png
 permalink: /algorithm/hash/concept/
 ---
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png)
+<!-- more -->
 
 
 > 文章参考了[enjoy algorithms](enjoyalgorithms.com)的相关内容
