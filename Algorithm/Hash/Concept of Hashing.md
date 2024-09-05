@@ -11,7 +11,7 @@ permalink: /algorithm/hash/concept
 ---
 ---
 
-> 文章参考了[enjoyalgorithms.com]的相关内容
+> 文章参考了[enjoy algorithms](enjoyalgorithms.com)的相关内容
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png)
 <!-- more -->
 
@@ -87,4 +87,4 @@ h(k)，用于根据键 k 计算数组索引或“槽”。然后，具有键 k �
 
 ---
 
-> 文章参考了[enjoyalgorithms.com]的相关内容
+> 文章参考了[enjoy algorithms](enjoyalgorithms.com)的相关内容
