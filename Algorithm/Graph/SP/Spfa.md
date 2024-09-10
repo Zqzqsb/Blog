@@ -91,3 +91,87 @@ int main()
 
 + 每当有节点的距离被更新，就覆盖更新这个节点的前置节点。
 + 可以根据节点的其他属性进行排序。
+
+## 判断负环
+
++ 当所有距离都置为无穷大时，负权边会导致其他节点距离的更新，而在负权回路中，节点被更新的次数将没有上线。
++ 这个负环处会成为一个**负权制造源**，源源不断的向外更新其他节点的距离。
++ 在不含负权回路的图中，任一节点的被更新路径长度不会超过`n` , 因为任意两个点的最短路径最多包含`n`个节点。
+
+
+```cpp
+
+#include<iostream>
+#include<cstring>
+#include<queue>
+#include<string>
+using namespace std;
+
+const int N = 1e5 + 10;
+
+int h[N] , e[N] , ne[N] , w[N] , idx;
+int dis[N] , count[N] , st[N];
+
+void init()
+{
+    memset(h , -1 , sizeof h);
+    memset(dis , 0x3f , sizeof dis);
+}
+
+void add(int a , int b , int c)
+{
+    e[idx] = b; w[idx] = c; ne[idx] = h[a] , h[a] = idx++;
+}
+
+string spfa(int n)
+{
+    queue<int> q;
+
+	// 将所有的节点入队，最初的更新会发生在负权边处
+    for(int i = 1 ; i <= n ; i++)
+    {
+        q.push(i); st[i] = true;
+    }
+    
+    while(q.size())
+    {
+        int f = q.front(); st[f] = false; q.pop();
+        
+        
+        for(int i = h[f] ; i != -1 ; i = ne[i])
+        {
+            int j = e[i];
+            if(dis[j] > dis[f] + w[i])
+            {
+                dis[j] = dis[f] + w[i];
+                
+                if(count[j] >= n)
+                    return "Yes";
+                    
+                count[j] = max(count[j] , count[f] + 1); // 保留最长的一条更新路径 
+                
+                if(!st[j]) {
+                    q.push(j); st[j] = true;
+                }
+            }
+        }
+    }
+    
+    return "No";
+}
+
+int main()
+{
+    init();
+    int n , m; cin >> n >> m;
+    int a , b , c; 
+    while(m--)   
+    {
+        scanf("%d %d %d" , &a , &b , &c);
+        add(a , b , c);
+    }
+    
+    cout << spfa(n);
+}
+```
+
