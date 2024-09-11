@@ -25,6 +25,8 @@ permalink: /algorithm/graph/spfa/
 
 在邻接表中对算法过程进行实现，[Acwing851](https://www.acwing.com/problem/content/853/).
 
+在一般的`spfa`过程中，使用队列或者栈不会影响算法的运行效率，因为我们都需要等到算法的收敛。
+
 ```cpp
 #include<iostream>
 #include<cstring>
@@ -107,7 +109,6 @@ int main()
 > 1500ms
 
 ```cpp
-
 #include<iostream>
 #include<cstring>
 #include<queue>
@@ -184,14 +185,12 @@ int main()
 
 ## 局限和优化
 
-
 + 这种判断负环的方式适合在稠密图中工作，因为理论上来说负权制造源制造的负权会波及到整个图。
-+ 使用队列本质上是一种广度搜索，使用栈处理这个过程会更快，广度搜索存储了太多无意义的传播过程。
++ 使用队列本质上是一种广度搜索实现，使用栈处理这个过程会更快，因为我的搜索目的是尽可能快的找到一条长的负权传播路径， 而算法的性质已经帮我们确定了一些搜索的起点(负权边的源点)。广度搜索存储了太多无意义的传播过程。
 
 > 200ms
 
 ```cpp
-
 #include<iostream>
 #include<cstring>
 #include<stack>
