@@ -9,7 +9,7 @@ createTime: 2024-9-10
 permalink: /algorithm/graph/bellmanford/
 ---
 
-`Bellman-Ford`如何处理有边数限制的最短路，以及进行负环判断。
+`Bellman-Ford`如何处理有边数限制的最短路,以及它和款搜的比较。
 
 <!-- more -->
 
