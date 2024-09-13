@@ -5,7 +5,7 @@ categories:
 tags:
   - 图论
   - 判断环路
-createTime: 2024-9-8
+createTime: 2024-9-12
 permalink: /algorithm/graph/circle/
 ---
 
@@ -70,6 +70,13 @@ permalink: /algorithm/graph/circle/
  
 + 在[spfa](https://blog.zqzqsb.cn/algorithm/graph/spfa/)章节中，已经阐释并并且实现这中方法。
 
+## 总结
+
+可以总结出
++ 一般环路的判断在路径转移过程中进行判断
++ 负权环路的判断在距离更新的过程中进行判断
 
 
 
+
+[[Spfa]]

@@ -160,3 +160,16 @@ int main()
 
 + 在例题的图中作业时，`bellman-ford`和`BFS`有大致相当的效率
 + 可以详见`bellman-ford`适用于边数较少的情况, `BFS`适用于边数较多，迭代轮次较少的场景。
+
+### 检测负环路
+
+如果`Bellman-Ford`的迭代次数超过了图中的节点个数，那么就出现了负环路。因为在不含负环路的图中，任何一条距离更新路径不会超过图中节点的数目。
+
+[Acwing 852](https://www.acwing.com/problem/content/description/854/)
+
+> 600ms
+
+```cpp
+
+```
+
