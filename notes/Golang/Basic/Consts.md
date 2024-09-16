@@ -14,7 +14,7 @@ description: 笔记记录了Golang中的常量相关。
 
 常量的定义格式：`const identifier [type] = value`，例如：
 
-```golang
+```Golang
 const Pi = 3.14159
 ```
 
@@ -34,7 +34,7 @@ const Pi = 3.14159
 
 数字型的常量是没有大小和符号的，并且可以使用任何精度而不会导致溢出：
 
-```golang
+```Golang
 const Ln2 = 0.693147180559945309417232121458\
 			176568075500134360255254120680009
 const Log2E = 1/Ln2 // this is a precise reciprocal
@@ -48,7 +48,7 @@ const hardEight = (1 << 100) >> 97
 
 不过需要注意的是，当常量赋值给一个精度过小的数字型变量时，可能会因为无法正确表达常量所代表的数值而导致溢出，这会在编译期间就引发错误。另外，常量也允许使用并行赋值的形式：
 
-```golang
+```Golang
 const beef, two, c = "eat", 2, "veg"
 const Monday, Tuesday, Wednesday, Thursday, Friday, Saturday = 1, 2, 3, 4, 5, 6
 const (
@@ -59,7 +59,7 @@ const (
 
 常量还可以用作枚举：
 
-```golang
+```Golang
 const (
 	Unknown = 0
 	Female = 1
@@ -71,7 +71,7 @@ const (
 
 在这个例子中，`iota` 可以被用作枚举值：
 
-```golang
+```Golang
 const (
 	a = iota
 	b = iota
@@ -81,7 +81,7 @@ const (
 
 第一个 `iota` 等于 0，每当 `iota` 在新的一行被使用时，它的值都会自动加 1，并且没有赋值的常量默认会应用上一行的赋值表达式：
 
-```golang
+```Golang
 // 赋值一个常量时，之后没赋值的常量都会应用上一行的赋值表达式
 const (
 	a = iota  // a = 0

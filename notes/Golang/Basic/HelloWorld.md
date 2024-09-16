@@ -8,7 +8,7 @@ description: 讲述了Go项目的基本结构。
 <br> 讲述了Go项目的基本结构。
 <!-- more -->
 
-```golang
+```Golang
 package main
 
 import "fmt"
@@ -133,7 +133,7 @@ import ("fmt"; "os")
 - 如果当前包是 main 包，则定义 main 函数。
 - 然后定义其余的函数，首先是类型的方法，接着是按照 main 函数中先后调用的顺序来定义相关函数，如果有很多函数，则可以按照字母顺序来进行排序。
 
-```golang
+```Golang
 package main
 
 import (

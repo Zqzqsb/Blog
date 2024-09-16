@@ -12,7 +12,7 @@ description: 笔记记录了Golang中的Switch语句。
 
 相比较 C 和 Java 等其它语言而言，Go 语言中的 switch 结构使用上更加灵活。它接受任意形式的表达式：
 
-```golang
+```Golang
 switch var1 {
 	case val1:
 		...
@@ -35,7 +35,7 @@ switch var1 {
 
 因此：
 
-```golang
+```Golang
 switch i {
 	case 0: // 空分支，只有当 i == 0 时才会进入分支
 	case 1:
@@ -49,7 +49,7 @@ switch i {
 
 可选的 `default` 分支可以出现在任何顺序，但最好将它放在最后。它的作用类似与 `if-else` 语句中的 `else`，表示不符合任何已给出条件时，执行相关语句。
 
-```golang
+```Golang
 package main
 
 import "fmt"
@@ -76,7 +76,7 @@ It's equal to 98
 
 switch 语句的第二种形式是不提供任何被判断的值（实际上默认为判断是否为 true），然后在每个 case 分支中进行测试不同的条件。当任一分支的测试结果为 true 时，该分支的代码会被执行。这看起来非常像链式的 `if-else` 语句，但是在测试条件非常多的情况下，提供了可读性更好的书写方式。
 
-```golang
+```Golang
 switch {
 	case condition1:
 		...
@@ -89,7 +89,7 @@ switch {
 
 例如:
 
-```golang
+```Golang
 switch {
 	case i < 0:
 		f1()
@@ -102,7 +102,7 @@ switch {
 
 任何支持进行相等判断的类型都可以作为测试表达式的条件，包括 int、string、指针等。
 
-```golang
+```Golang
 package main
 
 import "fmt"
@@ -131,7 +131,7 @@ Number is between 0 and 10
 
 switch 语句的第三种形式是包含一个初始化语句：
 
-```golang
+```Golang
 switch initialization {
 	case val1:
 		...
@@ -144,7 +144,7 @@ switch initialization {
 
 这种形式可以非常优雅地进行条件判断：
 
-```golang
+```Golang
 switch result := calculate(); {
 	case result < 0:
 		...
@@ -157,7 +157,7 @@ switch result := calculate(); {
 
 在下面这个代码片段中，变量 a 和 b 被平行初始化，然后作为判断条件：
 
-```golang
+```Golang
 switch a, b := x[i], y[j]; {
 	case a < b: t = -1
 	case a == b: t = 0
