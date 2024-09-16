@@ -28,7 +28,7 @@ fmt.Printf("An integer: %d, it's location in memory: %p
 
 这个地址可以存储在一个叫做指针的特殊数据类型中，在本例中这是一个指向 int 的指针，即 `i1`：此处使用 \*int 表示。如果我们想调用指针 intP，我们可以这样声明它
 
-```Golang
+```Go
 var intP *int
 ```
 
@@ -74,7 +74,7 @@ ptr2 := &10 //error: cannot take the address of 10
 
 对一个空指针的反向引用是不合法的，并且会使程序崩溃：
 
-```Golang
+```Go
 package main
 func main() {
 	var p *int = nil
