@@ -27,7 +27,7 @@ description: 笔记记录了Golang中的基本数据类型。
 当相等运算符两边的值是完全相同的值的时候会返回 true，否则返回 false，并且只有在两个的
 值的类型相同的情况下才可以使用。
 
-```Go
+```golang
 var aVar = 10
 aVar == 5 -> false
 aVar == 10 -> true
@@ -89,7 +89,7 @@ float32 精确到小数点后 7 位，float64 精确到小数点后 15 位。由
 
 Go 中不允许不同类型之间的混合使用，但是对于常量的类型限制非常少，因此允许常量之间的混合使用，下面这个程序很好地解释了这个现象（该程序无法通过编译）：
 
-```Go
+```golang
 package main
 
 func main() {
@@ -107,7 +107,7 @@ func main() {
 
 下面这个程序展示了通过显式转换来避免这个问题（第 4.2 节）。
 
-```Go
+```golang
 package main
 
 import "fmt"
@@ -136,7 +136,7 @@ func main() {
 
 当进行类似 `a32bitInt = int32(a32Float)` 的转换时，小数点后的数字将被丢弃。这种情况一般发生当从取值范围较大的类型转换为取值范围较小的类型时，或者你可以写一个专门用于处理类型转换的函数来确保没有发生精度的丢失。下面这个例子展示如何安全地从 int 型转换为 int8：
 
-```Go
+```golang
 func Uint8FromInt(n int) (uint8, error) {
 	if 0 <= n && n <= math.MaxUint8 { // conversion is safe
 		return uint8(n), nil
@@ -147,7 +147,7 @@ func Uint8FromInt(n int) (uint8, error) {
 
 或者安全地从 float64 转换为 int：
 
-```Go
+```golang
 func IntFromFloat64(x float64) int {
 	if math.MinInt32 <= x && x <= math.MaxInt32 { // x lies in the integer range
 		whole, fraction := math.Modf(x)
@@ -178,7 +178,7 @@ func IntFromFloat64(x float64) int {
 
 一些像游戏或者统计学类的应用需要用到随机数。`rand` 包实现了伪随机数的生成。
 
-```Go
+```golang
 package main
 import (
 	"fmt"
@@ -210,7 +210,7 @@ func main() {
 
 ## 运算符优先级
 
-```Go
+```golang
 优先级 	运算符
  7 		^ !
  6 		* / % << >> & &^
@@ -227,7 +227,7 @@ func main() {
 
 在 `type TZ int` 中，TZ 就是 int 类型的新名称（用于表示程序中的时区），然后就可以使用 TZ 来操作 int 类型的数据。
 
-```Go
+```golang
 package main
 import "fmt"
 
@@ -248,7 +248,7 @@ func main() {
 
 在 ASCII 码表中，A 的值是 65，而使用 16 进制表示则为 41，所以下面的写法是等效的：
 
-```Go
+```golang
 var ch byte = 65 或 var ch byte = 'A'
 ```
 
@@ -260,7 +260,7 @@ var ch byte = 65 或 var ch byte = 'A'
 
 因为 Unicode 至少占用 2 个字节，所以我们使用 `int16` 或者 `int` 类型来表示。如果需要使用到 4 字节，则会加上 `\U` 前缀；前缀 `\u` 则总是紧跟着长度为 4 的 16 进制数，前缀 `\U` 紧跟着长度为 8 的 16 进制数。
 
-```Go
+```golang
 var ch int = '\u0041'
 var ch2 int = '\u03B2'
 var ch3 int = '\U00101234'
@@ -275,7 +275,7 @@ fmt.Printf("%U - %U - %U", ch, ch2, ch3) // UTF-8 code point
 
 输出:
 
-```Go
+```golang
 65 - 946 - 1053236
 A - β - r
 41 - 3B2 - 101234

@@ -12,7 +12,7 @@ description: 笔记记录了Golang中的If语句。
 
 if 可以包含一个初始化语句（如：给一个变量赋值）。这种写法具有固定的格式（在初始化语句后方必须加上分号）：
 
-```Go
+```golang
 if initialization; condition {
 	// do something
 }
@@ -20,7 +20,7 @@ if initialization; condition {
 
 例如:
 
-```Go
+```golang
 if val := 10; val > max {
 	// do something
 }
@@ -36,7 +36,7 @@ o 语言的函数经常使用两个返回值来表示执行是否成功：返回
 
 在第 4.7 节的程序 `string_conversion.go` 中，函数 `strconv.Atoi` 的作用是将一个字符串转换为一个整数。之前我们忽略了相关的错误检查：
 
-```Go
+```golang
 anInt, _ = strconv.Atoi(origStr)
 ```
 
@@ -46,7 +46,7 @@ anInt, _ = strconv.Atoi(origStr)
 
 我们在第二个版本中对代码进行了改进：
 
-```Go
+```golang
 package main
 
 import (
@@ -82,7 +82,7 @@ func main() {
 
 **习惯用法**
 
-```Go
+```golang
 value, err := pack1.Function1(param1)
 if err != nil {
 	fmt.Printf("An error occured in pack1.Function1 with parameter %v", param1)
@@ -94,7 +94,7 @@ if err != nil {
 
 **习惯用法**
 
-```Go
+```golang
 if err != nil {
 	fmt.Printf("Program stopping with error %v", err)
 	os.Exit(1)
@@ -105,7 +105,7 @@ if err != nil {
 
 **习惯用法**
 
-```Go
+```golang
 if err := file.Chmod(0664); err != nil {
 	fmt.Println(err)
 	return err
@@ -114,7 +114,7 @@ if err := file.Chmod(0664); err != nil {
 
 或者将 ok-pattern 的获取放置在 if 语句的初始化部分，然后进行判断：
 
-```Go
+```golang
 if value, ok := readData(); ok {
 …
 }
@@ -124,7 +124,7 @@ if value, ok := readData(); ok {
 
 如果您像下面一样，没有为多返回值的函数准备足够的变量来存放结果：
 
-```Go
+```golang
 func mySqrt(f float64) (v float64, ok bool) {
 	if f < 0 { return } // error case
 	return math.Sqrt(f),true
@@ -138,14 +138,14 @@ func main() {
 
 会得到一个编译错误：`multiple-value mySqrt() in single-value context`。
 
-```Go
+```golang
 t, ok := mySqrt(25.0)
 if ok { fmt.Println(t) }
 ```
 
 当您将字符串转换为整数时，且确定转换一定能够成功时，可以将 `Atoi` 函数进行一层忽略错误的封装：
 
-```Go
+```golang
 func atoi (s string) (n int) {
 	n, _ = strconv.Atoi(s)
 	return
@@ -154,6 +154,6 @@ func atoi (s string) (n int) {
 
 实际上，`fmt` 包（第 4.4.3 节）最简单的打印函数也有 2 个返回值：
 
-```Go
+```golang
 count, err := fmt.Println(x) // number of bytes printed, nil or 0, error
 ```
