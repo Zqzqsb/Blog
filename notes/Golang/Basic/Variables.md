@@ -18,7 +18,7 @@ description: 笔记记录了Golang中的变量相关。
 
 而在 Go 中，则可以很轻松地将它们都声明为指针类型
 
-```go
+```Go
 var a, b *int
 ```
 
@@ -26,7 +26,7 @@ var a, b *int
 
 示例
 
-```go
+```Go
 var a int
 var b bool
 var str string
@@ -34,7 +34,7 @@ var str string
 
 也可以分开书写
 
-```go
+```Go
 var (
 	a int
 	b bool
@@ -60,7 +60,7 @@ var (
 
 示例：
 
-```go
+```Go
 a = 15
 b = false
 ```
@@ -71,7 +71,7 @@ b = false
 
 示例：
 
-```go
+```Go
 var identifier [type] = value
 var a int = 15
 var i = 5
@@ -81,7 +81,7 @@ var str string = "Go says hello to the world!"
 
 但是 Go 编译器的智商已经高到可以根据变量的值来自动推断其类型，这有点像 Ruby 和 Python 这类动态语言，只不过它们是在运行时进行推断，而 Go 是在编译时就已经完成推断过程。因此，你还可以使用下面的这些形式来声明及初始化变量：
 
-```go
+```Go
 var a = 15
 var b = false
 var str = "Go says hello to the world!"
@@ -89,7 +89,7 @@ var str = "Go says hello to the world!"
 
 或:
 
-```go
+```Go
 var (
 	a = 15
 	b = false
@@ -101,13 +101,13 @@ var (
 
 不过自动推断类型并不是任何时候都适用的，当你想要给变量的类型并不是自动推断出的某种类型时，你还是需要显式指定变量的类型，例如：
 
-```go
+```Go
 var n int64 = 2
 ```
 
 然而，`var a` 这种语法是不正确的，因为编译器没有任何可以用于自动推断类型的依据。变量的类型也可以在运行时实现自动推断，例如：
 
-```go
+```Go
 var (
 	HOME = os.Getenv("HOME")
 	USER = os.Getenv("USER")
@@ -117,13 +117,13 @@ var (
 
 这种写法主要用于声明包级别的全局变量，当你在函数体内声明局部变量时，应使用简短声明语法 `:=`，例如：
 
-```go
+```Go
 a := 1
 ```
 
 下面这个例子展示了如何通过`runtime`包在运行时获取所在的操作系统类型，以及如何通过 `os` 包中的函数 `os.Getenv()` 来获取环境变量中的值，并保存到 string 类型的局部变量 path 中。
 
-```go
+```Go
 package main
 
 import (
@@ -184,7 +184,7 @@ func main() {
 
 函数 `Printf` 可以在 fmt 包外部使用，这是因为它以大写字母 P 开头，该函数主要用于打印输出到控制台。通常使用的格式化字符串作为第一个参数：
 
-```go
+```Go
 func Printf(format string, list of variables to be printed)
 ```
 
@@ -197,7 +197,7 @@ func Printf(format string, list of variables to be printed)
 
 函数 `fmt.Print` 和 `fmt.Println` 会自动使用格式化标识符 `%v` 对字符串进行格式化，两者都会在每个参数之间自动增加空格，而后者还会在字符串的最后加上一个换行符。例如：
 
-```go
+```Go
 fmt.Print("Hello:", 23)
 ```
 
@@ -217,7 +217,7 @@ a 和 b 的类型（int 和 bool）将由编译器自动推断。
 
 如果你声明了一个局部变量却没有在相同的代码块中使用它，同样会得到编译错误，例如下面这个例子当中的变量 a:
 
-```go
+```Go
 func main() {
    var a string = "abc"
    fmt.Println("hello, world")
@@ -234,7 +234,7 @@ func main() {
 
 同一类型的多个变量可以声明在同一行，如
 
-```go
+```Go
 var a, b, c int
 ```
 
@@ -242,13 +242,13 @@ var a, b, c int
 
 多变量可以在同一行进行赋值，如：
 
-```go
+```Go
 a, b, c = 5, 7, "abc"
 ```
 
 上面这行假设了变量 a，b 和 c 都已经被声明，否则的话应该这样使用：
 
-```go
+```Go
 a, b, c := 5, 7, "abc"
 ```
 
@@ -274,7 +274,7 @@ a, b, c := 5, 7, "abc"
 
 一个可能的用途是在开始执行程序之前对数据进行检验或修复，以保证程序状态的正确性。
 
-```go
+```Go
 package trans
 
 import "math"
@@ -290,7 +290,7 @@ func init() {
 
 示例 4.7 [user_init.go](https://go.timpaik.top/examples/chapter_4/user_init.go) 中导入了包 trans（需要init.go目录为./trans/init.go）并且使用到了变量 Pi：
 
-```go
+```Go
 package main
 
 import (
@@ -308,7 +308,7 @@ func main() {
 
 init 函数也经常被用在当一个程序开始之前调用后台执行的 goroutine，如下面这个例子当中的 `backend()`：
 
-```go
+```Go
 func init() {
    // setup preparations
    go backend()

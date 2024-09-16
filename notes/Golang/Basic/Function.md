@@ -30,7 +30,7 @@ func main must have no arguments and no return values results.
 
 右大括号 `}` 需要被放在紧接着函数体的下一行。如果你的函数非常简短，你也可以将它们放在同一行：
 
-```go
+```Go
 unc Sum(a, b int) int { return a + b }
 ```
 
@@ -38,7 +38,7 @@ unc Sum(a, b int) int { return a + b }
 
 因此符合规范的函数一般写成如下的形式：
 
-```go
+```Go
 func functionName(parameter_list) (return_value_list) {
    …
 }

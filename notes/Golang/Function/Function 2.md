@@ -16,7 +16,7 @@ description: 笔记记录了Golang中的函数。
 
 关键字 defer 的用法类似于面向对象编程语言 Java 和 C# 的 `finally` 语句块，它一般用于释放某些已分配的资源。
 
-```go
+```Go
 package main
 import "fmt"
 
@@ -49,7 +49,7 @@ Function2: Deferred until the end of the calling function!
 
 使用 defer 的语句同样可以接受参数，下面这个例子就会在执行 defer 语句时打印 `0`：
 
-```go
+```Go
 func a() {
 	i := 0
 	defer fmt.Println(i)
@@ -60,7 +60,7 @@ func a() {
 
 当有多个 defer 行为被注册时，它们会以逆序执行（类似栈，即后进先出）：
 
-```go
+```Go
 func f() {
 	for i := 0; i < 5; i++ {
 		defer fmt.Printf("%d ", i)
@@ -76,27 +76,27 @@ func f() {
 
 + 关闭文件流
 
-```go
+```Go
 defer file.Close()
 ```
 
 + 解锁一个加锁的资源
 
-```go
+```Go
 mu.Lock()  
 defer mu.Unlock() 
 ```
 
 + 打印最终报告
 
-```go
+```Go
 printHeader()  
 defer printFooter()
 ```
 
 + 关闭数据库链接
 
-```go
+```Go
 defer disconnectFromDB()
 ```
 
@@ -104,7 +104,7 @@ defer disconnectFromDB()
 
 以下代码模拟了上面描述的第 4 种情况：
 
-```go
+```Go
 package main
 
 import "fmt"
@@ -138,7 +138,7 @@ func doDBOperations() {
 
 一个基础但十分实用的实现代码执行追踪的方案就是在进入和离开某个函数打印相关的消息，即可以提炼为下面两个函数
 
-```go
+```Go
 package main
 
 import "fmt"
@@ -177,7 +177,7 @@ leaving: b
 
 上面的代码还可以修改为更加简便的版本
 
-```go
+```Go
 package main
 
 import "fmt"
@@ -211,7 +211,7 @@ func main() {
 
 下面的代码展示了另一种在调试时使用 defer 语句的手法
 
-```go
+```Go
 package main
 
 import (
