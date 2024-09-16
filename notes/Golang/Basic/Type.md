@@ -18,19 +18,19 @@ description: 讲述了Go项目的数据类型和命名规则。
 
 函数也可以是一个确定的类型，就是以函数作为返回类型。这种类型的声明要写在函数名和可选的参数列表之后，例如:
 
-```Go
+```go
 func FunctionName (a typea, b typeb) typeFunc
 ```
 
 你可以在函数体中的某处返回使用类型为 typeFunc 的变量 var：
 
-```Go
+```go
 return var
 ```
 
 一个函数可以拥有多返回值，返回类型之间需要使用逗号分割，并使用小括号 `()` 将它们括起来，如：
 
-```Go
+```go
 func FunctionName (a typea, b typeb) (t1 type1, t2 type2)
 ```
 
@@ -38,7 +38,7 @@ func FunctionName (a typea, b typeb) (t1 type1, t2 type2)
 
 返回的形式：
 
-```Go
+```go
 return var1, var2
 ```
 
@@ -46,7 +46,7 @@ return var1, var2
 
 使用 type 关键字可以定义你自己的类型，你可能想要定义一个结构体(第 10 章)，但是也可以定义一个已经存在的类型的别名，如：
 
-```Go
+```go
 type IZ int
 ```
 
@@ -54,7 +54,7 @@ type IZ int
 
 然后我们可以使用下面的方式声明变量：
 
-```Go
+```go
 var a IZ = 5
 ```
 
@@ -62,7 +62,7 @@ var a IZ = 5
 
 如果你有多个类型需要定义，可以使用因式分解关键字的方式，例如
 
-```Go
+```go
 type (
    IZ int
    FZ float64
@@ -76,13 +76,13 @@ type (
 
 在必要以及可行的情况下，一个类型的值可以被转换成另一种类型的值。由于 Go 语言不存在隐式类型转换，因此所有的转换都必须显式说明，就像调用一个函数一样（类型在这里的作用可以看作是一种函数）：
 
-```Go
+```go
 valueOfTypeB = typeB(valueOfTypeA)
 ```
 
 示例:
 
-```Go
+```go
 a := 5.0
 b := int(a)
 ```
@@ -91,7 +91,7 @@ b := int(a)
 
 具有相同底层类型的变量之间可以相互转换：
 
-```Go
+```go
 var a IZ = 5
 c := int(a)
 d := IZ(c)

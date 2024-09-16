@@ -24,13 +24,13 @@ description: 笔记记录了Golang中的数组的定义。
 
 数组声明的格式
 
-```Go
+```go
 var identifier [len]type
 ```
 
 例如
 
-```Go
+```go
 var arr1 [5]int
 ```
 
@@ -39,7 +39,7 @@ var arr1 [5]int
 
 **写法一**
 
-```Go
+```go
 package main
 import "fmt"
 
@@ -69,7 +69,7 @@ Array at index 4 is 8
 
 **写法二**
 
-```Go
+```go
 package main
 import "fmt"
 
@@ -96,7 +96,7 @@ index: 4 , value: 0
 
 ### 遍历串
 
-```Go
+```go
 a := [...]string {"a", "b", "c", "d"}
 for i := range a {
 	fmt.Println("Array item", i, "is", a[i])
@@ -106,13 +106,13 @@ for i := range a {
 
 ## 数组元素的类型
 
-```Go
+```go
 var arr1 = new([5]int)
 ```
 
 `arr1`的类型是 `*[5]int` , 以`c++`的方式理解，是个指针(引用)类型。
 
-```Go
+```go
 var arr2 [5]int
 ```
 
@@ -122,7 +122,7 @@ var arr2 [5]int
 
 #### 浅拷贝例子
 
-```Go
+```go
 var arr1 = new([5]int)
 arr1[3] = 100
 var arr2 = arr1 // shallow copy
@@ -136,7 +136,7 @@ fmt.Println("%d %d", arr1[3], arr2[3])
 
 #### 深拷贝的例子
 
-```Go
+```go
 var arr3 [5]int = [...]int{1, 2, 3, 4, 5}
 arr3[3] = 100
 var arr4 = arr3 // deep copy
@@ -150,7 +150,7 @@ fmt.Println("%d %d", arr3[3], arr4[3])
 
 ### 参数传递
 
-```Go
+```go
 package main
 import "fmt"
 func f(a [3]int) { fmt.Println(a) }
@@ -170,7 +170,7 @@ func main() {
 
 ### 写法一 
 
-```Go
+```go
 var arrAge = [5]int{18, 20, 15, 22, 16}
 ```
 
@@ -178,7 +178,7 @@ var arrAge = [5]int{18, 20, 15, 22, 16}
 
 ### 写法二
 
-```Go
+```go
 var arrLazy = [...]int{5, 6, 7, 8, 22}
 ```
 
@@ -186,7 +186,7 @@ var arrLazy = [...]int{5, 6, 7, 8, 22}
 
 ### 写法三
 
-```Go
+```go
 var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}
 ```
 
@@ -195,7 +195,7 @@ var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}
 
 ## 多维数组
 
-```Go
+```go
 package main
 const (
 	WIDTH  = 1920

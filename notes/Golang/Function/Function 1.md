@@ -32,7 +32,7 @@ Go 里面有三种类型的函数：
 
 这样是不正确的 Go 代码：
 
-```Go
+```go
 func g()
 {
 }
@@ -40,14 +40,14 @@ func g()
 
 必须这样的:
 
-```Go
+```go
 func g() {
 }
 ```
 
 函数被调用的基本格式如下：
 
-```Go
+```go
 pack1.Function(arg1, arg2, …, argn)
 ```
 
@@ -55,7 +55,7 @@ pack1.Function(arg1, arg2, …, argn)
 
 一个简单的函数调用其他函数的例子：
 
-```Go
+```go
 package main
 
 func main() {
@@ -91,7 +91,7 @@ Go 语言不支持这项特性的主要原因是函数重载需要进行多余�
 
 如果需要申明一个在外部定义的函数，你只需要给出函数名与函数签名，不需要给出函数体：
 
-```Go
+```go
 func flushICache(begin, end uintptr) // implemented externally
 ```
 
@@ -142,7 +142,7 @@ Go 默认使用按值传递来传递参数，也就是传递参数的副本。�
 
 如下，simple_function.go 里的 `MultiPly3Nums` 函数带有三个形参，分别是 `a`、`b`、`c`，还有一个 `int` 类型的返回值（被注释的代码具有和未注释部分同样的功能，只是多引入了一个本地变量）：
 
-```Go
+```go
 package main
 
 import "fmt"
@@ -178,7 +178,7 @@ Multiply 2 * 5 * 6 = 60
 
 命名返回值作为结果形参（result parameters）被初始化为相应类型的零值，当需要返回的时候，我们只需要一条简单的不带参数的return语句。需要注意的是，即使只有一个命名返回值，也需要使用 `()` 括起来的 fibonacci.go 函数）。
 
-```Go
+```go
 package main
 
 import "fmt"
@@ -236,7 +236,7 @@ num = 10, 2x num = 20, 3x num = 30
 
 `ThreeValues` 是拥有三个返回值的不需要任何参数的函数，在下面的例子中，我们将第一个与第三个返回值赋给了 `i1` 与 `f1`。第二个返回值赋给了空白符 `_`，然后自动丢弃掉。
 
-```Go
+```go
 package main
 
 import "fmt"
@@ -262,7 +262,7 @@ The int: 5, the float: 7.500000
 
 另外一个示例，函数接收两个参数，比较它们的大小，然后按小-大的顺序返回这两个数，示例代码为minmax.go。
 
-```Go
+```go
 package main
 
 import "fmt"
@@ -296,7 +296,7 @@ Minimum is: 65, Maximum is 78
 
 如果函数的最后一个参数是采用 `...type` 的形式，那么这个函数就可以处理一个变长的参数，这个长度可以为 0，这样的函数称为变参函数。
 
-```Go
+```go
 func myFunc(a, b, arg ...int) {}
 ```
 
@@ -304,7 +304,7 @@ func myFunc(a, b, arg ...int) {}
 
 示例函数和调用：
 
-```Go
+```go
 func Greeting(prefix string, who ...string)
 Greeting("hello:", "Joe", "Anna", "Eileen")
 ```
@@ -313,7 +313,7 @@ Greeting("hello:", "Joe", "Anna", "Eileen")
 
 如果参数被存储在一个 slice 类型的变量 `slice` 中，则可以通过 `slice...` 的形式来传递参数，调用变参函数。
 
-```Go
+```go
 package main
 
 import "fmt"

@@ -36,15 +36,15 @@ description: 笔记记录了Golang中的切片相关。
 
 切片只能向后移动
 
-```Go
+```go
 slice1 = slice1[0:cap(slice1)] // 从原来的起始位置增长到原始数组的末尾
 ```
 
-```Go
+```go
 slice1 = slice1[1:] // 将slice的头部往前移动一位，尾部不变
 ```
 
-```Go
+```go
 slice1 = slice1[1:len(slice1)+1] // 将slice向后滑动一位 可能会溢出
 ```
 
@@ -53,7 +53,7 @@ slice1 = slice1[1:len(slice1)+1] // 将slice向后滑动一位 可能会溢出
 
 如果你有一个函数需要对数组做操作，你可能总是需要把参数声明为切片。当你调用该函数时，把数组分片，创建为一个 切片引用并传递给该函数。这里有一个计算数组元素和的方法:
 
-```Go
+```go
 func sum(a []int) int {
 	s := 0
 	for i := 0; i < len(a); i++ {
@@ -70,13 +70,13 @@ func main() {
 
 ## 使用`make`创造切片
 
-```Go
+```go
 slice1 := make([]type ,  len)
 ```
 
 这里`len`是数组长度，也是slice的初始长度。
 
-```Go
+```go
 slice1 := make([]type , len , cap)
 ```
 
@@ -98,7 +98,7 @@ slice1 := make([]type , len , cap)
 
 **例子**
 
-```Go
+```go
 slice := make([]int , 5, 10)
 ```
 
@@ -110,7 +110,7 @@ slice := make([]int , 5, 10)
 
 **例子** 
 
-```Go
+```go
 ptr := new(int)
 ```
 ### 区别总结
