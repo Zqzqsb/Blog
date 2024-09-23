@@ -4,7 +4,7 @@ cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/basic
 createTime: 2024-4-24
 description: 本文讲解了C++链表的结构体实现方法和模拟数组实现方法。
 author: ZQ
-permalink: /algorithm/basic/linked_list/
+permalink: /algorithm/ds/linked_list/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/basic/linked_list/Linked-list.png)
 <br> 本文讲解了C++链表的结构体实现方法和模拟数组实现方法。

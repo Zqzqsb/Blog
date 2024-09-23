@@ -170,6 +170,51 @@ int main()
 > 600ms
 
 ```cpp
+#include<iostream>
+#include<cstring>
 
+using namespace std;
+
+const int N = 1e5;
+int dis[N] , last[N];
+struct Edge
+{
+    int a , b , c;
+}edges[N];
+
+string bellman_ford(int n , int m)
+{
+    bool update=1;
+    int cnt=0;
+    
+    while(update)
+    {
+        update=0;
+        if (cnt>n) return "Yes";
+        cnt++;
+        memcpy(last,dis,sizeof dis);
+        for (int i=1;i<=m;i++)
+        {
+            auto e=edges[i];
+            if (dis[e.a]>dis[e.b]+e.c)
+            {
+                dis[e.a]=dis[e.b]+e.c;
+                update=1;
+            }
+        }
+    }
+    return "No";
+}
+
+int main()
+{
+    int n , m;  cin >> n >> m;
+    for(int i = 1; i <= m ; i++)
+    {
+        cin >> edges[i].a >> edges[i].b >> edges[i].c;
+    }
+    cout << bellman_ford(n , m);
+}
 ```
 
++ 该算法的效率为`O(VE)`
