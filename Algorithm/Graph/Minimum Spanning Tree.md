@@ -11,7 +11,7 @@ permalink: /algorithm/graph/mst/
 
 本文讲解了图的最小生成树问题以及两个相关的求解算法,`Prim`算法和`kruskal`算法。
 
-<!--more-->
+<!-- more -->
 
 ## 问题概述
 

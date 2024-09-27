@@ -11,7 +11,7 @@ permalink: /algorithm/graph/circle/
 
 系统讲述了图中的环路检测方法。
 
-<!--more-->
+<!-- more -->
 
 ## 一般环路
 
