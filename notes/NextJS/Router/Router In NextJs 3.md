@@ -7,7 +7,7 @@ tags:
   - NextJs
 description: This note records things about Redirecting.
 ---
-<br> This note records things about Redirecting.
+ This note records things about Redirecting.
 <!-- more -->
 
 ## 重定向函数

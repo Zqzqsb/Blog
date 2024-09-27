@@ -10,7 +10,7 @@ author: ZQ
 permalink: /algorithm/basic/bin_search/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/%E5%B0%81%E9%9D%A2.png)
-<br> 本文介绍了整数二分和浮点数二分，以及常用方法。
+ 本文介绍了整数二分和浮点数二分，以及常用方法。
 <!-- more -->
 
 ## 查找问题

@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的数组的定义。
 ---
-<br> 笔记记录了Golang中的数组的定义。
+ 笔记记录了Golang中的数组的定义。
 <!-- more -->
 
 ## 概述

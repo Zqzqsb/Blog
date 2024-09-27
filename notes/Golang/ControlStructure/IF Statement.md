@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的If语句。
 ---
-<br> 笔记记录了Golang中的If语句。
+ 笔记记录了Golang中的If语句。
 <!-- more -->
 
 ## 初始化语句

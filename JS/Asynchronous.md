@@ -8,7 +8,7 @@ tags:
 author: ZQ
 permalink: /javascript/asynchronous/
 ---
-<br> 本文记录了JavaScript异步编程中的一些细节。
+ 本文记录了JavaScript异步编程中的一些细节。
 <!-- more -->
 
 ##  单线程JavaScript

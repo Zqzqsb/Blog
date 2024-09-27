@@ -7,7 +7,7 @@ tags:
 permalink: /network/webserver/ajax/
 description: 解读了ajax的起源和发展历史。
 ---
-<br> 解读了ajax的起源和发展历史。
+ 解读了ajax的起源和发展历史。
 <!-- more -->
 
 ## 简介

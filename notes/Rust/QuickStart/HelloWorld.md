@@ -5,7 +5,7 @@ tags:
   - Rust
 description: 讲述了Rust程序最小程序结构。
 ---
-<br> 讲述了Rust程序最小程序结构。
+ 讲述了Rust程序最小程序结构。
 <!-- more -->
 
 ## Hello World 程序

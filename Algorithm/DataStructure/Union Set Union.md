@@ -8,7 +8,7 @@ tags:
 - DSU
 permalink: /algorithm/ds/unionset/
 ---
-<br> 本文讲解了并查集结构和实现方法。
+ 本文讲解了并查集结构和实现方法。
 <!-- more -->
 ## 概述
 

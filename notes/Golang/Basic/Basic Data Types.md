@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的基本数据类型。
 ---
-<br> 笔记记录了Golang中的基本数据类型。
+ 笔记记录了Golang中的基本数据类型。
 <!-- more -->
 
 将在这个部分讲解有关布尔型、数字型和字符型的相关知识。

@@ -7,7 +7,7 @@ tags:
   - NextJs
 description: This note records things about Dynamic Route.
 ---
-<br> This note records things about Dynamic Route.
+ This note records things about Dynamic Route.
 <!-- more -->
 ## 动态路由概述
 

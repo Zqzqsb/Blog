@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的函数。
 ---
-<br> 笔记记录了Golang中的函数。
+ 笔记记录了Golang中的函数。
 <!-- more -->
 
 ## defer 和 追踪

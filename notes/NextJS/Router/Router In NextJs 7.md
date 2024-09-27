@@ -7,7 +7,7 @@ tags:
   - NextJs
 description: This note records things about Routes Handlers.
 ---
-<br> This note records things about Routes Handlers.
+ This note records things about Routes Handlers.
 <!-- more -->
 
 ## 概述

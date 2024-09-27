@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的For语句。
 ---
-<br> 笔记记录了Golang中的For语句。
+ 笔记记录了Golang中的For语句。
 <!-- more -->
 
 如果想要重复执行某些语句，Go 语言中只有 for 结构可以使用。不要小看它，这个 for 结构比其

@@ -7,7 +7,7 @@ tags:
   - NextJs
 description: This note records things about Project Organization.
 ---
-<br> This note records things about Project Organization.
+ This note records things about Project Organization.
 <!-- more -->
 ## 默认安全托管
 

@@ -5,7 +5,7 @@ tags:
   - Rust
 description: rust中数据类型。
 ---
-<br> rust中数据类型。
+ rust中数据类型。
 <!-- more -->
 
 ## 概述

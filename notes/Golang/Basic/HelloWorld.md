@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 讲述了Go项目的基本结构。
 ---
-<br> 讲述了Go项目的基本结构。
+ 讲述了Go项目的基本结构。
 <!-- more -->
 
 ```go

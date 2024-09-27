@@ -7,7 +7,7 @@ tags:
 description: linux文件相关命令。
 permalink: /Linux/Command/File/
 ---
-<br> linux文件相关命令。
+ linux文件相关命令。
 <!-- more -->
 
 ## 概述

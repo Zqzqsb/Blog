@@ -7,7 +7,7 @@ tags:
   - NextJs
 description: This note records things about Parallel Routes.
 ---
-<br> This note records things about Parallel Routes.
+ This note records things about Parallel Routes.
 <!-- more -->
 ##  Parallel Routes 概述
 

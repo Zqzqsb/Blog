@@ -7,7 +7,7 @@ tags:
 description: linux进程相关命令。
 permalink: /Linux/Command/Process/
 ---
-<br> linux进程相关命令。
+ linux进程相关命令。
 <!-- more -->
 
 ## ps

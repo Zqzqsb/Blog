@@ -7,7 +7,7 @@ tags:
 description: linux文件特殊权限。
 permalink: /Linux/Command/Privilege/
 ---
-<br> linux文件特殊权限。
+ linux文件特殊权限。
 <!-- more -->
 
 # 概述

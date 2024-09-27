@@ -5,7 +5,7 @@ tags:
   - Rust
 description: 怎样从cargo创建项目。
 ---
-<br> 怎样从cargo创建项目。
+ 怎样从cargo创建项目。
 <!-- more -->
 
 ## Cargo

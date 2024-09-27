@@ -8,7 +8,7 @@ tags:
 description: 本文记录debian12作为服务器的安装和配置过程
 permalink: /server/build/
 ---
-<br> 本文记录debian12作为服务器的安装和配置过程
+ 本文记录debian12作为服务器的安装和配置过程
 <!-- more -->
 
 ## 前言

@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 讲述了Go中的指针。
 ---
-<br> 讲述了Go中的指针。
+ 讲述了Go中的指针。
 <!-- more -->
 
 ## 概述

@@ -7,7 +7,7 @@ tags:
   - NextJs
 description: This note records things about Streaming.
 ---
-<br> This note records things about Streaming.
+ This note records things about Streaming.
 <!-- more -->
 ## 本篇笔记的结构
 

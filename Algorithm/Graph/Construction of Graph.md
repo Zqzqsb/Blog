@@ -10,7 +10,7 @@ description: 本篇文章讲述的图的构建方式
 permalink: /algorithm/graph/construct/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/GraphBuild/cover.png)
-<br> 本篇文章讲述的图的构建方式
+ 本篇文章讲述的图的构建方式
 <!-- more -->
 ## 概述
 

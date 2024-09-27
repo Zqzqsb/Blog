@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的函数相关。
 ---
-<br> 笔记记录了Golang中的函数相关。
+ 笔记记录了Golang中的函数相关。
 <!-- more -->
 
 ## Main 函数

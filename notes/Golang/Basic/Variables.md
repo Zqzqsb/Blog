@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的变量相关。
 ---
-<br> 笔记记录了Golang中的变量相关。
+ 笔记记录了Golang中的变量相关。
 <!-- more -->
 
 ## 概述

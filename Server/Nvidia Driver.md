@@ -8,7 +8,7 @@ tags:
 description: 这篇备忘录记录了在linux上安装英伟达显卡驱动的一般过程。
 permalink: /server/nvidia/driver/
 ---
-<br> 这篇备忘录记录了在linux上安装英伟达显卡驱动的一般过程。
+ 这篇备忘录记录了在linux上安装英伟达显卡驱动的一般过程。
 <!-- more -->
 
 ## 下载

@@ -5,7 +5,7 @@ tags:
   - Golang
 description: 笔记记录了Golang中的Switch语句。
 ---
-<br> 笔记记录了Golang中的Switch语句。
+ 笔记记录了Golang中的Switch语句。
 <!-- more -->
 
 ## Switch 概述

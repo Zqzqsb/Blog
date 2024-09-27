@@ -5,7 +5,7 @@ tags:
   - Rust
 description: 使用Rust实现了一个小的猜数游戏。
 ---
-<br> 使用Rust实现了一个小的猜数游戏。
+ 使用Rust实现了一个小的猜数游戏。
 <!-- more -->
 
 ## 读入输入

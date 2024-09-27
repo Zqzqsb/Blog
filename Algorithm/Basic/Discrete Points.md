@@ -9,7 +9,7 @@ author: ZQ
 permalink: /algorithm/basic/One-dimensional_Discrete_Point_Problem/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/1D%20Discrete%20Point/cover.png)
-<br> 本文介绍了一维离散点问题的处理方法
+ 本文介绍了一维离散点问题的处理方法
 <!-- more -->
 
 ## 问题背景
