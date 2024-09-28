@@ -1,11 +1,11 @@
 ---
-title: Union Set Union
+title: Disjoint Set Union
 createTime: 2024-9-22
 description: 本文讲解了并查集结构和实现方法。
 author: ZQ
 tags:
-- DataStructure
-- DSU
+  - DataStructure
+  - DSU
 permalink: /algorithm/ds/unionset/
 ---
  本文讲解了并查集结构和实现方法。
