@@ -9,6 +9,7 @@ permalink: /Linux/OnMacbook/Debian/
 ---
 
 本文记录在 `Macbook pro 2019`上安装`debian`操作系统的过程。
+
 <!-- more -->
 
 ## 前提
