@@ -4,9 +4,9 @@ tags:
   - 算法
   - 动态规划
   - 树形DP
-createTime: 2024-10-22
+createTime: 2024-10-23
 author: ZQ
-permalink: /algorithm/dp/tree/
+permalink: /algorithm/dp/tree/concept/
 ---
 
 本文讲解了树形`dp`的一些概念和一个典型例题。
