@@ -9,8 +9,6 @@ cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/
 permalink: /algorithm/hash/concept/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png)
-<!-- more -->
-
 
 > 文章参考了[enjoy algorithms](enjoyalgorithms.com)的相关内容
 

@@ -10,8 +10,6 @@ permalink: /algorithm/graph/tpsort/
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/TpSort/cover.png
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/TpSort/cover.png)
-<!-- more -->
-
 本文讲解了拓扑的排序的一般实现方法和它在`AOV`和`AOE`网络中的应用。
 
 <!-- more -->
