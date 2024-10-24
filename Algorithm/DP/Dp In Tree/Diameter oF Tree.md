@@ -42,7 +42,7 @@ permalink: /algorithm/dp/tree/Diameter/
 
 ![情况一](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Diameter%20Of%20Tree/%E7%A4%BA%E4%BE%8B%E4%B8%80.png)
 
-## 求解算法
+### 求解算法
 
 1. 从任一点出发，使用`BFS` , 找到树的直径的端点。
 2. 从树的端点出发，使用`BFS`,找出树的直径
