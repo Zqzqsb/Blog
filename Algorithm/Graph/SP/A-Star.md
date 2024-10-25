@@ -102,7 +102,8 @@ int cal(string state)
 string Astar(string start)
 {
     priority_queue<PII , vector<PII> , greater<PII>> q;
-    unordered_map<string , pair<string , char>> prev;
+    // 维护每个点的前置节点和对应的移动方式
+    unordered_map<string , pair<string , char>> prev; 
     unordered_map<string , int> dist;
     string end = "12345678x";
     q.push({cal(start) + 0 , start}); dist[start] = 0;
@@ -161,17 +162,121 @@ int main()
         start += c;
         if(c != 'x') seq += c;
     }
-    
+
+	// 求解逆序对
     int cnt = 0;
     for(int i = 0 ; i < 8 ; i++)
         for(int j = i ; j < 8 ; j++)
             if(seq[j] > seq[i]) cnt++;
-    
+
+	// 逆序对是偶次变换的 如果初始逆序对为奇数 则无解
     if(cnt % 2 == 1) {
         cout << "unsolvable";
         return 0;
     }
     
     cout << Astar(start);
+}
+```
+
+> [178. 第K短路](https://www.acwing.com/problem/content/description/180/)
+
+```cpp
+#include<iostream>
+#include<cstring>
+#include<queue>
+using namespace std;
+
+const int N = 1e3 + 10 , M = 2e4 + 10;
+int h[N] , rh[N] , e[M] , w[M] , ne[M] , idx;
+int dist[N] , inQ[N];
+int cnt[N];
+
+typedef pair<int , pair<int , int>> PIII;
+
+void add(int h[] , int a , int b , int c)
+{
+    w[idx] = c; e[idx] = b; ne[idx] = h[a] ; h[a] = idx++;
+}
+
+void init()
+{
+    memset(h , -1 , sizeof h);
+    memset(rh , -1 , sizeof rh);
+    memset(dist , 0x3f , sizeof dist);
+}
+
+
+// 在方向图中求出终点到其他点的最短距离
+void spfa(int start)
+{
+    queue<int> q; q.push(start);
+    dist[start] = 0; inQ[start] = true;
+    
+    while(q.size())
+    {
+        int f = q.front(); q.pop(); inQ[f] = false;
+        
+        for(int i = rh[f] ; i != -1 ; i = ne[i])
+        {
+            int j = e[i];
+            
+            if(dist[j] > dist[f] + w[i])
+            {
+                dist[j] = dist[f] + w[i];
+                if(!inQ[j])
+                {
+                    q.push(j) ; inQ[j] = true;
+                }
+            }
+        }
+    }
+}
+
+int Astar(int s , int end , int k)
+{
+    priority_queue<PIII , vector<PIII> , greater<PIII>> heap;
+    heap.push({0 + dist[s] , {0 , s}}); 
+    
+    while(heap.size())
+    {
+        auto t = heap.top(); heap.pop();
+        int vertex = t.second.second , distance = t.second.first;
+        
+        cnt[vertex] ++;
+        // 第一次访问终点 k 次是即为答案
+        if(cnt[end] == k) return distance;
+        
+        // 入队所有可能的点
+        for(int i = h[vertex] ; i != -1 ; i = ne[i])
+        {
+            int j = e[i];
+            
+            // 如果一个点已经被访问了超过 k 次 那么它不可能在 通往终点的 k 短路上
+            if(cnt[j] <= k)
+                heap.push({distance + dist[j] + w[i] , {distance + w[i] , j}});
+        }
+    }
+    
+    return -1;
+}
+int main()
+{
+    init();
+    
+    int n , m; cin >> n >> m;
+    while(m --)
+    {
+        int a , b , c; cin >> a >> b >> c;
+        add(h , a , b , c); add(rh , b , a , c);
+    }
+    
+    int s , t , k; cin >> s >> t >> k;
+    
+    spfa(t);
+    
+    if(s == t) k ++; // 如果起点等于终点 因为是至少需要经过一条边 所以多一条路径
+    
+    cout << Astar(s , t , k);
 }
 ```
