@@ -8,9 +8,9 @@ tags:
 createTime: 2024-10-24
 permalink: /algorithm/graph/astar/
 ---
+![A-Star](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/A-Star/A-Star.gif)
 
 `A-Star`加入了启发式函数，使得路径搜索更为高效。本文讲解了`A-Star`算法的一些细节。
-![A-Star](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/A-Star/A-Star.gif)
 
 <!-- more -->
 
