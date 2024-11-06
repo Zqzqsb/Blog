@@ -28,7 +28,7 @@ permalink: /golang/startup/
 
 这里我使用的是 `gvm` 在`debian12`上进行开发。开发环境使用`vscode` + `neovim`。
 
-`gvm` 的[github链接](https://github.com/moovweb/gvm)
+`gvm` 的 [github链接](https://github.com/moovweb/gvm)
 
 ## 基本语法
 
