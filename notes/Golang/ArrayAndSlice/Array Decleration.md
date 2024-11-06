@@ -4,6 +4,7 @@ createTime: 2024-8-7
 tags:
   - Golang
 description: 笔记记录了Golang中的数组的定义。
+permalink: /note/golang/array/
 ---
  笔记记录了Golang中的数组的定义。
 <!-- more -->
