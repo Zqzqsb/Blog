@@ -32,5 +32,5 @@ permalink: /golang/startup/
 
 ## 基本语法
 
-由于之前已经学过一些基本语法。这部分可以直接转到[博客](https://blog.zqzqsb.cn/notes/Golang/)阅读`Basic`部分。
+由于之前已经学过一些基本语法。这部分可以直接转到[博客](https://blog.zqzqsb.cn/notes/Golang/)的笔记。
 

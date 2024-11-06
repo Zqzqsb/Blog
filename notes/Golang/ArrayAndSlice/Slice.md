@@ -113,6 +113,7 @@ slice := make([]int , 5, 10)
 ```go
 ptr := new(int)
 ```
+
 ### 区别总结
 
 1. `make()` 适用于 slice、map 和 channel 的初始化，返回已初始化的数据结构。
