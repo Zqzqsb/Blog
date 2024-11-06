@@ -1,5 +1,5 @@
 ---
-title: Arrays and Slice in Golang.
+title: Slice
 createTime: 2024-8-11
 tags:
   - Golang

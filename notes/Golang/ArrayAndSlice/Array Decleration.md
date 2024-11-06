@@ -1,5 +1,5 @@
 ---
-title: Arrays and Slice in Golang.
+title: Arrays Decleration
 createTime: 2024-8-7
 tags:
   - Golang

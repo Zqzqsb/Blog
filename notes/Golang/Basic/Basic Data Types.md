@@ -101,7 +101,7 @@ func main() {
 }
 ```
 
-如果你尝试编译该程序，则将得到编译错误 `cannot use a + a (type int) as type int32 in assignment`。
+如果你尝试编译该程序，则将得到编译错误 `cannot use a + a (type int) as type int32 in assignment`。`int`的字节数取决于操作系统，32位系统中为4字节，64位系统中为8字节。可以使用`unsafe.Sizeof(a)`查看。不论`a`和`b`的字节数是否相同，这种转换都是不允许的。
 
 同样地，int16 也不能够被隐式转换为 int32。
 
