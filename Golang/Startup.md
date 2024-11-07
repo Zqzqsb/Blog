@@ -30,7 +30,65 @@ permalink: /golang/startup/
 
 `gvm` 的 [github链接](https://github.com/moovweb/gvm)
 
+我练习的源码已经托管在[github](https://github.com/Zqzqsb/LearnGolang)
+
 ## 基本语法
 
 由于之前已经学过一些基本语法。这部分可以直接转到[博客](https://blog.zqzqsb.cn/notes/Golang/)的笔记。
 
+## 练手程序
+
+### [猜数字](https://github.com/Zqzqsb/LearnGolang/blob/main/ByteDance/Lesson1/GussingGame.go)
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"math/rand"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
+
+func main() {
+	maxNum := 1000
+	rand.Seed(time.Now().UnixNano())
+	secretNumber := rand.Intn(maxNum)
+	// fmt.Println("The secret number is", secretNumber)
+
+	fmt.Println("Please input your guess")
+	reader := bufio.NewReader(os.Stdin) // 将系统输入转换为 bufio
+
+	for {
+		input, err := reader.ReadString('\n')
+
+		if err != nil {
+			fmt.Println("error ouccered , try again!")
+			continue
+		}
+
+		input = strings.Trim(input, "\r\n")
+
+		guess, err := strconv.Atoi(input)
+
+		if err != nil {
+			fmt.Println("Invalid Number. Please input a number!")
+			continue
+		}
+
+		fmt.Println("You guess is", guess)
+
+		if guess > secretNumber {
+			fmt.Println("Guess too big!")
+		} else if guess < secretNumber {
+			fmt.Println("Guess too small!")
+		} else {
+			fmt.Print("You are right!")
+			break
+		}
+	}
+}
+```

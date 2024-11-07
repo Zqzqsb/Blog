@@ -3,7 +3,6 @@ title: Learn Nvim Lesson1
 createTime: 2024-9-2
 author: ZQ
 tags:
-  - nvim
   - vim
 description: 记录了学习nvim第一课学到的内容
 permalink: /vim/lesson1/
