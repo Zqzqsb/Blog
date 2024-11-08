@@ -7,7 +7,7 @@ createTime: 2023-8-3
 author: ZQ
 permalink: /algorithm/basic/LNS/
 ---
-
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E6%9C%80%E9%95%BF%E9%9D%9E%E9%87%8D%E5%AD%90%E5%BA%8F%E5%88%97/%E5%B0%81%E9%9D%A2.png)
 ## 最长非重复子序列
 
 使用双指针算法解决这个问题。 这其中的核心问题是如何记录已经访问的元素和失配(miss match)后的的算法行为。

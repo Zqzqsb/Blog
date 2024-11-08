@@ -9,6 +9,9 @@ tags:
 author: ZQ
 permalink: /algorithm/ds/linked_list/
 ---
+![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/basic/linked_list/Linked-list.png)
+ 本文讲解了C++链表的结构体实现方法和模拟数组实现方法。
+<!-- more -->
 
 ## 链表结构
 

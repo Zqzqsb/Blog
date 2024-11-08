@@ -8,6 +8,8 @@ tags:
 description: 本文记录自用服务器的数据备份方案。
 permalink: /server/backup/
 ---
+ 本文记录自用服务器的数据备份方案。
+<!-- more -->
 
 ## 两地三备份
 

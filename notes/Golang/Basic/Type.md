@@ -5,6 +5,8 @@ tags:
   - Golang
 description: 讲述了Go项目的数据类型和命名规则。
 ---
+ 讲述了Go项目的数据类型和命名规则。
+<!-- more -->
 
 ## 类型概述
 
@@ -94,4 +96,3 @@ var a IZ = 5
 c := int(a)
 d := IZ(c)
 ```
-

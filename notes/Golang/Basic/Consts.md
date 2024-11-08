@@ -5,6 +5,8 @@ tags:
   - Golang
 description: 笔记记录了Golang中的常量相关。
 ---
+ 笔记记录了Golang中的常量相关。
+<!-- more -->
 
 常量使用关键字 `const` 定义，用于存储不会改变的数据。
 
@@ -116,4 +118,3 @@ const (
 	YB                             // 1 << (10*8)
 )
 ```
-

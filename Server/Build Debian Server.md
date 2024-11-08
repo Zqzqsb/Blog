@@ -8,6 +8,8 @@ tags:
 description: 本文记录debian12作为服务器的安装和配置过程
 permalink: /server/build/
 ---
+ 本文记录debian12作为服务器的安装和配置过程
+<!-- more -->
 
 ## 前言
 
@@ -465,7 +467,8 @@ sudo mount /dev/nvme0n1p1 /data
 + 使用`mdadm`创建一个RAID0阵列 
 
 ```shell
-sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1\n
+sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
+
 ```
 
 + 为`md0`指定一个文件系统

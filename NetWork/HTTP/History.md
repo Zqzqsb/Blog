@@ -8,6 +8,8 @@ tags:
 description: 关于Http协议的发展历史。
 permalink: /network/http/history/
 ---
+ 关于Http协议的发展历史。
+<!-- more -->
 
 ## HTTP 0.9
 
