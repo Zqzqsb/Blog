@@ -3,7 +3,7 @@ title: Garbage Collection
 createTime: 2024-11-8
 tags:
   - Golang
-permalink: /note/golang/struct/construction
+permalink: /note/golang/struct/construction/
 ---
 
 Go 开发者不需要写代码来释放程序中不再使用的变量和结构占用的内存，在 Go 运行时中有一个独立的进程，即垃圾收集器（GC），会处理这些事情，它搜索不再使用的变量然后释放它们的内存。可以通过 `runtime` 包访问 GC 进程。

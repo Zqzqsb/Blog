@@ -3,7 +3,7 @@ title: Struct Construction
 createTime: 2024-11-8
 tags:
   - Golang
-permalink: /note/golang/struct/construction
+permalink: /note/golang/struct/construction/
 ---
 
 ## 工厂方法

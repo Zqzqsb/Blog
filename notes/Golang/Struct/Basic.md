@@ -3,7 +3,7 @@ title: Struct Basic
 createTime: 2024-11-8
 tags:
   - Golang
-permalink: /note/golang/struct/basic
+permalink: /note/golang/struct/basic/
 ---
 
 ## 概述

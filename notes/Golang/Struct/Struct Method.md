@@ -3,7 +3,7 @@ title: Struct Method
 createTime: 2024-11-8
 tags:
   - Golang
-permalink: /note/golang/struct/method
+permalink: /note/golang/struct/method/
 ---
 
 ## 概述
