@@ -7,8 +7,6 @@ tags:
   - NextJs
 description: This note records things about Route Basicr.
 ---
- This note records things about Route Basicr.
-<!-- more -->
 
 ## 本篇笔记的结构
 

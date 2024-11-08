@@ -5,8 +5,6 @@ tags:
   - Golang
 description: 笔记记录了Golang中的函数。
 ---
- 笔记记录了Golang中的函数。
-<!-- more -->
 
 ## 内置函数
 
@@ -40,8 +38,7 @@ func main() {
 }
 
 func Add(a, b int) {
-	fmt.Printf("The sum of %d and %d is: %d
-", a, b, a+b)
+	fmt.Printf("The sum of %d and %d is: %d\n", a, b, a+b)
 }
 
 func callback(y int, f func(int, int)) {
@@ -107,8 +104,7 @@ func f() {
 	for i := 0; i < 4; i++ {
 		g := func(i int) { fmt.Printf("%d ", i) } //此例子中只是为了演示匿名函数可分配不同的内存地址，在现实开发中，不应该把该部分信息放置到循环中。
 		g(i)
-		fmt.Printf(" - g is of type %T and has value %v
-", g, g)
+		fmt.Printf(" - g is of type %T and has value %v\n", g, g)
 	}
 }
 ```
@@ -145,12 +141,10 @@ import "fmt"
 func main() {
 	// make an Add2 function, give it a name p2, and call it:
 	p2 := Add2()
-	fmt.Printf("Call Add2 for 3 gives: %v
-", p2(3))
+	fmt.Printf("Call Add2 for 3 gives: %v\n", p2(3))
 	// make a special Adder function, a gets value 2:
 	TwoAdder := Adder(2)
-	fmt.Printf("The result is: %v
-", TwoAdder(3))
+	fmt.Printf("The result is: %v\n", TwoAdder(3))
 }
 
 func Add2() func(b int) int {

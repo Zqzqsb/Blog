@@ -7,8 +7,6 @@ tags:
   - NextJs
 description: This note records things about Dynamic Route.
 ---
- This note records things about Dynamic Route.
-<!-- more -->
 ## 动态路由概述
 
 如果您事先不知道确切的区段名称并希望从动态数据创建路由，则可以使用在请求时填充或在构建时预呈现的动态区段。

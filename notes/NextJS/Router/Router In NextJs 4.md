@@ -7,8 +7,6 @@ tags:
   - NextJs
 description: This note records things about Project Organization.
 ---
- This note records things about Project Organization.
-<!-- more -->
 ## 默认安全托管
 
 在 `app` 目录中，嵌套文件夹层次结构定义路由结构。
@@ -96,3 +94,4 @@ import { Button } from '@/components/button'
 此策略将全局共享的应用程序代码存储在根 `app` 目录中，并将更具体的应用程序代码拆分为使用它们的路由段。
 
 ![](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fproject-organization-app-root-split.png&w=1920&q=75)
+

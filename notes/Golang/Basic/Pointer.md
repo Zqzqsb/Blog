@@ -5,8 +5,6 @@ tags:
   - Golang
 description: 讲述了Go中的指针。
 ---
- 讲述了Go中的指针。
-<!-- more -->
 
 ## 概述
 
@@ -22,8 +20,7 @@ Go 语言的取地址符是 `&`，放到一个变量前使用就会返回相应
 
 ```go
 var i1 = 5
-fmt.Printf("An integer: %d, it's location in memory: %p
-", i1, &i1)
+fmt.Printf("An integer: %d, it's location in memory: %p\n", i1, &i1)
 ```
 
 这个地址可以存储在一个叫做指针的特殊数据类型中，在本例中这是一个指向 int 的指针，即 `i1`：此处使用 \*int 表示。如果我们想调用指针 intP，我们可以这样声明它

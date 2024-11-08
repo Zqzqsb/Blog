@@ -5,8 +5,6 @@ tags:
   - Golang
 description: 笔记记录了Golang中的变量相关。
 ---
- 笔记记录了Golang中的变量相关。
-<!-- more -->
 
 ## 概述
 
@@ -134,11 +132,9 @@ import (
 
 func main() {
 	var goos string = runtime.GOOS
-	fmt.Printf("The operating system is: %s
-", goos)
+	fmt.Printf("The operating system is: %s\n", goos)
 	path := os.Getenv("PATH")
-	fmt.Printf("Path is %s
-", path)
+	fmt.Printf("Path is %s\n", path)
 }
 ```
 
@@ -188,8 +184,7 @@ func main() {
 func Printf(format string, list of variables to be printed)
 ```
 
-在示例 4.5 中，格式化字符串为：`"The operating system is: %s
-"`。
+在示例 4.5 中，格式化字符串为：`"The operating system is: %s\n"`。
 
 这个格式化字符串可以含有一个或多个的格式化标识符，例如：`%..`，其中 `..` 可以被不同类型所对应的标识符替换，如 `%s` 代表字符串标识符、`%v` 代表使用类型的默认输出格式的标识符。这些标识符所对应的值从格式化字符串后的第一个逗号开始按照相同顺序添加，如果参数超过 1 个则同样需要使用逗号分隔。使用这些占位符可以很好地控制格式化输出的文本。
 
@@ -301,8 +296,7 @@ import (
 var twoPi = 2 * trans.Pi
 
 func main() {
-   fmt.Printf("2*Pi = %g
-", twoPi) // 2*Pi = 6.283185307179586
+   fmt.Printf("2*Pi = %g\n", twoPi) // 2*Pi = 6.283185307179586
 }
 ```
 

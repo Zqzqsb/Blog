@@ -5,8 +5,6 @@ tags:
   - Golang
 description: 笔记记录了Golang中的基本数据类型。
 ---
- 笔记记录了Golang中的基本数据类型。
-<!-- more -->
 
 将在这个部分讲解有关布尔型、数字型和字符型的相关知识。
 
@@ -119,10 +117,8 @@ func main() {
 	//m = n
 	m = int32(n)
 
-	fmt.Printf("32 bit int is: %d
-", m)
-	fmt.Printf("16 bit int is: %d
-", n)
+	fmt.Printf("32 bit int is: %d\n", m)
+	fmt.Printf("16 bit int is: %d\n", n)
 }
 ```
 
@@ -249,7 +245,7 @@ func main() {
 在 ASCII 码表中，A 的值是 65，而使用 16 进制表示则为 41，所以下面的写法是等效的：
 
 ```go
-var ch byte = 65 或 var ch byte = 'A'
+var ch byte = 65 或 var ch byte = '\x41'
 ```
 
 另外一种可能的写法是 `\` 后面紧跟着长度为 3 的 8 进制数，例如：`\377`。
@@ -264,12 +260,9 @@ var ch byte = 65 或 var ch byte = 'A'
 var ch int = '\u0041'
 var ch2 int = '\u03B2'
 var ch3 int = '\U00101234'
-fmt.Printf("%d - %d - %d
-", ch, ch2, ch3) // integer
-fmt.Printf("%c - %c - %c
-", ch, ch2, ch3) // character
-fmt.Printf("%X - %X - %X
-", ch, ch2, ch3) // UTF-8 bytes
+fmt.Printf("%d - %d - %d\n", ch, ch2, ch3) // integer
+fmt.Printf("%c - %c - %c\n", ch, ch2, ch3) // character
+fmt.Printf("%X - %X - %X\n", ch, ch2, ch3) // UTF-8 bytes
 fmt.Printf("%U - %U - %U", ch, ch2, ch3) // UTF-8 code point
 ```
 
@@ -291,3 +284,12 @@ U+0041 - U+03B2 - U+101234
 - 判断是否为空白符号：`unicode.IsSpace(ch)`
 
 这些函数返回一个布尔值。包 `utf8` 拥有更多与 rune 类型相关的函数。
+
+
+
+
+
+
+
+
+

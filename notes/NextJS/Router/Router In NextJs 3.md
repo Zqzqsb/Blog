@@ -7,8 +7,6 @@ tags:
   - NextJs
 description: This note records things about Redirecting.
 ---
- This note records things about Redirecting.
-<!-- more -->
 
 ## 重定向函数
 
@@ -194,3 +192,4 @@ export const config = {
 要创建多个根布局，请删除顶级 `layout.js` 文件，然后在每个路由组中添加一个 `layout.js` 文件。这对于将应用程序划分为具有完全不同 UI 或体验的部分非常有用。 `<html>` 需要将 and `<body>` 标记添加到每个根布局中。
 
 ![](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Froute-group-multiple-root-layouts.png&w=1920&q=75)
+

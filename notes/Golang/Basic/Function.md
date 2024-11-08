@@ -5,8 +5,6 @@ tags:
   - Golang
 description: 笔记记录了Golang中的函数相关。
 ---
- 笔记记录了Golang中的函数相关。
-<!-- more -->
 
 ## Main 函数
 
@@ -49,15 +47,13 @@ func functionName(parameter_list) (return_value_list) {
 
 只有当某个函数需要被外部包调用的时候才使用大写字母开头，并遵循 Pascal 命名法；否则就遵循骆驼命名法，即第一个单词的首字母小写，其余单词的首字母大写。
 
-下面这一行调用了 `fmt` 包中的 `Println` 函数，可以将字符串输出到控制台，并在最后自动增加换行字符 `
-`：
+下面这一行调用了 `fmt` 包中的 `Println` 函数，可以将字符串输出到控制台，并在最后自动增加换行字符 `\n`：
 
 ```
 fmt.Println（"hello, world"）
 ```
 
-使用 `fmt.Print("hello, world
-")` 可以得到相同的结果。
+使用 `fmt.Print("hello, world\n")` 可以得到相同的结果。
 
 `Print` 和 `Println` 这两个函数也支持使用变量，如：`fmt.Println(arr)`。如果没有特别指定，它们会以默认的打印格式将变量 `arr` 输出到控制台。
 
@@ -68,3 +64,8 @@ fmt.Println（"hello, world"）
 当被调用函数的代码执行到结束符 `}` 或返回语句时就会返回，然后程序继续执行调用该函数之后的代码。
 
 程序正常退出的代码为 0 即 `Program exited with code 0`；如果程序因为异常而被终止，则会返回非零值，如：1。这个数值可以用来测试是否成功执行一个程序。
+
+
+
+
+

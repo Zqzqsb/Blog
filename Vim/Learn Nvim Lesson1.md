@@ -7,8 +7,6 @@ tags:
 description: 记录了学习nvim第一课学到的内容
 permalink: /vim/lesson1/
 ---
- 记录了学习nvim第一课学到的内容
-<!-- more -->
 
 ## basic command structure
 verb + conduct + obj

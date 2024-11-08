@@ -5,8 +5,6 @@ tags:
   - Rust
 description: 怎样从cargo创建项目。
 ---
- 怎样从cargo创建项目。
-<!-- more -->
 
 ## Cargo
 
@@ -122,3 +120,4 @@ Hello, world!
 ##  `release build`
 
 当项目最终准备好发布时，可以使用 `cargo build --release` 来优化编译项目。这会在 _target/release_ 而不是 _target/debug_ 下生成可执行文件。这些优化可以让 Rust 代码运行的更快，不过启用这些优化也需要消耗更长的编译时间。这也就是为什么会有两种不同的配置：一种是为了开发，你需要经常快速重新构建；另一种是为用户构建最终程序，它们不会经常重新构建，并且希望程序运行得越快越好。如果你在测试代码的运行时间，请确保运行 `cargo build --release` 并使用 _target/release_ 下的可执行文件进行测试。
+
