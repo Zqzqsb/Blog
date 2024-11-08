@@ -1,5 +1,5 @@
 ---
-title: Visibility
+title: Package Visibility
 createTime: 2024-11-8
 tags:
   - Golang
