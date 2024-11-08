@@ -3,7 +3,7 @@ title: Lock and sync package
 createTime: 2024-11-8
 tags:
   - Golang
-permalink: /note/golang/packagelock/
+permalink: /note/golang/package/lock/
 ---
 
 ## 概述
