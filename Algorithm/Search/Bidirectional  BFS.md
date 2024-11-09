@@ -3,8 +3,7 @@ title: Bidirectional BFS
 categories:
   - 算法
 tags:
-  - 哈希
-  - 双向宽搜
+  - BFS
 createTime: 2024-11-9
 permalink: /algorithm/search/bidirbfs/
 ---
