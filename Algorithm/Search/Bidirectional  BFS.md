@@ -4,6 +4,7 @@ categories:
   - 算法
 tags:
   - BFS
+  - 搜索
 createTime: 2024-11-9
 permalink: /algorithm/search/bidirbfs/
 ---
