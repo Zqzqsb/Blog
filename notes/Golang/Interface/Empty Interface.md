@@ -1,5 +1,5 @@
 ---
-title: Examples about Interface in Golang.
+title: Empty Interface in golang.
 createTime: 2024-11-13
 tags:
   - Golang
