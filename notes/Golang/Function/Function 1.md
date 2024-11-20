@@ -6,6 +6,8 @@ tags:
 description: 笔记记录了Golang中的函数。
 permalink: /note/golang/function/1
 ---
+ 笔记记录了Golang中的函数。
+<!-- more -->
 
 ## Introduction
 
@@ -147,9 +149,11 @@ package main
 import "fmt"
 
 func main() {
-    fmt.Printf("Multiply 2 * 5 * 6 = %d\n", MultiPly3Nums(2, 5, 6))
+    fmt.Printf("Multiply 2 * 5 * 6 = %d
+", MultiPly3Nums(2, 5, 6))
     // var i1 int = MultiPly3Nums(2, 5, 6)
-    // fmt.Printf("MultiPly 2 * 5 * 6 = %d\n", i1)
+    // fmt.Printf("MultiPly 2 * 5 * 6 = %d
+", i1)
 }
 
 func MultiPly3Nums(a int, b int, c int) int {
@@ -191,7 +195,8 @@ func main() {
 }
 
 func PrintValues() {
-    fmt.Printf("num = %d, 2x num = %d, 3x num = %d\n", num, numx2, numx3)
+    fmt.Printf("num = %d, 2x num = %d, 3x num = %d
+", num, numx2, numx3)
 }
 
 func getX2AndX3(input int) (int, int) {
@@ -241,7 +246,8 @@ func main() {
     var i1 int
     var f1 float32
     i1, _, f1 = ThreeValues()
-    fmt.Printf("The int: %d, the float: %f \n", i1, f1)
+    fmt.Printf("The int: %d, the float: %f 
+", i1, f1)
 }
 
 func ThreeValues() (int, int, float32) {
@@ -265,7 +271,8 @@ import "fmt"
 func main() {
     var min, max int
     min, max = MinMax(78, 65)
-    fmt.Printf("Minmium is: %d, Maximum is: %d\n", min, max)
+    fmt.Printf("Minmium is: %d, Maximum is: %d
+", min, max)
 }
 
 func MinMax(a int, b int) (min int, max int) {
@@ -314,7 +321,8 @@ import "fmt"
 
 func main() {
 	x := min(1, 3, 2, 0)
-	fmt.Printf("The minimum is: %d\n", x)
+	fmt.Printf("The minimum is: %d
+", x)
 	slice := []int{7,9,3,5,1}
 	x = min(slice...)
 	fmt.Printf("The minimum in the slice is: %d", x)
@@ -340,14 +348,3 @@ func min(s ...int) int {
 The minimum is: 0
 The minimum in the slice is: 1
 ```
-
-
-
-
-
-
-
-
-
-
-

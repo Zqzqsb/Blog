@@ -6,6 +6,8 @@ tags:
 description: 笔记记录了Golang中的数组的定义。
 permalink: /note/golang/array/
 ---
+ 笔记记录了Golang中的数组的定义。
+<!-- more -->
 
 ## 概述
 
@@ -51,7 +53,8 @@ func main() {
 	}
 
 	for i:=0; i < len(arr1); i++ {
-		fmt.Printf("Array at index %d is %d\n", i, arr1[i])
+		fmt.Printf("Array at index %d is %d
+", i, arr1[i])
 	}
 }
 ```
@@ -76,7 +79,8 @@ func main() {
 	var arr1 [5]int
 
 	for i , _ := range arr1 {
-		fmt.Printf("index: %d , value: %d\n" , i , arr1[i]);
+		fmt.Printf("index: %d , value: %d
+" , i , arr1[i]);
 	}
 
 }
@@ -211,7 +215,3 @@ func main() {
 	}
 }
 ```
-
-
-
-

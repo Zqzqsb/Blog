@@ -6,6 +6,8 @@ tags:
 description: 笔记记录了Golang中的接口。
 permalink: /note/golang/interface/concept/
 ---
+ 笔记记录了Golang中的接口。
+<!-- more -->
 
 ## 概述
 
@@ -68,7 +70,8 @@ func main() {
 	// areaIntf := Shaper(sq1)
 	// or even:
 	// areaIntf := sq1
-	fmt.Printf("The square has area: %f\n", areaIntf.Area())
+	fmt.Printf("The square has area: %f
+", areaIntf.Area())
 }
 ```
 
@@ -140,13 +143,17 @@ if _, ok := varI.(T); ok {  // checked type assertion
 ```go
 switch t := areaIntf.(type) {
 	case *Square:
-		fmt.Printf("Type Square %T with value %v\n", t, t)
+		fmt.Printf("Type Square %T with value %v
+", t, t)
 	case *Circle:
-		fmt.Printf("Type Circle %T with value %v\n", t, t)
+		fmt.Printf("Type Circle %T with value %v
+", t, t)
 	case nil:
-		fmt.Printf("nil value: nothing to check?\n")
+		fmt.Printf("nil value: nothing to check?
+")
 	default:
-		fmt.Printf("Unexpected type %T\n", t)
+		fmt.Printf("Unexpected type %T
+", t)
 }
 ```
 
@@ -159,7 +166,8 @@ type Stringer interface {
     String() string
 }
 if sv, ok := v.(Stringer); ok {
-    fmt.Printf("v implements String(): %s\n", sv.String()) // note: sv, not v
+    fmt.Printf("v implements String(): %s
+", sv.String()) // note: sv, not v
 }
 ```
 
@@ -203,14 +211,16 @@ func main() {
 	//       List does not implement Appender (Append method has pointer receiver)
 	
 	if LongEnough(lst) { // VALID:Identical receiver type
-		fmt.Printf("- lst is long enough\n")
+		fmt.Printf("- lst is long enough
+")
 	}
 	// A pointer value
 	plst := new(List)
 	CountInto(plst, 1, 10) //VALID:Identical receiver type
 	if LongEnough(plst) {
 		// VALID: a *List can be dereferenced for the receiver
-		fmt.Printf("- plst is long enough\n")
+		fmt.Printf("- plst is long enough
+")
 	}
 }
 ```
@@ -237,4 +247,3 @@ func main() {
 - 类型 T 的可调用方法集包含接受者为 \*T 或 T 的所有方法集
 - 类型 \*T 的可调用方法集包含接受者为 \*T 的所有方法
 - 类型 \*T 的可调用方法集不包含接受者为 T 的方法
-

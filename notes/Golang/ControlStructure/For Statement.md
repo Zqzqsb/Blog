@@ -6,6 +6,8 @@ tags:
 description: 笔记记录了Golang中的For语句。
 permalink: /note/golang/for/
 ---
+ 笔记记录了Golang中的For语句。
+<!-- more -->
 
 如果想要重复执行某些语句，Go 语言中只有 for 结构可以使用。不要小看它，这个 for 结构比其
 它语言中的更为灵活。
@@ -25,7 +27,8 @@ import "fmt"
 
 func main() {
 	for i := 0; i < 5; i++ {
-		fmt.Printf("This is the %d iteration\n", i)
+		fmt.Printf("This is the %d iteration
+", i)
 	}
 }
 ```
@@ -75,14 +78,18 @@ import "fmt"
 
 func main() {
 	str := "Go is a beautiful language!"
-	fmt.Printf("The length of str is: %d\n", len(str))
+	fmt.Printf("The length of str is: %d
+", len(str))
 	for ix :=0; ix < len(str); ix++ {
-		fmt.Printf("Character on position %d is: %c \n", ix, str[ix])
+		fmt.Printf("Character on position %d is: %c 
+", ix, str[ix])
 	}
 	str2 := "日本語"
-	fmt.Printf("The length of str2 is: %d\n", len(str2))
+	fmt.Printf("The length of str2 is: %d
+", len(str2))
 	for ix :=0; ix < len(str2); ix++ {
-		fmt.Printf("Character on position %d is: %c \n", ix, str2[ix])
+		fmt.Printf("Character on position %d is: %c 
+", ix, str2[ix])
 	}
 }
 ```
@@ -150,7 +157,8 @@ func main() {
 
 	for i >= 0 {
 		i = i - 1
-		fmt.Printf("The variable i is now: %d\n", i)
+		fmt.Printf("The variable i is now: %d
+", i)
 	}
 }
 ```
@@ -205,20 +213,25 @@ import "fmt"
 
 func main() {
 	str := "Go is a beautiful language!"
-	fmt.Printf("The length of str is: %d\n", len(str))
+	fmt.Printf("The length of str is: %d
+", len(str))
 	for pos, char := range str {
-		fmt.Printf("Character on position %d is: %c \n", pos, char)
+		fmt.Printf("Character on position %d is: %c 
+", pos, char)
 	}
 	fmt.Println()
 	str2 := "Chinese: 日本語"
-	fmt.Printf("The length of str2 is: %d\n", len(str2))
+	fmt.Printf("The length of str2 is: %d
+", len(str2))
 	for pos, char := range str2 {
-    	fmt.Printf("character %c starts at byte position %d\n", char, pos)
+    	fmt.Printf("character %c starts at byte position %d
+", char, pos)
 	}
 	fmt.Println()
 	fmt.Println("index int(rune) rune    char bytes")
 	for index, rune := range str2 {
-    	fmt.Printf("%-2d      %d      %U '%c' % X\n", index, rune, rune, rune, []byte(string(rune)))
+    	fmt.Printf("%-2d      %d      %U '%c' % X
+", index, rune, rune, rune, []byte(string(rune)))
 	}
 }
 ```

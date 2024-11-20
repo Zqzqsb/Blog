@@ -7,6 +7,8 @@ tags:
   - NextJs
 description: NextJS 快速入门
 ---
+ NextJS 快速入门
+<!-- more -->
 
 ## `Next.js` 文件结构
 
@@ -89,4 +91,3 @@ export default function Page() {
 	return <h1>Hello, Next.js!</h1>
 }
 ```
-

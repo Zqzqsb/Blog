@@ -6,6 +6,8 @@ tags:
 description: 笔记记录了Golang中的If语句。
 permalink: /note/golang/if/
 ---
+ 笔记记录了Golang中的If语句。
+<!-- more -->
 
 ## 初始化语句
 
@@ -59,17 +61,21 @@ func main() {
 	var newS string
 	// var err error
 
-	fmt.Printf("The size of ints is: %d\n", strconv.IntSize)	  
+	fmt.Printf("The size of ints is: %d
+", strconv.IntSize)	  
 	// anInt, err = strconv.Atoi(origStr)
 	an, err := strconv.Atoi(orig)
 	if err != nil {
-		fmt.Printf("orig %s is not an integer - exiting with error\n", orig)
+		fmt.Printf("orig %s is not an integer - exiting with error
+", orig)
 		return
 	} 
-	fmt.Printf("The integer is %d\n", an)
+	fmt.Printf("The integer is %d
+", an)
 	an = an + 5
 	newS = strconv.Itoa(an)
-	fmt.Printf("The new string is: %s\n", newS)
+	fmt.Printf("The new string is: %s
+", newS)
 }
 ```
 

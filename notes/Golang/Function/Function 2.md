@@ -6,6 +6,8 @@ tags:
 description: 笔记记录了Golang中的函数。
 permalink: /note/golang/function/2
 ---
+ 笔记记录了Golang中的函数。
+<!-- more -->
 
 ## defer 和 追踪
 
@@ -24,9 +26,11 @@ func main() {
 }
 
 func function1() {
-	fmt.Printf("In function1 at the top\n")
+	fmt.Printf("In function1 at the top
+")
 	defer function2()
-	fmt.Printf("In function1 at the bottom!\n")
+	fmt.Printf("In function1 at the bottom!
+")
 }
 
 func function2() {
