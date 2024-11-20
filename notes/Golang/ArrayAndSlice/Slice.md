@@ -6,8 +6,6 @@ tags:
 description: 笔记记录了Golang中的切片相关。
 permalink: /note/golang/slice/
 ---
- 笔记记录了Golang中的切片相关。
-<!-- more -->
 
 ## 概述
 

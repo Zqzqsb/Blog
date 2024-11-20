@@ -7,8 +7,6 @@ tags:
   - NextJs
 description: This note records things about Parallel Routes.
 ---
- This note records things about Parallel Routes.
-<!-- more -->
 ##  Parallel Routes 概述
 
 “并行路由”允许您在同一布局中同时或有条件地呈现一个或多个页面。它们对于应用的高度动态部分非常有用，例如社交网站上的仪表板和源。
@@ -244,3 +242,4 @@ You can use: 您可以使用：
 ![](https://nextjs.org/_next/image?url=%2Fdocs%2Flight%2Fintercepted-routes-modal-example.png&w=1920&q=75)
 
 在上面的示例中， `photo` 段的路径可以使用 `(..)` 匹配器，因为 `@modal` 是一个槽而不是一个段。这意味着 `photo` 路由仅高一级段，尽管文件系统级别高两级。
+

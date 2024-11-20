@@ -6,8 +6,6 @@ tags:
 description: 笔记记录了Golang中的Map相关。
 permalink: /note/golang/map/
 ---
- 笔记记录了Golang中的Map相关。
-<!-- more -->
 
 ## 概述
 
@@ -132,8 +130,7 @@ func main() {
 		items[i] = make(map[int]int, 1)
 		items[i][1] = 2
 	}
-	fmt.Printf("Version A: Value of items: %v
-", items)
+	fmt.Printf("Version A: Value of items: %v\n", items)
 
 	// Version B: NOT GOOD!
 	items2 := make([]map[int]int, 5)
@@ -141,8 +138,7 @@ func main() {
 		item = make(map[int]int, 1) // item is only a copy of the slice element.
 		item[1] = 2 // This 'item' will be lost on the next iteration.
 	}
-	fmt.Printf("Version B: Value of items: %v
-", items2)
+	fmt.Printf("Version B: Value of items: %v\n", items2)
 ```
 
 **输出**

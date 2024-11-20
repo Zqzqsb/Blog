@@ -6,8 +6,6 @@ tags:
 description: 笔记记录了Golang中的Switch语句。
 permalink: /note/golang/switch/
 ---
- 笔记记录了Golang中的Switch语句。
-<!-- more -->
 
 ## Switch 概述
 

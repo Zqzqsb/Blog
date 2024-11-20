@@ -6,8 +6,6 @@ tags:
 description: 空接口的概念和作用。
 permalink: /note/golang/interface/empty/
 ---
- 空接口的概念和作用。
-<!-- more -->
 
 **空接口或者最小接口** 不包含任何方法，它对实现不做任何要求：
 
@@ -34,30 +32,23 @@ type Any interface{}
 func main() {
 	var val Any
 	val = 5
-	fmt.Printf("val has the value: %v
-", val)
+	fmt.Printf("val has the value: %v\n", val)
 	val = str
-	fmt.Printf("val has the value: %v
-", val)
+	fmt.Printf("val has the value: %v\n", val)
 	pers1 := new(Person)
 	pers1.name = "Rob Pike"
 	pers1.age = 55
 	val = pers1
-	fmt.Printf("val has the value: %v
-", val)
+	fmt.Printf("val has the value: %v\n", val)
 	switch t := val.(type) {
 	case int:
-		fmt.Printf("Type int %T
-", t)
+		fmt.Printf("Type int %T\n", t)
 	case string:
-		fmt.Printf("Type string %T
-", t)
+		fmt.Printf("Type string %T\n", t)
 	case bool:
-		fmt.Printf("Type boolean %T
-", t)
+		fmt.Printf("Type boolean %T\n", t)
 	case *Person:
-		fmt.Printf("Type pointer to Person %T
-", t)
+		fmt.Printf("Type pointer to Person %T\n", t)
 	default:
 		fmt.Printf("Unexpected type %T", t)
 	}
@@ -186,7 +177,6 @@ func main() {
 	b.SetData("right node")
 	root.le = a
 	root.ri = b
-	fmt.Printf("%v
-", root) // Output: &{0x125275f0 root node 0x125275e0}
+	fmt.Printf("%v\n", root) // Output: &{0x125275f0 root node 0x125275e0}
 }
 ```

@@ -8,9 +8,6 @@ tags:
 author: ZQ
 permalink: /hexo/build/
 ---
-![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Other/Hexo_%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/%E5%B0%81%E9%9D%A2.jpg)
- 本文介绍了hexo博客搭建的过程。
-<!-- more -->
 
 ## 安装 git
 

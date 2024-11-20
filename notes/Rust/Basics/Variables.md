@@ -5,8 +5,6 @@ tags:
   - Rust
 description: 记录rust中的变量及它们的可变性。
 ---
- 记录rust中的变量及它们的可变性。
-<!-- more -->
 
 ## 默认不可变性
 
@@ -88,3 +86,6 @@ fn main() {
 	string spaces = "    ";
 	int lenSpaces = spaces.length();
 ```
+
+
+

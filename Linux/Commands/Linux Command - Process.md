@@ -7,8 +7,6 @@ tags:
 description: linux进程相关命令。
 permalink: /Linux/Command/Process/
 ---
- linux进程相关命令。
-<!-- more -->
 
 ## ps
 
@@ -357,8 +355,7 @@ void* producer(void* arg) {
         pthread_mutex_lock(&mutex);
 
         products++;
-        printf("Produced one product, total number of products: %d
-", products);
+        printf("Produced one product, total number of products: %d\n", products);
 
         pthread_cond_signal(&cond);
         pthread_mutex_unlock(&mutex);
@@ -375,8 +372,7 @@ void* consumer(void* arg) {
         }
         
         products--;
-        printf("Consumed one product, total number of products: %d
-", products);
+        printf("Consumed one product, total number of products: %d\n", products);
 
         pthread_mutex_unlock(&mutex);
     }

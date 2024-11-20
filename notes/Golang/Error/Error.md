@@ -6,8 +6,6 @@ tags:
 description: 笔记记录了go中的错误机制。
 permalink: /note/golang/error/
 ---
- 笔记记录了go中的错误机制。
-<!-- more -->
 
 ## 概述
 
@@ -216,3 +214,10 @@ fmt.Printf("The process id is %v", pid)
 + 返回值：
 	+ os.Process：表示子进程的句柄
 	+ errror：如果出错则返回错误。
+
+
+
+
+
+
+

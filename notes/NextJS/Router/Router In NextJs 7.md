@@ -7,8 +7,6 @@ tags:
   - NextJs
 description: This note records things about Routes Handlers.
 ---
- This note records things about Routes Handlers.
-<!-- more -->
 
 ## 概述
 
@@ -57,3 +55,5 @@ export async function GET() {
 + 使用任何其他 HTTP 方法。
 + 使用动态函数，例如 `cookies` 和 `headers` 。
 + 段配置选项手动指定动态模式。
+
+

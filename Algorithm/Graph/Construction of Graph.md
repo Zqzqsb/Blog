@@ -9,9 +9,6 @@ cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Graph
 description: 本篇文章讲述的图的构建方式
 permalink: /algorithm/graph/construct/
 ---
-![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/GraphBuild/cover.png)
- 本篇文章讲述的图的构建方式
-<!-- more -->
 ## 概述
 
 本文从解决算法问题的角度，给出几种图的构建方式，他们的代码实现，特点以及优缺点分析。
@@ -168,3 +165,4 @@ void add(int a , int b , int c)
 | 邻接表 - 向量表       | 中    | 否      | 否      | 中   | 稀疏  |
 | 邻接表 - 哈希表       | 中    | 是      | 是      | 中大  | 一般  |
 | 邻接表 - 模拟数组(前向星) | 快    | 否      | 否      | 中大  | 稀疏  |
+

@@ -6,8 +6,6 @@ tags:
 description: 关于Interface的一些编程例子。
 permalink: /note/golang/interface/reflection/
 ---
- 关于Interface的一些编程例子。
-<!-- more -->
 
 ## 反射概述
 
@@ -70,16 +68,12 @@ func main() {
 	typ := value.Type()
 
 	// 打印变量的值和类型信息
-	fmt.Printf("值: %v
-", value)
-	fmt.Printf("类型: %s
-", typ)
+	fmt.Printf("值: %v\n", value)
+	fmt.Printf("类型: %s\n", typ)
 
 	// 进一步演示 reflect.Type 的功能
-	fmt.Printf("类型名: %s
-", typ.Name())
-	fmt.Printf("种类: %s
-", typ.Kind())
+	fmt.Printf("类型名: %s\n", typ.Name())
+	fmt.Printf("种类: %s\n", typ.Kind())
 }
 ```
 
@@ -159,8 +153,7 @@ type Person struct {
 
 // 方法：介绍自己
 func (p Person) Introduce() {
-	fmt.Printf("Hi, I'm %s, and I'm %d years old.
-", p.Name, p.Age)
+	fmt.Printf("Hi, I'm %s, and I'm %d years old.\n", p.Name, p.Age)
 }
 
 func main() {
@@ -182,8 +175,7 @@ func main() {
 		field := v.Field(i)          // 获取第 i 个字段的值
 		fieldName := t.Field(i).Name // 获取第 i 个字段的名字
 		fieldType := t.Field(i).Type // 获取第 i 个字段的类型
-		fmt.Printf("Field %d: Name=%s, Type=%s, Value=%v
-", i, fieldName, fieldType, field)
+		fmt.Printf("Field %d: Name=%s, Type=%s, Value=%v\n", i, fieldName, fieldType, field)
 	}
 
 	// 调用结构体的第 0 个方法（Introduce 方法是第 0 个方法）
