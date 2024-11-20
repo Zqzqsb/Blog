@@ -4,7 +4,7 @@ createTime: 2024-11-20
 tags:
   - Golang
 description: 笔记记录了Goroutine的编程实践
-permalink: /note/golang/routinue/intro/
+permalink: /note/golang/routinue/programming/
 ---
  笔记记录了Goroutine的编程实践
 <!-- more -->
