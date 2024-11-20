@@ -4,6 +4,7 @@ createTime: 2024-11-13
 tags:
   - Golang
 description: 关于Interface的一些编程例子。
+permalink: /note/golang/interface/examples/
 ---
  关于Interface的一些编程例子。
 <!-- more -->

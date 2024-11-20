@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 讲述了Go项目的数据类型和命名规则。
+permalink: /note/golang/types/
 ---
  讲述了Go项目的数据类型和命名规则。
 <!-- more -->

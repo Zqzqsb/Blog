@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 笔记记录了Golang中的Switch语句。
+permalink: /note/golang/switch/
 ---
  笔记记录了Golang中的Switch语句。
 <!-- more -->

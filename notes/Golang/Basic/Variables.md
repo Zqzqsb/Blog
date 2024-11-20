@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 笔记记录了Golang中的变量相关。
+permalink: /note/golang/variables/
 ---
  笔记记录了Golang中的变量相关。
 <!-- more -->

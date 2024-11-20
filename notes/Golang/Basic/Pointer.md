@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 讲述了Go中的指针。
+permalink: /note/golang/pointer/
 ---
  讲述了Go中的指针。
 <!-- more -->

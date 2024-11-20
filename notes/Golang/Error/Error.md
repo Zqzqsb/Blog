@@ -4,6 +4,7 @@ createTime: 2024-11-20
 tags:
   - Golang
 description: 笔记记录了go中的错误机制。
+permalink: /note/golang/error/
 ---
  笔记记录了go中的错误机制。
 <!-- more -->

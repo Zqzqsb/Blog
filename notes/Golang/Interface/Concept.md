@@ -4,6 +4,7 @@ createTime: 2024-11-13
 tags:
   - Golang
 description: 笔记记录了Golang中的接口。
+permalink: /note/golang/interface/concept/
 ---
  笔记记录了Golang中的接口。
 <!-- more -->

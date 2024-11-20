@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 笔记记录了Golang中的函数相关。
+permalink: /note/golang/function/basic
 ---
  笔记记录了Golang中的函数相关。
 <!-- more -->

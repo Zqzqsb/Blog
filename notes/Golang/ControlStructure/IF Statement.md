@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 笔记记录了Golang中的If语句。
+permalink: /note/golang/if/
 ---
  笔记记录了Golang中的If语句。
 <!-- more -->

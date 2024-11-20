@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 讲述了Go项目的基本结构。
+permalink: /note/golang/helloworld/
 ---
  讲述了Go项目的基本结构。
 <!-- more -->

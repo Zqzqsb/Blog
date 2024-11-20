@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 笔记记录了Golang中的常量相关。
+permalink: /note/golang/consts/
 ---
  笔记记录了Golang中的常量相关。
 <!-- more -->

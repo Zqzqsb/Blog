@@ -4,6 +4,7 @@ createTime: 2024-11-13
 tags:
   - Golang
 description: 讲述了接口和动态类型的关系。
+permalink: /note/golang/interface/dynamic_types/
 ---
  讲述了接口和动态类型的关系。
 <!-- more -->

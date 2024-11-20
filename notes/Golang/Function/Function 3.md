@@ -4,6 +4,7 @@ createTime: 2024-7-17
 tags:
   - Golang
 description: 笔记记录了Golang中的函数。
+permalink: /note/golang/function/3
 ---
  笔记记录了Golang中的函数。
 <!-- more -->

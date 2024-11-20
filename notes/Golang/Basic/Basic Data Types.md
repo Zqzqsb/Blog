@@ -4,6 +4,7 @@ createTime: 2024-7-15
 tags:
   - Golang
 description: 笔记记录了Golang中的基本数据类型。
+permalink: /note/golang/basic/
 ---
  笔记记录了Golang中的基本数据类型。
 <!-- more -->

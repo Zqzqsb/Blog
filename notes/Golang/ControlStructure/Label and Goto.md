@@ -4,6 +4,7 @@ createTime: 2024-7-17
 tags:
   - Golang
 description: 笔记记录了Golang中的Label和Goto语句。
+permalink: /note/golang/goto/
 ---
  笔记记录了Golang中的Label和Goto语句。
 <!-- more -->

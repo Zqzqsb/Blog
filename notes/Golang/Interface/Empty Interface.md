@@ -4,6 +4,7 @@ createTime: 2024-11-13
 tags:
   - Golang
 description: 空接口的概念和作用。
+permalink: /note/golang/interface/empty/
 ---
  空接口的概念和作用。
 <!-- more -->
