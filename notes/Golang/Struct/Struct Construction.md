@@ -126,6 +126,72 @@ func printFieldTags(data interface{}) {
 }
 ```
 
+在 Go 语言中，结构体标签（tag）紧跟在结构体字段的类型之后，并由反引号包裹。结构体标签的完整规则包括格式、键值对结构、解析方式等方面。以下是 Go 中结构体标签的完整规则
+
+标签必须放在反引号 ``（backticks）内，并采用键值对的格式。多个键值对之间以空格分隔，每个键值对由键、冒号、值组成。
+
+```go
+type StructName struct {     FieldName FieldType `key1:"value1" key2:"value2"` }
+```
+
+```go
+type User struct {     Name string `json:"name" xml:"name" validate:"required"` }
+```
+
+这里标签中包含三个键值对：`json:"name"`、`xml:"name"` 和 `validate:"required"`，它们分别提供了 JSON 序列化、XML 序列化以及验证的规则。
+
+### 键和值的规则
+
+- **键**：键必须是非空的字符串，可以包含字母、数字和一些特殊符号（一般只使用字母和数字）。
+- **值**：值必须是一个合法的字符串，用双引号包裹（不能使用单引号）。
+- 标签的值中可以包含任何字符，但如果需要使用反斜杠 `\` 或双引号 `"`, 则需要进行转义。
+
+### 解析方式
+
+Go 语言标准库的 `reflect` 包提供 `StructTag` 类型，通过它可以解析标签值。
+
+- `StructTag.Get` 方法可以通过键获取单个标签的值。
+- `reflect.StructField.Tag` 可以获取结构体字段的完整标签，之后可以使用 `Get` 或手动解析。
+
+```go
+type Product struct {
+    ID    int    `db:"primary_key" json:"id"`
+    Name  string `json:"name" validate:"required"`
+}
+
+field, _ := reflect.TypeOf(Product{}).FieldByName("ID")
+fmt.Println(field.Tag.Get("json")) // 输出: "id"
+fmt.Println(field.Tag.Get("db"))   // 输出: "primary_key"
+```
+
+### 标签的应用
+
+结构体标签最常用于标准库和第三方库中的特定功能，如：
+
+- **`json`、`xml`、`yaml`**：用于序列化和反序列化（序列化相关库会寻找 `json`、`xml` 或 `yaml` 等键值）。
+- **ORM**：数据库映射库，如 GORM 或 XORM 会使用 `gorm` 或 `xorm` 标签定义主键、列名、索引等。
+- **验证**：`validate` 标签可用于定义字段的验证规则，常用的验证库如 `go-playground/validator` 支持此标签。
+- **表单映射**：HTTP 表单解析库（如 `gorilla/schema`）使用 `form` 标签来指定字段名。
+
+### 标签的零值
+
+如果标签键不存在或者没有为标签赋值，`Get` 方法会返回空字符串 `""`。这通常用于判断一个标签是否存在。
+
+### 标签的最佳实践
+
+- 避免在标签中使用过多的键值对，以保持清晰易读。
+- 标签的值应简明扼要且与字段的使用场景密切相关。
+- 使用驼峰或小写的标签键，通常符合惯例，例如 `json:"field_name"` 而不是 `JSON:"field_name"`。
+
+### 标签的限制
+
+- 标签内容不被 Go 编译器直接检查，因此错误标签在编译时不会报错，只有在运行时出错。
+- 反射解析的开销较高，频繁使用标签会增加一定的性能开销。
+
+### 标签的复杂解析
+
+复杂标签可以在值中嵌入多个条件，例如 `"required,min=1,max=100"`。库需要自己解析标签中的复杂内容，以支持多条件的验证或序列化。
+
 ## 匿名字段
 
 观察例子
