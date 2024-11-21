@@ -9,6 +9,7 @@ permalink: /golang/dependency/
 
 讲述了`golang`的发展历史，现行范式和框架，核心要素。
 
+<!-- more -->
 ## 历史
 
 ### `GoPath`
