@@ -10,6 +10,7 @@ permalink: /golang/startup/
 最近参加了字节的青训营，有机会可以任务驱动式的系统学习一下`golang`。该系列笔记会同步发布掘金。
 
 <!-- more -->
+
 ## 介绍
 
 **golang的特点**
