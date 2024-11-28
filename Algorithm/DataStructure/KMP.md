@@ -39,6 +39,15 @@ KMP 算法的核心思想是利用模式串本身的信息，避免在匹配过�
 
 因此，部分匹配表为 `[0, 0, 1, 2, 0]`。
 
+**情况1** 
+
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/BuildNext1.png)
+
++ `now == x`时，两个指针各延伸一位，并且记录公共前后缀的长度。
+
+**情况2**
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/BuildNext2.png)
+
 ## 编码实现
 
 > [Acwing 831](https://www.acwing.com/problem/content/833/)
