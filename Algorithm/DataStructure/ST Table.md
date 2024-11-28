@@ -2,7 +2,7 @@
 title: ST Table
 createTime: 2024-11-28
 tags:
-  - ST Table
+  - ST
   - RMQ
 author: ZQ
 permalink: /algorithm/ds/st/
