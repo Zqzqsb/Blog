@@ -10,6 +10,8 @@ permalink: /algorithm/ds/st/
 
 讲解了`st`使用场景和构造方法。
 
+<!-- more -->
+
 ## RMQ问题
 
 在计算机科学与算法设计中，**区间最小值查询（Range Minimum Query，简称 RMQ）** 是一个经典且广泛应用的问题。RMQ 的目标是在一个数组中，快速找到指定区间内的最值。
