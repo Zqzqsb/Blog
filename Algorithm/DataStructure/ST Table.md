@@ -1,9 +1,9 @@
 ---
-title: KMP
+title: ST Table
 createTime: 2024-11-28
 tags:
-  - KMP
-  - Mactching
+  - ST Table
+  - RMQ
 author: ZQ
 permalink: /algorithm/ds/st/
 ---
