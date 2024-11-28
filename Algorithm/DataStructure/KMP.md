@@ -8,6 +8,7 @@ author: ZQ
 permalink: /algorithm/ds/kmp/
 ---
 
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/KMP.png)
 讲述了用于优化字符匹配的`kmp`算法的思想和编码实现。
 
 <!-- more -->
