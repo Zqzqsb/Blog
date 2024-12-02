@@ -47,6 +47,40 @@ KMP 算法的核心思想是利用模式串本身的信息，避免在匹配过�
 
 **情况2**
 ![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/BuildNext2.png)
+## 匹配
+
+使用两个工作指针进行匹配，有四种情况。
+
+### 情况一 - 未完全匹配
+
+模式串和字符串中的工作指针指向的字符相同，但是没有完全匹配模式串。
+
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/MatchedCase1.png)
+
+将两个工作指针同时向后移动一位。
+
+### 情况二 - 匹配成功
+
+完成模式串的匹配。
+
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/CompleteMatch.png)
+
+将 字符串中的指针移动一位，模式串中按照匹配成功的当前位置的字串(即**整个串**)的`next`数组进行回退 , `j = next[j]`。
+
+### 情况三 -  部分失配
+
+发生失配，但是模式串的工作指针不为 0。
+
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/MisMatch1.png)
+按照**已经匹配部分**的`next`数组进行回退, `j = next[j - 1]`。
+
+### 情况四 - 完全失配
+
+模式串已经回退到头部， 但仍然失配。
+
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/KMP/MisMatch2.png)
+
+字符串的指针向后移动一位。
 
 ## 编码实现
 
