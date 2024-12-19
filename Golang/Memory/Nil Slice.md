@@ -12,6 +12,12 @@ permalink: /golang/memory/nilslice/
 
 <!-- more -->
 
+## 概述
+
+`golang`中的空切片和仅申明的`nil`切边有什么不同吗。
+
+## 代码实验
+
 ```go
 package emptyslice
 
