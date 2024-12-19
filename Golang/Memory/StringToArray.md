@@ -71,7 +71,7 @@ func TestStringToByteArray(t *testing.T) {
 	fmt.Println((*(*[2]int)(unsafe.Pointer(&s)))[0], (*(*[2]int)(unsafe.Pointer(&s)))[1])
 	fmt.Println((*(*[3]int)(unsafe.Pointer(&convertArray)))[0], (*(*[3]int)(unsafe.Pointer(&convertArray)))[1], (*(*[3]int)(unsafe.Pointer(&convertArray)))[2])
 	// 5489287 5
-	// 5489287 5
+	// 5489287 5 0 使用了同一块内存，但是array的容量为0
 
 	// +--------------------+       +----------------------------+
 	// |     SliceHeader    |       |        Go []byte           |
@@ -89,9 +89,17 @@ func TestStringToByteArray(t *testing.T) {
 	// |  h  |  e  |  l  |  l  |  o  |
 	// +----------------------------+
 
+	// 试图向字节数组追加一个感叹号
 	convertArray = append(convertArray, '!')
+
 	fmt.Println(convertArray)
 	fmt.Println(s)
+	// [104 101 108 108 111 33]
+	// hello  hello 没有变化
 
+	fmt.Println((*(*[2]int)(unsafe.Pointer(&s)))[0], (*(*[2]int)(unsafe.Pointer(&s)))[1])
+	fmt.Println((*(*[3]int)(unsafe.Pointer(&convertArray)))[0], (*(*[3]int)(unsafe.Pointer(&convertArray)))[1], (*(*[3]int)(unsafe.Pointer(&convertArray)))[2])
+	// 5489287 5 字符串的底层数组仍然在原地
+	// 824633795440 6 8 // 因为发生扩容， go runtime 将array移动到了别的位置
 }
 ```
