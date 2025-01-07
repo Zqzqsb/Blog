@@ -1,0 +1,24 @@
+name: Trigger Jenkins Build
+
+on:
+  push:
+    branches:
+      - main # 仅当推送到 `main` 分支时触发
+
+jobs:
+  trigger-jenkins-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Trigger Jenkins build
+        run: |
+          curl -X POST http://<JENKINS_URL>/job/<JOB_NAME>/build \
+          --user <USER>:<API_TOKEN>
+        env:
+          JENKINS_URL: https://jenkins.zqzqsb.cn/
+          JOB_NAME: GenBlog
+          USER: pray
+          API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
