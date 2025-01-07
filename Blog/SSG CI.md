@@ -1,6 +1,6 @@
 ---
 title: Build Blog Site In CI Pipeline
-createTime: 2024-1-8
+createTime: 2025-1-8
 tags:
   - jenkins
   - SSG
@@ -24,7 +24,7 @@ permalink: /blog/ci/
 **`docker-compose.yml`**
 
 ```yml
-version: '3.8'
+version: "3.8"
 
 services:
   jenkins:
@@ -75,10 +75,9 @@ RUN node -v && npm -v && rsync --version
 
 安装三个插件
 
-+ `git plugin`
-+ `github plugin`
-+ `Chinese simplify plugin`
-
+- `git plugin`
+- `github plugin`
+- `Chinese simplify plugin`
 
 **Job**
 
@@ -96,7 +95,7 @@ name: Trigger Jenkins Build
 on:
   push:
     branches:
-      - master       # 仅当推送到 `master` 分支时触发
+      - master # 仅当推送到 `master` 分支时触发
   workflow_dispatch: # 允许手动触发
 
 jobs:
@@ -109,7 +108,7 @@ jobs:
 
       - name: Trigger Jenkins build
         run: |
-          curl -v -X GET "${JENKINS_URL}/job/GenBlog/build?token=${API_TOKEN}" 
+          curl -v -X GET "${JENKINS_URL}/job/GenBlog/build?token=${API_TOKEN}"
         env:
           JENKINS_URL: https://jenkins.zqzqsb.cn
           API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }} ## 在仓库的secrets属性中配置相关变量
