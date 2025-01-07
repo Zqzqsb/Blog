@@ -16,10 +16,7 @@ jobs:
 
       - name: Trigger Jenkins build
         run: |
-          curl -X POST http://<JENKINS_URL>/job/<JOB_NAME>/build \
-          --user <USER>:<API_TOKEN>
+          curl -v -X GET "${JENKINS_URL}/job/GenBlog/build?token=${API_TOKEN}"
         env:
-          JENKINS_URL: https://jenkins.zqzqsb.cn/
-          JOB_NAME: GenBlog
-          USER: pray
+          JENKINS_URL: https://jenkins.zqzqsb.cn
           API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
