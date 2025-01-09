@@ -1,5 +1,5 @@
 ---
-title: Two Sum
+title: P1 - Two Sum
 createTime: 2024-9-3
 tags:
   - leetcode
