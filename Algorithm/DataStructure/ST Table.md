@@ -43,8 +43,6 @@ ST 表通过倍增区间的方法处理区间，使得 DP表的空间占用为 `
 
 ## 编码实现
 
-> [Acwing 1273](天才的记忆)
-
 ```cpp
 #include<iostream>
 #include<cmath>
