@@ -3,13 +3,15 @@ title: Fenwick
 createTime: 2024-11-29
 author: ZQ
 tags:
-  - DataStructure
-  - Fenwick
+  - 数据结构
+  - Fenwick树
 permalink: /algorithm/ds/fenwick/
 ---
-讲解了树状数组的概念，理解和使用场景。
+
+讲解了`Fenwick`树的概念，理解和使用场景。
 
 <!-- more -->
+
 ## 概述
 
 树状数组（Fenwick Tree），又叫二进制索引树（Binary Indexed Tree, BIT），是一种支持动态数组中区间求和(`O(lgN)`)和单点修改(`O(lgn)`)操作的数据结构。它在时间复杂度和空间复杂度上都具有较好的表现，尤其适合于解决一些需要频繁更新和查询的数据问题。

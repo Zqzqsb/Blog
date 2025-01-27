@@ -1,16 +1,15 @@
 ---
 title: Simulate Linked List
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/basic/linked_list/Linked-list.png
-createTime: 2024-4-24
-description: 本文讲解了C++链表的结构体实现方法和模拟数组实现方法。
 tags:
-- DataStructure
-- Linkedlist
+  - 数据结构
+  - 链表
 author: ZQ
 permalink: /algorithm/ds/linked_list/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/basic/linked_list/Linked-list.png)
  本文讲解了C++链表的结构体实现方法和模拟数组实现方法。
+ 
 <!-- more -->
 
 ## 链表结构

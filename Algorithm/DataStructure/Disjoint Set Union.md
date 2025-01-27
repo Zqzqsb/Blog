@@ -4,12 +4,14 @@ createTime: 2024-9-22
 description: 本文讲解了并查集结构和实现方法。
 author: ZQ
 tags:
-  - DataStructure
-  - DSU
+  - 数据结构
+  - 并查集
 permalink: /algorithm/ds/unionset/
 ---
+
  本文讲解了并查集结构和实现方法。
 <!-- more -->
+
 ## 概述
 
 并查集（Disjoint Set Union，简称 DSU），这是一种用于处理集合合并和查询的数据结构。它通常包含两个主要操作：查找（Find）和合并（Union）。这个数据结构在解决连通性问题时非常有用，比如判断图中节点是否连通，或者将一组元素分成不相交的集合。

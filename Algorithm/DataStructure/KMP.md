@@ -3,7 +3,6 @@ title: KMP
 createTime: 2024-11-28
 tags:
 - KMP
-- Mactching
 author: ZQ
 permalink: /algorithm/ds/kmp/
 ---

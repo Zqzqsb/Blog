@@ -2,8 +2,8 @@
 title: Monotonic Queue
 createTime: 2024-10-29
 tags:
-- DataStructure
-- Queue
+  - 数据结构
+  - 单调性
 author: ZQ
 permalink: /algorithm/ds/monotonic/queue/
 ---
@@ -157,6 +157,7 @@ int main()
 最大面积的计算方式 = 横向延伸的距离 * 纸片高度。
 
 横向延伸的距离为 向左向右延伸的距离之和。
+
 ## 代码
 
 ```cpp

@@ -2,13 +2,12 @@
 title: ST Table
 createTime: 2024-11-28
 tags:
-  - ST
-  - RMQ
+  - 稀疏表
 author: ZQ
 permalink: /algorithm/ds/st/
 ---
 
-讲解了`st`使用场景和构造方法。
+讲解了`st`表使用场景和构造方法。
 
 <!-- more -->
 
