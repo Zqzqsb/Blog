@@ -1,13 +1,14 @@
 ---
 title: Sort Algorithms
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8FAND%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/%E5%B0%81%E9%9D%A2.gif
-createTime: 2022-1-10
-description: 本文讲解了快速排序和归并排序的实现方法。
+tags:
+  - 排序算法
 author: ZQ
 permalink: /algorithm/basic/sort_algorithms/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8FAND%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/%E5%B0%81%E9%9D%A2.gif)
- 本文讲解了快速排序和归并排序的实现方法。
+本文讲解了快速排序和归并排序的实现方法。
+ 
 <!-- more -->
 
 ## 快速排序
@@ -48,10 +49,12 @@ void QuickSort(int a[] , int start , int end)
 + 快慢指针的大体思想是利用快指针将后方大的元素移动到前方
 + 使用该方法进行分割 在数组有序的前提下 整个快排的复杂度会退化到`O(0.5 * n^2) `
 	+ 递归树每次只能排除一个元素 递归树往单边生长
+	
 ### 优化
 
 任何选取区间端点作为分割元素的方法都不可避免的会有递归树倾斜和复杂度退化的问题。
 这些可以采用区间中间作为分割元素。
+
 ```c++
 void quick_sort(int q[], int l, int r)
 {
@@ -73,9 +76,6 @@ void quick_sort(int q[], int l, int r)
 **注意**
 
 这显然是一种应试主义，我们可以构造一种输入，使得该方法的递归树也出现倾斜。
-
-
-
 
 
 ## 归并排序

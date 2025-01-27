@@ -1,16 +1,15 @@
 ---
 title: 递归和递推
-tags:
-  - 算法
+tags: 
   - 递归
 createTime: 2024-1-10
-description: 本文介绍了递归和递推的基本思想和典型问题
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8/%E4%BF%84%E7%BD%97%E6%96%AF%E5%A5%97%E5%A8%83.png
 author: ZQ
 permalink: /algorithm/basic/recurrence/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8/%E4%BF%84%E7%BD%97%E6%96%AF%E5%A5%97%E5%A8%83.png)
- 本文介绍了递归和递推的基本思想和典型问题
+ 本文介绍了递归和递推的基本思想和典型问题。
+ 
 <!-- more -->
 
 ## 前言

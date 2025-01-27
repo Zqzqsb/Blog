@@ -1,16 +1,15 @@
 ---
 title: Binary Search
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/%E5%B0%81%E9%9D%A2.png
 createTime: 2022-2-1
-description: 本文介绍了整数二分和浮点数二分，以及常用方法。
 tags:
-  - 基础算法
   - 二分查找
 author: ZQ
 permalink: /algorithm/basic/bin_search/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/%E5%B0%81%E9%9D%A2.png)
  本文介绍了整数二分和浮点数二分，以及常用方法。
+ 
 <!-- more -->
 
 ## 查找问题
@@ -132,7 +131,7 @@ int BinSearch_2(int l , int r)
 
 - 明确所求的点，写对应的取中点方法
 - 写`checkmid()`时让答案点保持在其区间内
-  - 求 1 号点就检查 mid 是否在左区间，反之同理
+  - 求 1 号点就检查 答案 是否在左区间，反之同理
 - 移动区间端点
   - 保持答案在区间内
   - 保证区间每次都至少减少 1

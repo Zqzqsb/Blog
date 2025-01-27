@@ -1,15 +1,13 @@
 ---
 title: Discrete Points In One-Demension
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/1D%20Discrete%20Point/cover.png
-tags:
-  - 离散点
-description: 本文介绍了一维离散点问题的处理方法
 createTime: 2024-1-25
 author: ZQ
 permalink: /algorithm/basic/One-dimensional_Discrete_Point_Problem/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/1D%20Discrete%20Point/cover.png)
  本文介绍了一维离散点问题的处理方法
+ 
 <!-- more -->
 
 ## 问题背景

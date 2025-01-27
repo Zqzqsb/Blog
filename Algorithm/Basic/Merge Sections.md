@@ -1,16 +1,13 @@
 ---
 title: Merge Sections
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/%E5%B0%81%E9%9D%A2.png
-description: 本文讲述了基础算法中区间合并的相关内容。
-tags:
-  - 基础算法
-  - 区间合并
 createTime: 2023-8-3
 author: ZQ
 permalink: /algorithm/basic/merge_sections/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/%E7%AE%97%E6%B3%95_%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/%E5%B0%81%E9%9D%A2.png)
  本文讲述了基础算法中区间合并的相关内容。
+ 
 <!-- more -->
 
 ##  区间合并
