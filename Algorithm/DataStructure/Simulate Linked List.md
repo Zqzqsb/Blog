@@ -1,5 +1,6 @@
 ---
 title: Simulate Linked List
+createTime: 2024-10-15
 tags:
   - 数据结构
   - 链表
