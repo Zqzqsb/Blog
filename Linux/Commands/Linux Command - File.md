@@ -4,10 +4,11 @@ createTime: 2024-8-19
 author: ZQ
 tags:
   - linux
-description: linux文件相关命令。
 permalink: /Linux/Command/File/
 ---
+
  linux文件相关命令。
+ 
 <!-- more -->
 
 ## 概述

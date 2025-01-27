@@ -4,10 +4,11 @@ createTime: 2024-8-9
 author: ZQ
 tags:
   - linux
-description: Rsync命令的使用方式。
 permalink: /Linux/Command/Rsync/
 ---
+
  Rsync命令的使用方式。
+ 
 <!-- more -->
 
 `rsync` 是一个用于同步文件和目录的强大工具，可以在本地和远程系统之间传输数据。它支持显示复制进度，是替代 `cp` 命令的一种有效方式，尤其在你需要监控大文件或大量文件的复制时。它的设计初衷是使文件和目录的备份、镜像、同步等操作变得快速且占用最少的带宽。`rsync` 可以在本地、远程、甚至不同的操作系统之间工作。

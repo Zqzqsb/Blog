@@ -4,7 +4,6 @@ createTime: 2024-9-2
 author: ZQ
 tags:
   - vim
-  - nvim
 description: Neovim编辑和移动的基本操作
 permalink: /neovim/basic/
 ---

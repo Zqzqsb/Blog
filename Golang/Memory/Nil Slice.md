@@ -3,7 +3,6 @@ title: Memory about nil slice and empty slice.
 createTime: 2024-12-19
 tags:
   - golang
-  - memory
 author: ZQ
 permalink: /golang/memory/nilslice/
 ---

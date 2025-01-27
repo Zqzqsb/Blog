@@ -3,7 +3,6 @@ title: String array convertion.
 createTime: 2024-12-19
 tags:
   - golang
-  - memory
 author: ZQ
 permalink: /golang/memory/string/convert/array/
 ---

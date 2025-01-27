@@ -4,10 +4,11 @@ createTime: 2024-4-25
 author: ZQ
 tags:
   - linux
-description: linux进程相关命令。
 permalink: /Linux/Command/Process/
 ---
+
  linux进程相关命令。
+ 
 <!-- more -->
 
 ## ps

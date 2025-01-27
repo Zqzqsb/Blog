@@ -7,7 +7,9 @@ tags:
 author: ZQ
 permalink: /docker/vitualization/
 ---
+
  本文记录了docker的基本命令。
+ 
 <!-- more -->
 
 讨论了`docker`的虚拟化和传统虚拟化的差别。

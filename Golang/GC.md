@@ -9,6 +9,7 @@ permalink: /golang/gc/
 `go`的发行版优化和落地实践。
 
 <!-- more -->
+
 ## 性能优化的层次
 
 + 业务代码

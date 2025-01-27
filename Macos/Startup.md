@@ -1,10 +1,8 @@
 ---
-title: Configuration - Startup
+title: Macos - Startup
 createTime: 2024-11-5
-tags:
-  - Configuration
 author: ZQ
-permalink: /configuration/Startup/
+permalink: /Macos/Startup/
 ---
 
 最近安装了一台黑苹果，想记录一下从零开始配置可用的过程。 并且在这一过程中学习一下`bash`相关的知识。于是有了配置系列的博客。

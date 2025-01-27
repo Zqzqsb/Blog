@@ -1,14 +1,15 @@
 ---
 title: Asynchronous coding in javascript
 createTime: 2024-4-11
-description: 本文记录了JavaScript异步编程中的一些细节。
 tags:
   - JavaScript
   - 异步编程
 author: ZQ
 permalink: /javascript/asynchronous/
 ---
+
  本文记录了JavaScript异步编程中的一些细节。
+ 
 <!-- more -->
 
 ##  单线程JavaScript

@@ -2,9 +2,7 @@
 title: Build Blog Site In CI Pipeline
 createTime: 2025-1-8
 tags:
-  - jenkins
-  - SSG
-  - Blog
+  - CI/CD
 author: ZQ
 permalink: /blog/ci/
 ---

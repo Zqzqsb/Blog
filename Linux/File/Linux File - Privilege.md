@@ -4,10 +4,11 @@ createTime: 2024-7-1
 author: ZQ
 tags:
   - linux
-description: linux文件特殊权限。
 permalink: /Linux/Command/Privilege/
 ---
+
  linux文件特殊权限。
+ 
 <!-- more -->
 
 # 概述
