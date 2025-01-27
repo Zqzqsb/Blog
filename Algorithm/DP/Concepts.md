@@ -1,17 +1,15 @@
 ---
 title: Concepts About Dynamic Programming
 tags:
-  - 算法
   - 动态规划
-  - 线型动态规划
 createTime: 2024-2-20
-description: 这篇文章介绍了动态规划的概念和划分方法。
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/classical_dp_questions_1/status_demo.png
 author: ZQ
 permalink: /algorithm/dp/concept/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/classical_dp_questions_1/status_demo.png)
  这篇文章介绍了动态规划的概念和划分方法。
+ 
 <!-- more -->
 
 ## 前言

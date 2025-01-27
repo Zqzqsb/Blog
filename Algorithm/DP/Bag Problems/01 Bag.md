@@ -1,17 +1,15 @@
 ---
 title: 01 Bag
 tags:
-  - 算法
   - 背包问题
   - 动态规划
-createTime: 2024-2-16
-description: 这篇文章对01背包已经优化做了详细解读。
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/One-Zero%20Bag%20Question/BagQuestion.png
 author: ZQ
 permalink: /algorithm/dp/01bag/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/One-Zero%20Bag%20Question/BagQuestion.png)
  这篇文章对01背包已经优化做了详细解读。
+ 
 <!-- more -->
 
 ## 0-1 背包问题

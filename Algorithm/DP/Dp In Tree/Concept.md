@@ -1,7 +1,6 @@
 ---
 title: Dp In Tree
 tags:
-  - 算法
   - 动态规划
   - 树形DP
 createTime: 2024-10-23

@@ -1,17 +1,16 @@
 ---
 title: Typical Problems About Linear DP
 tags:
-  - 算法
   - 动态规划
   - 线型动态规划
 createTime: 2024-2-21
-description: 这篇文章介绍了动态规划的概念和划分方法。
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/linear_dp_problems/linear_dp_demo.png
 author: ZQ
 permalink: /algorithm/dp/linear_dp/1/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/linear_dp_problems/linear_dp_demo.png)
  这篇文章介绍了动态规划的概念和划分方法。
+ 
 <!-- more -->
 
 ## 线性 DP 概念
