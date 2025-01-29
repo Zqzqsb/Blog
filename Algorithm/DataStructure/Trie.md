@@ -7,6 +7,8 @@ author: ZQ
 permalink: /algorithm/ds/trie/
 ---
 
+![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Trie/Trie.png)
+
 本文讲解了字典树的结构和实现方法。字典树是一种用于处理字符串集合的数据结构，特别适用于前缀查询和自动补全等应用。
 
 <!-- more -->
@@ -17,10 +19,51 @@ permalink: /algorithm/ds/trie/
 
 字典树的主要操作包括插入、删除和查找。通过逐字符插入或查找，字典树能够在 `O(L)` 时间复杂度内完成操作，其中 `L` 是字符串的长度。
 
-![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Trie/Trie.png)
+## 常用操作
+
+### 插入（Insert）
+
+**功能**：将一个字符串插入到 Trie 中。
+
+**实现思路**：
+
+- 从根节点开始，逐字符遍历字符串。
+- 对于每个字符，如果对应的子节点不存在，则创建一个新的子节点。
+- 遍历完所有字符后，标记当前节点为字符串的结束节点，并更新计数。
+
+### 2. 删除（Delete）
+
+**功能**：从 Trie 中移除一个字符串。
+
+**实现思路**：
+
+- 从根节点开始，逐字符遍历字符串，同时记录路径上的节点。
+- 如果字符串存在，减少计数并取消结束标记。
+- 回溯路径，删除不再需要的节点（即没有子节点且不是其他字符串的结束节点）。
+
+### 3. 查找（Search）
+
+**功能**：判断一个字符串是否存在于 Trie 中。
+
+**实现思路**：
+
+- 从根节点开始，逐字符遍历字符串。
+- 如果某个字符的子节点不存在，则字符串不存在。
+- 遍历完所有字符后，检查当前节点是否为字符串的结束节点。
+
+### 4. 前缀查询（Prefix Search）
+
+**功能**：判断 Trie 中是否存在以某个前缀开头的字符串。
+
+**实现思路**：
+
+- 从根节点开始，逐字符遍历前缀字符串。
+- 如果某个字符的子节点不存在，则不存在以该前缀开头的字符串。
+- 如果成功遍历整个前缀，说明存在至少一个以该前缀开头的字符串。
 
 ## 代码示例
 
+示例代码中仅仅实现了插入和查找。
 ### 使用哈希表维护下一层节点
 
 ```cpp
@@ -87,88 +130,9 @@ private:
 };
 ```
 
-### 使用字符数组
-
-```cpp
-#include <iostream>
-#include <cstring> // 用于 memset
-#include <string>
-
-using namespace std;
-
-// 定义 Trie 的节点结构
-struct TreeNode {
-    TreeNode* children[26]; // 子节点数组，存储 'a' 到 'z'
-    int count;              // 以当前节点为结尾的字符串计数
-
-    TreeNode() : count(0) {
-        memset(children, 0, sizeof(children)); // 初始化子节点为 nullptr
-    }
-};
-
-// 插入字符串到 Trie 中
-void insert(TreeNode* root, const string& str) {
-    TreeNode* node = root;
-    for (char c : str) {
-        int index = c - 'a'; // 将字符映射到 0-25 的索引
-        if (!node->children[index]) {
-            node->children[index] = new TreeNode(); // 如果不存在对应子节点，则创建
-        }
-        node = node->children[index];
-    }
-    node->count++; // 增加当前节点的字符串计数
-}
-
-// 查询字符串在 Trie 中的计数
-int query(TreeNode* root, const string& str) {
-    TreeNode* node = root;
-    for (char c : str) {
-        int index = c - 'a'; // 将字符映射到 0-25 的索引
-        if (!node->children[index]) {
-            return 0; // 未找到字符串
-        }
-        node = node->children[index];
-    }
-    return node->count; // 返回以该节点为结尾的字符串计数
-}
-
-// 递归释放 Trie 所有节点的内存
-void destroy(TreeNode* node) {
-    for (int i = 0; i < 26; ++i) {
-        if (node->children[i]) {
-            destroy(node->children[i]);
-        }
-    }
-    delete node;
-}
-
-int main() {
-    int n;
-    cin >> n;
-
-    TreeNode* root = new TreeNode(); // 创建根节点
-
-    while (n--) {
-        char op;
-        string str;
-        cin >> op >> str;
-
-        if (op == 'I') {
-            insert(root, str);
-        } else if (op == 'Q') {
-            cout << query(root, str) << endl;
-        }
-    }
-
-    destroy(root); // 释放内存
-    return 0;
-}
-```
-
 ### 使用数组模拟
 
 + 数组的一行存储树的一层，层之间的跳转关系存储在每行的具体位置上。
-+ 存储的效率事实上和第二种写法相当。
 
 ```cpp
 #include <iostream>
