@@ -9,7 +9,7 @@ permalink: /Linux/ipc/fifo/noblock/
 
  本文讨论unix中的系统调用`open()`与其阻塞模式，具体为`O_NOBLOCK` 标记的添加与否对于读FIFO命名管道造成的影响。
 
-<!--more-->
+<!-- more -->
 
 ## 1.unix 中的`open()`.
 
