@@ -55,6 +55,26 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 .4mfAAg77YRqHz9u7f1oyWR-Ar4qnGoxc6Moav8-jkCM
 ```
 
+对应的明文解码示例如下：
+
+**Header**
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+**Payload**
+```json
+{
+  "user_id": 123,
+  "role": "admin",
+  "iat": 1670211812,
+  "exp": 1670215412
+}
+```
+
 ### 总结
 
 `jwt`的信息部分是明文传输的，包含一个对于信息的校验码。
@@ -93,125 +113,176 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 ## 前端存储
 
-- Web 前端通常把 Token 存在 `HTTP-Only Cookie` 或 `LocalStorage` 中，但前者更安全（可防止大多数 XSS 窃取）。
+Web 前端通常把 Token 存在 `LocalStorage` 或 `HttpOnly Cookie` 中。两者各有优劣，但**推荐使用 `HttpOnly Cookie`**，因为它能更好地防御 XSS 攻击。
+
+### LocalStorage
+
+-   **优点**:
+    -   通过 JavaScript (`localStorage.setItem()`, `localStorage.getItem()`) 轻松访问和管理。
+    -   容量较大（通常为 5-10MB）。
+-   **缺点**:
+    -   **容易受到 XSS (跨站脚本) 攻击**。如果网站存在 XSS 漏洞，攻击者可以执行恶意脚本，读取并窃取 `LocalStorage` 中的所有数据，包括 JWT。这是其最致命的弱点。
+    -   每次请求都需要手动将 Token 添加到请求头（例如 `Authorization: Bearer <token>`）。
+
+### HttpOnly Cookie
+
+-   **优点**:
+    -   **更安全**。设置了 `HttpOnly` 标志的 Cookie 不能通过 JavaScript 访问，可以有效防止 XSS 攻击窃取 Token。
+    -   浏览器会自动将 Cookie 附加到所有对同源服务器的请求中，无需手动处理。
+-   **缺点**:
+    -   **可能受到 CSRF (跨站请求伪造) 攻击**。因为浏览器会自动发送 Cookie，攻击者可以诱导用户在其他网站上点击一个链接，向你的应用发送恶意请求。可以通过设置 `SameSite` 属性（如 `Strict` 或 `Lax`）来有效缓解 CSRF 攻击。
+    -   默认不能跨域使用（除非进行复杂的 CORS 配置）。
+
+### 使用拦截器自动携带 Token (LocalStorage 方案)
+
+当您选择将 JWT 存储在 `LocalStorage` 时，浏览器不会像处理 Cookie 那样自动在每个请求中携带它。因此，您需要在前端代码中手动将其附加到每个需要认证的 API 请求上。为了避免在每个请求函数中重复编写相同的代码，最佳实践是使用 HTTP 客户端库（如 `axios`）的 **请求拦截器 (Request Interceptor)**。
+
+拦截器会在每个请求被发送到服务器之前“拦截”它，让您有机会修改请求配置，例如添加 `Authorization` 请求头。
+
+下面是一个使用 `axios` 设置请求拦截器的示例：
+
+```javascript
+import axios from 'axios';
+
+// 1. 创建一个 axios 实例
+const apiClient = axios.create({
+  baseURL: 'https://api.example.com', // 你的 API 基础 URL
+});
+
+// 2. 设置请求拦截器
+apiClient.interceptors.request.use(
+  config => {
+    // 从 LocalStorage 中获取 token
+    const token = localStorage.getItem('jwt_token');
+
+    // 如果 token 存在，则将其添加到请求头中
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config; // 返回修改后的配置
+  },
+  error => {
+    // 处理请求错误
+    return Promise.reject(error);
+  }
+);
+
+// 3. 使用配置好的 axios 实例发起请求
+// 现在所有通过 apiClient 发起的请求都会自动携带 Authorization 头
+export const fetchUserData = () => {
+  return apiClient.get('/user');
+};
+
+export const updateProfile = (data) => {
+  return apiClient.post('/profile', data);
+};
+```
+
+通过这种方式，您只需在项目入口处配置一次拦截器，所有后续的 API 请求就都能自动完成 Token 的携带，极大地简化了代码并提高了可维护性。
+
+### 总结与交互图
+
+综合来看，`HttpOnly Cookie` 结合 `SameSite` 属性是存储 JWT 的最佳实践。下面是使用 `HttpOnly Cookie` 进行身份验证的前后端交互流程图：
+
+```mermaid
+sequenceDiagram
+    participant Client as 客户端 (浏览器)
+    participant Server as 服务端
+
+    Client->>Server: POST /login (用户名, 密码)
+    Server->>Server: 验证用户名和密码
+    alt 验证成功
+        Server->>Server: 生成 JWT
+        Server-->>Client: "响应 (Set-Cookie: jwt=...,HttpOnly,SameSite=Strict)"
+    else 验证失败
+        Server-->>Client: "响应 (401 Unauthorized)"
+    end
+
+    Note over Client,Server: 后续请求
+
+    Client->>Server: "GET /api/data (自动携带 Cookie)"
+    Server->>Server: 从 Cookie 中读取 JWT 并验证
+    alt JWT 有效
+        Server-->>Client: "响应 (200 OK, 返回数据)"
+    else JWT 无效或过期
+        Server-->>Client: "响应 (401 Unauthorized)"
+    end
+```
 
 ## 中间件实现
 
-以 `hertz`的 `jwt` 中间件为例。
+- 以 `golang-jwt/v5` 来说明 `jwt` 工具的核心方法。
 
 ```go
-package mw // 定义包名为 mw，通常用于存放中间件相关的代码
+package utils
 
 import (
-	"context"
-	"fmt"
-	"net/http"
+	"errors"
 	"time"
 
-	// 导入项目内部的包
-	// 数据库访问层，用于检查用户信息
-	"github.com/cloudwego/hertz/pkg/app"          // Hertz 框架的 app 包，处理请求上下文
-	"github.com/cloudwego/hertz/pkg/common/hlog"  // Hertz 的日志包
-	"github.com/cloudwego/hertz/pkg/common/utils" // Hertz 的工具包，包含辅助函数
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"github.com/hertz-contrib/jwt" // Hertz 的 JWT 中间件包
-	"zqzqsb.com/gomall/app/user/biz/model"
-	"zqzqsb.com/gomall/app/user/biz/service"
-	"zqzqsb.com/gomall/app/user/kitex_gen/user"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 )
 
-// 全局变量，用于存储初始化后的 JWT 中间件实例
-var (
-	JwtMiddleware *jwt.HertzJWTMiddleware // JWT 中间件实例
-	IdentityKey   = "identity"            // 用于在 JWT 载荷中存储用户身份的键
-)
+// Claims 结构定义了 JWT 的载荷（Payload），包含了自定义的数据和标准的注册声明。
+type Claims struct {
+	UserID uuid.UUID `json:"user_id"` // 自定义声明：用户ID
+	Email  string    `json:"email"`   // 自定义声明：用户邮箱
+	jwt.RegisteredClaims             // 嵌入标准声明，如 iss (issuer), exp (expiration time), sub (subject) 等
+}
 
-// InitJwt 初始化 JWT 中间件
-func InitJwt() {
-	var err error
-	// 创建新的 JWT 中间件实例并配置相关参数
-	JwtMiddleware, err = jwt.New(&jwt.HertzJWTMiddleware{
-		Realm:         "test zone",                                        // 认证领域，用于在 WWW-Authenticate 头中返回
-		Key:           []byte("secret key"),                               // 用于签名 JWT 的密钥，请确保使用足够复杂且安全的密钥
-		Timeout:       time.Hour,                                          // JWT 的有效期，此处设置为 1 小时
-		MaxRefresh:    time.Hour,                                          // 允许刷新 JWT 的最大时间，此处设置为 1 小时
-		// 表示在解析请求时，会尝试从以下几处获取 Token：
-		// HTTP Header 中的 Authorization 字段
-		// URL 查询参数 ?token=xxx
-		// Cookie 名为 jwt
-		// （按照这个顺序依次查找）
-		TokenLookup:   "header: Authorization, query: token, cookie: jwt", // 定义从哪里查找 JWT
-		TokenHeadName: "Bearer",                                           // JWT 在请求头中的前缀
-		// 自定义登录成功后的响应格式
-		LoginResponse: func(ctx context.Context, c *app.RequestContext, code int, token string, expire time.Time) {
-			// 直接set一个http only cookie 给客户端
-			c.SetCookie(
-				"jwt", // Cookie名称
-				token, // Cookie值
-				3600,  // 过期时间(秒)
-				"/",   // 路径
-				"",    // 域名(留空表示当前域)
-				protocol.CookieSameSiteDefaultMode,
-				true, // Secure
-				true, // HttpOnly
-			)
-			c.JSON(http.StatusOK, utils.H{
-				"code":    code,                        // 状态码
-				"token":   token,                       // 生成的 JWT Token
-				"expire":  expire.Format(time.RFC3339), // 过期时间
-				"message": "success",
-			})
+// GenerateToken 生成一个新的 JWT。
+// userID: 用户唯一标识
+// email: 用户邮箱
+// secret: 用于签名的密钥
+// expireHours: Token 的有效时间（小时）
+func GenerateToken(userID uuid.UUID, email string, secret string, expireHours int) (string, error) {
+	// 创建 Claims，包含自定义数据和过期时间
+	claims := Claims{
+		UserID: userID,
+		Email:  email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			// 设置过期时间
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * time.Duration(expireHours))),
+			// 设置签发时间
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
-		// 认证函数，用于验证用户登录信息
-		Authenticator: func(ctx context.Context, c *app.RequestContext) (interface{}, error) {
-			var err error
-			var req user.LoginReq
-			err = c.BindAndValidate(&req)
-			if err != nil {
-				c.String(consts.StatusBadRequest, err.Error())
-				return nil, err
-			}
-			LoginService := service.NewLoginService(ctx)
-			resp, err := LoginService.Run(&req)
-			if err != nil {
-				c.String(consts.StatusInternalServerError, fmt.Sprintf("Registration failed: %v", err))
-				return nil, err
-			}
-			return resp.UserId, nil
-		},
-		IdentityKey: IdentityKey, // 设置用于标识用户身份的键
-		// 从 JWT 载荷中提取用户身份信息
-		IdentityHandler: func(ctx context.Context, c *app.RequestContext) interface{} {
-			claims := jwt.ExtractClaims(ctx, c) // 提取 JWT 载荷中的声明
-			return &model.User{
-				ID: claims[IdentityKey].(uint), // 使用声明中的身份键获取用户ID
-			}
-		},
-		// 将用户数据转换为 JWT 载荷中的声明
-		PayloadFunc: func(data interface{}) jwt.MapClaims {
-			if v, ok := data.(*model.User); ok {
-				return jwt.MapClaims{
-					IdentityKey: v.ID, // 将用户ID存储在 JWT 载荷中
-				}
-			}
-			return jwt.MapClaims{} // 返回空的声明
-		},
-		// 自定义 HTTP 状态消息函数，用于记录错误日志并返回错误消息
-		HTTPStatusMessageFunc: func(e error, ctx context.Context, c *app.RequestContext) string {
-			hlog.CtxErrorf(ctx, "jwt biz err = %+v", e.Error()) // 记录错误日志
-			return e.Error()                                    // 返回错误消息
-		},
-		// 自定义未授权响应
-		Unauthorized: func(ctx context.Context, c *app.RequestContext, code int, message string) {
-			c.JSON(http.StatusOK, utils.H{
-				"code":    code,    // 状态码
-				"message": message, // 错误消息
-			})
-		},
-	})
-	// 如果初始化过程中出现错误，程序将崩溃并输出错误信息
-	if err != nil {
-		panic(err)
 	}
+
+	// 使用指定的签名方法（HS256）和 Claims 创建一个新的 Token 实例
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// 使用提供的密钥对 Token 进行签名，生成最终的 Token 字符串
+	return token.SignedString([]byte(secret))
+}
+
+// ParseToken 解析并验证一个 JWT 字符串。
+// tokenString: 待解析的 JWT
+// secret: 用于验证签名的密钥
+func ParseToken(tokenString string, secret string) (*Claims, error) {
+	// 解析 Token。它需要三个参数：
+	// 1. token 字符串
+	// 2. 一个空的 Claims 结构体实例，用于填充解析出的数据
+	// 3. 一个 Keyfunc 回调函数，用于提供验证签名的密钥
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		// 在回调函数中，返回用于签名的密钥
+		// 在实际应用中，这里可能需要根据 token 的 header（例如 `alg` 字段）来选择不同的密钥
+		return []byte(secret), nil
+	})
+
+	// 处理解析过程中可能发生的错误（例如，token格式错误、签名无效等）
+	if err != nil {
+		return nil, err
+	}
+
+	// 验证 Token 是否有效，并从 Token 中提取 Claims
+	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
+		// 如果 token.Claims 能成功转换为 *Claims 类型，并且 token.Valid 为 true，则表示 Token 有效
+		return claims, nil
+	}
+
+	// 如果 Token 无效，则返回错误
+	return nil, errors.New("invalid token")
 }
 ```
