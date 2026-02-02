@@ -1,11 +1,18 @@
 ---
+title: 理解 Restful API
+createTime: 2026-2-2
+author: ZQ
 tags:
-  - web
-  - api
-  - rest
+  - http
+  - network
+description: 理解 Restful API
+permalink: /network/http/understand-restful-api/
 ---
+ 关于Http协议的发展历史。
+ 
+<!-- more -->
 
-# 深入理解 RESTful API 设计风格
+## 深入理解 RESTful API 设计风格
 
 > REST (Representational State Transfer) 是一种用于构建网络应用的架构风格，而非一个具体的标准或协议。它利用 HTTP 协议的现有特性（如方法和状态码），通过一种清晰、可预测的方式来组织和暴露服务。一个遵循 REST 原则的 API 被称为 RESTful API。
 
