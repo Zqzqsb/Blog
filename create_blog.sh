@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# 博客文章生成脚本
-# 用法: ./create_blog.sh <目录> <博客标题>
-# 示例: ./create_blog.sh Database "Redis持久化机制"
+# 博客文章生成脚本 - 交互式版本
+# 用法: ./create_blog.sh
+# 支持多级目录选择，输入 q 或 exit 随时退出
 
 set -e
 
@@ -10,31 +10,160 @@ set -e
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
-
-# 检查参数
-if [ $# -ne 2 ]; then
-    echo -e "${RED}错误: 参数不足${NC}"
-    echo "用法: $0 <目录> <博客标题>"
-    echo "示例: $0 Database \"Redis持久化机制\""
-    echo ""
-    echo "可用目录:"
-    echo "  - Algorithm    (算法)"
-    echo "  - Database     (数据库)"
-    echo "  - Network      (网络)"
-    echo "  - Docker       (容器)"
-    echo "  - Linux        (Linux系统)"
-    echo "  - Golang       (Go语言)"
-    echo "  - JS           (JavaScript)"
-    echo "  - C++          (C++)"
-    exit 1
-fi
-
-CATEGORY=$1
-TITLE=$2
 
 # 获取脚本所在目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# 检查退出命令
+check_exit() {
+    if [[ "$1" == "q" ]] || [[ "$1" == "exit" ]] || [[ "$1" == "quit" ]]; then
+        echo -e "${YELLOW}已取消操作${NC}"
+        exit 0
+    fi
+}
+
+# 全局计数器
+GLOBAL_COUNTER=1
+
+# 扫描目录结构，生成树形列表
+# 参数: $1 = 基础路径, $2 = 缩进级别
+scan_directories() {
+    local base_path="$1"
+    local indent_level="${2:-0}"
+    local indent=""
+    
+    # 生成缩进
+    for ((i=0; i<indent_level; i++)); do
+        indent="  ${indent}"
+    done
+    
+    # 排除的目录
+    local exclude_dirs=(".git" "node_modules" ".obsidian" "Notes" ".windsurf")
+    
+    for item in "$base_path"/*; do
+        if [ -d "$item" ]; then
+            local dir_name=$(basename "$item")
+            
+            # 检查是否在排除列表中
+            local should_exclude=false
+            for exclude in "${exclude_dirs[@]}"; do
+                if [[ "$dir_name" == "$exclude" ]]; then
+                    should_exclude=true
+                    break
+                fi
+            done
+            
+            if [ "$should_exclude" = false ]; then
+                local relative_path="${item#$SCRIPT_DIR/}"
+                
+                # 检查是否有子目录
+                local has_subdirs=false
+                for subitem in "$item"/*; do
+                    if [ -d "$subitem" ]; then
+                        local subdir_name=$(basename "$subitem")
+                        local sub_exclude=false
+                        for exclude in "${exclude_dirs[@]}"; do
+                            if [[ "$subdir_name" == "$exclude" ]]; then
+                                sub_exclude=true
+                                break
+                            fi
+                        done
+                        if [ "$sub_exclude" = false ]; then
+                            has_subdirs=true
+                            break
+                        fi
+                    fi
+                done
+                
+                # 存储目录信息并显示
+                DIR_MAP["$GLOBAL_COUNTER"]="$relative_path"
+                
+                if [ "$has_subdirs" = true ]; then
+                    echo -e "${indent}${CYAN}${GLOBAL_COUNTER}. ${dir_name}/${NC}"
+                    ((GLOBAL_COUNTER++))
+                    
+                    # 递归扫描子目录
+                    for subitem in "$item"/*; do
+                        if [ -d "$subitem" ]; then
+                            local subdir_name=$(basename "$subitem")
+                            local sub_exclude=false
+                            for exclude in "${exclude_dirs[@]}"; do
+                                if [[ "$subdir_name" == "$exclude" ]]; then
+                                    sub_exclude=true
+                                    break
+                                fi
+                            done
+                            if [ "$sub_exclude" = false ]; then
+                                local sub_relative_path="${subitem#$SCRIPT_DIR/}"
+                                DIR_MAP["$GLOBAL_COUNTER"]="$sub_relative_path"
+                                echo -e "${indent}  ${GLOBAL_COUNTER}. ${subdir_name}"
+                                ((GLOBAL_COUNTER++))
+                            fi
+                        fi
+                    done
+                else
+                    echo -e "${indent}${GLOBAL_COUNTER}. ${dir_name}"
+                    ((GLOBAL_COUNTER++))
+                fi
+            fi
+        fi
+    done
+}
+
+# 关联数组存储目录映射
+declare -A DIR_MAP
+
+# 显示目录选择菜单
+echo -e "${BLUE}========================================${NC}"
+echo -e "${GREEN}博客文章创建工具${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo ""
+echo -e "${YELLOW}可用目录:${NC}"
+echo ""
+
+# 扫描并显示目录
+scan_directories "$SCRIPT_DIR" "" ""
+
+echo ""
+echo -e "${YELLOW}提示: 输入 'q' 或 'exit' 随时退出${NC}"
+echo ""
+
+# 选择目录
+while true; do
+    echo -ne "${GREEN}请选择目录编号: ${NC}"
+    read -r selection
+    check_exit "$selection"
+    
+    if [[ -n "${DIR_MAP[$selection]}" ]]; then
+        CATEGORY="${DIR_MAP[$selection]}"
+        echo -e "${GREEN}✓ 已选择: ${CATEGORY}${NC}"
+        break
+    else
+        echo -e "${RED}错误: 无效的编号，请重新输入${NC}"
+    fi
+done
+
+echo ""
+
+# 输入博客标题
+while true; do
+    echo -ne "${GREEN}请输入博客标题: ${NC}"
+    read -r TITLE
+    check_exit "$TITLE"
+    
+    if [[ -z "$TITLE" ]]; then
+        echo -e "${RED}错误: 标题不能为空${NC}"
+    else
+        echo -e "${GREEN}✓ 标题: ${TITLE}${NC}"
+        break
+    fi
+done
+
+echo ""
+
 TARGET_DIR="${SCRIPT_DIR}/${CATEGORY}"
 
 # 检查目录是否存在，不存在则创建
