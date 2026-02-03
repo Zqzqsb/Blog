@@ -2,14 +2,41 @@
 title: Trie
 createTime: 2025-1-29
 tags:
-- 字典树
+  - 字典树
 author: ZQ
 permalink: /algorithm/ds/trie/
 ---
 
-![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Trie/Trie.png)
-
 本文讲解了字典树的结构和实现方法。字典树是一种用于处理字符串集合的数据结构，特别适用于前缀查询和自动补全等应用。
+
+```mermaid
+graph TD
+    Root((Root))
+    Root -->|a| A((a))
+    Root -->|c| C((c))
+
+    A -->|p| AP((p))
+    A -->|n| AN((n))
+
+    AP -->|p| APP((p))
+    APP -->|l| APPL((l))
+    APPL -->|e| APPLE[apple*]
+
+    AN -->|d| AND[and*]
+
+    C -->|a| CA((a))
+    CA -->|t| CAT[cat*]
+    CA -->|r| CAR((r))
+    CAR -->|d| CARD[card*]
+
+    style APPLE fill:#90EE90
+    style AND fill:#90EE90
+    style CAT fill:#90EE90
+    style CARD fill:#90EE90
+
+    classDef endNode stroke:#2E8B57,stroke-width:3px
+    class APPLE,AND,CAT,CARD endNode
+```
 
 <!-- more -->
 
@@ -17,7 +44,38 @@ permalink: /algorithm/ds/trie/
 
 字典树（Trie）是一种树形数据结构，用于高效地存储和检索字符串集合中的键。每个节点代表一个字符，边表示字符之间的连接。字典树的根节点通常是空的，叶子节点代表一个完整的字符串。
 
-字典树的主要操作包括插入、删除和查找。通过逐字符插入或查找，字典树能够在 `O(L)` 时间复杂度内完成操作，其中 `L` 是字符串的长度。
+字典树的主要操作包括插入、删除和查找。通过逐字符插入或查找,字典树能够在 `O(L)` 时间复杂度内完成操作,其中 `L` 是字符串的长度。
+
+```mermaid
+graph TD
+    Root((Root))
+    Root -->|a| A((a))
+    Root -->|c| C((c))
+
+    A -->|p| AP((p))
+    A -->|n| AN((n))
+
+    AP -->|p| APP((p))
+    APP -->|l| APPL((l))
+    APPL -->|e| APPLE[apple*]
+
+    AN -->|d| AND[and*]
+
+    C -->|a| CA((a))
+    CA -->|t| CAT[cat*]
+    CA -->|r| CAR((r))
+    CAR -->|d| CARD[card*]
+
+    style APPLE fill:#90EE90
+    style AND fill:#90EE90
+    style CAT fill:#90EE90
+    style CARD fill:#90EE90
+
+    classDef endNode stroke:#2E8B57,stroke-width:3px
+    class APPLE,AND,CAT,CARD endNode
+```
+
+> **示例说明**：上图展示了一个包含 "apple"、"and"、"cat"、"card" 四个单词的字典树。绿色节点标记了单词的结束位置,每条路径代表一个字符序列。
 
 ## 常用操作
 
@@ -64,6 +122,7 @@ permalink: /algorithm/ds/trie/
 ## 代码示例
 
 示例代码中仅仅实现了插入和查找。
+
 ### 使用哈希表维护下一层节点
 
 ```cpp
@@ -132,7 +191,7 @@ private:
 
 ### 使用数组模拟
 
-+ 数组的一行存储树的一层，层之间的跳转关系存储在每行的具体位置上。
+- 数组的一行存储树的一层，层之间的跳转关系存储在每行的具体位置上。
 
 ```cpp
 #include <iostream>
@@ -174,14 +233,14 @@ int main()
 {
     int n;
     cin >> n;
-    
+
     char op;
-    
+
     while(n--)
     {
         cin >> op;
         scanf("%s" , str);
-        
+
         if(op == 'I') insert(str);
         else cout << query(str) << endl;
     }
