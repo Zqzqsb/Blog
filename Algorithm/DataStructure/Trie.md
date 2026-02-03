@@ -9,35 +9,6 @@ permalink: /algorithm/ds/trie/
 
 本文讲解了字典树的结构和实现方法。字典树是一种用于处理字符串集合的数据结构，特别适用于前缀查询和自动补全等应用。
 
-```mermaid
-graph TD
-    Root((Root))
-    Root -->|a| A((a))
-    Root -->|c| C((c))
-
-    A -->|p| AP((p))
-    A -->|n| AN((n))
-
-    AP -->|p| APP((p))
-    APP -->|l| APPL((l))
-    APPL -->|e| APPLE[apple*]
-
-    AN -->|d| AND[and*]
-
-    C -->|a| CA((a))
-    CA -->|t| CAT[cat*]
-    CA -->|r| CAR((r))
-    CAR -->|d| CARD[card*]
-
-    style APPLE fill:#90EE90
-    style AND fill:#90EE90
-    style CAT fill:#90EE90
-    style CARD fill:#90EE90
-
-    classDef endNode stroke:#2E8B57,stroke-width:3px
-    class APPLE,AND,CAT,CARD endNode
-```
-
 <!-- more -->
 
 ## 概述
