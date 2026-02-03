@@ -1,7 +1,5 @@
 ---
 title: Bidirectional BFS
-categories:
-  - 算法
 tags:
   - BFS
   - 搜索

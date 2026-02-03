@@ -1,10 +1,8 @@
 ---
 title: Topological Sort
-categories:
-  - 算法
 tags:
+  - 拓扑排序
   - 图论
-  - Tpsort
 createTime: 2024-9-29
 permalink: /algorithm/graph/tpsort/
 cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/TpSort/cover.png

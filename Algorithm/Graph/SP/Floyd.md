@@ -1,10 +1,8 @@
 ---
 title: Floyd-Warshall
-categories:
-  - 算法
 tags:
-  - 图论
   - 最短路
+  - 图论
 createTime: 2024-9-20
 permalink: /algorithm/graph/floyd/
 ---

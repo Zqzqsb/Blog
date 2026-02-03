@@ -1,7 +1,5 @@
 ---
 title: Construction of Graph
-categories:
-  - 算法
 tags:
   - 图论
 createTime: 2024-7-6

@@ -1,7 +1,5 @@
 ---
 title: ID-A*
-categories:
-  - 算法
 tags:
   - 最短路
   - 搜索

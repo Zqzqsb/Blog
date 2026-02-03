@@ -2,7 +2,6 @@
 title: Typical Problems About Linear DP
 tags:
   - 动态规划
-  - 线型动态规划
 createTime: 2024-2-21
 author: ZQ
 permalink: /algorithm/dp/linear_dp/1/

@@ -1,10 +1,7 @@
 ---
 title: Eulerian Path
-categories:
-  - 算法
 tags:
   - 图论
-  - 欧拉路径
 createTime: 2024-10-5
 permalink: /algorithm/graph/eulerainpath/
 ---

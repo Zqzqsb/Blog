@@ -2,6 +2,7 @@
 title: Heap
 createTime: 2025-1-29
 tags:
+  - 数据结构
   - 堆
 author: ZQ
 permalink: /algorithm/ds/heap/

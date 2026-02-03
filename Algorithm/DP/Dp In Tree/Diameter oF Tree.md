@@ -2,7 +2,6 @@
 title: Diameter oF Tree
 tags:
   - 动态规划
-  - 树形DP
 createTime: 2024-10-23
 author: ZQ
 permalink: /algorithm/dp/tree/Diameter/

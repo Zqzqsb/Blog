@@ -2,7 +2,6 @@
 title: Interval DP
 tags:
   - 动态规划
-  - 区间DP
 createTime: 2024-4-7
 author: ZQ
 permalink: /algorithm/dp/interval_dp/

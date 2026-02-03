@@ -1,7 +1,6 @@
 ---
 title: Variant of Bag Problems
 tags:
-  - 背包问题
   - 动态规划
 createTime: 2024-2-17
 author: ZQ

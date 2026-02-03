@@ -1,10 +1,8 @@
 ---
 title: Circle Route Detection
-categories:
-  - 算法
 tags:
-  - 图论
   - 判断环路
+  - 图论
 createTime: 2024-9-12
 permalink: /algorithm/graph/circle/
 ---

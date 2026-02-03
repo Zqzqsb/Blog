@@ -3,7 +3,7 @@ title: Monotonic Queue
 createTime: 2024-10-29
 tags:
   - 数据结构
-  - 单调性
+  - 单调队列
 author: ZQ
 permalink: /algorithm/ds/monotonic/queue/
 ---

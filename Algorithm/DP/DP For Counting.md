@@ -2,7 +2,6 @@
 title: DP For Counting
 tags:
   - 动态规划
-  - 计数dp
 createTime: 2024-4-2
 author: ZQ
 permalink: /algorithm/dp/counting/

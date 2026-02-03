@@ -1,10 +1,8 @@
 ---
 title: Minimum Spanning Tree
-categories:
-  - 算法
 tags:
+  - 最小生成树
   - 图论
-  - MST
 createTime: 2024-9-27
 permalink: /algorithm/graph/mst/
 ---

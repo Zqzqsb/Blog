@@ -2,7 +2,8 @@
 title: KMP
 createTime: 2024-11-28
 tags:
-- KMP
+  - KMP
+  - 模式匹配
 author: ZQ
 permalink: /algorithm/ds/kmp/
 ---

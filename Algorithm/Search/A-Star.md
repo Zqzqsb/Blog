@@ -1,7 +1,5 @@
 ---
 title: A-Star
-categories:
-  - 算法
 tags:
   - 图论
   - 最短路

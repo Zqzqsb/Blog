@@ -1,10 +1,8 @@
 ---
 title: Dijkstra
-categories:
-  - 算法
 tags:
-  - 图论
   - 最短路
+  - 图论
 createTime: 2024-9-8
 permalink: /algorithm/graph/Dijkstra/
 ---

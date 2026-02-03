@@ -1,7 +1,5 @@
 ---
 title: Concept of Hashing
-categories:
-  - 算法
 tags:
   - 哈希
 createTime: 2024-9-5
