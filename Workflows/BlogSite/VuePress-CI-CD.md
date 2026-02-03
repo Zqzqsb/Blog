@@ -3,9 +3,6 @@ title: VuePress 博客的 CI/CD 自动化部署实践
 createTime: 2025-2-3
 tags:
   - CI/CD
-  - VuePress
-  - Jenkins
-  - Docker
 author: ZQ
 permalink: /blog/vuepress-cicd/
 ---

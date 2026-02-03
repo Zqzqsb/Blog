@@ -3,7 +3,6 @@ title: Build Debian Server
 createTime: 2024-5-27
 author: ZQ
 tags:
-  - linux
   - 备忘录
 description: 本文记录debian12作为服务器的安装和配置过程
 permalink: /server/build/

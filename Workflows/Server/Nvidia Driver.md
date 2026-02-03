@@ -3,7 +3,6 @@ title: Install Nvidia Driver
 createTime: 2024-9-26
 author: ZQ
 tags:
-  - linux
   - 备忘录
 description: 这篇备忘录记录了在linux上安装英伟达显卡驱动的一般过程。
 permalink: /server/nvidia/driver/

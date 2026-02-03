@@ -3,7 +3,6 @@ title: Data Backup Solution
 createTime: 2024-7-1
 author: ZQ
 tags:
-  - server
   - 备忘录
 description: 本文记录自用服务器的数据备份方案。
 permalink: /server/backup/
