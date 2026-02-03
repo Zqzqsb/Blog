@@ -3,13 +3,15 @@ title: Construction of Graph
 tags:
   - 图论
 createTime: 2024-7-6
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/GraphBuild/cover.png
 description: 本篇文章讲述的图的构建方式
 permalink: /algorithm/graph/construct/
 ---
+
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/GraphBuild/cover.png)
  本篇文章讲述的图的构建方式
+
 <!-- more -->
+
 ## 概述
 
 本文从解决算法问题的角度，给出几种图的构建方式，他们的代码实现，特点以及优缺点分析。

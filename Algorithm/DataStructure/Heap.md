@@ -8,8 +8,6 @@ author: ZQ
 permalink: /algorithm/ds/heap/
 ---
 
-![](https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Heap/heaps.png)
-
 本文讲解了堆的概念和实现方法。
 
 <!-- more -->

@@ -3,7 +3,6 @@ title: Concept of Hashing
 tags:
   - 哈希
 createTime: 2024-9-5
-cover: https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png
 permalink: /algorithm/hash/concept/
 ---
 ![cover]( https://alicloud-pic.oss-cn-shanghai.aliyuncs.com/BlogImg/Algorithm/Hash/Concept/cover.png)
