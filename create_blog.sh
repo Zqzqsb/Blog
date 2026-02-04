@@ -151,7 +151,7 @@ echo ""
 # 输入博客标题
 while true; do
     echo -ne "${GREEN}请输入博客标题: ${NC}"
-    read -r TITLE
+    read -e -r TITLE
     check_exit "$TITLE"
     
     if [[ -z "$TITLE" ]]; then
