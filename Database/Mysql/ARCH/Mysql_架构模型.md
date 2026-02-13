@@ -4,9 +4,10 @@ createTime: 2026-02-13
 author: ZQ
 tags:
   - MySQL
-description: MySQL Client → Server → Engine 完整链路，以及生产环境中的分布式演进
 permalink: /database/mysql/architecture/
 ---
+
+![](./pic/mysql_arch.png)
 
 > MySQL 的架构可以沿 Client → Server → Engine 三段来看。Client 负责连接管理和协议编解码，Server 负责 SQL 解析、优化和执行调度，Engine（主要是 InnoDB）负责数据的实际存取。当单机到达瓶颈后，DB Proxy、DB Agent、读写分离、分库分表等方案会嵌入 Client 和 Server 之间。
 
