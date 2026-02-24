@@ -132,12 +132,12 @@ bool next(Row *row);
 - **上层算子**通过调用子节点的 `next()` 获取一行行数据
 - 每个算子内部只关心“从子节点拉一行，做一点工作，再交给上层”
 
-以 `SELECT name FROM users WHERE age > 18` 为例，对应的执行树可以画成：
+以 `SELECT name FROM users WHERE age > 18` 为例，对应的执行树可以表示为：
 
-```mermaid
-graph TD
-    P[Project(name)] --> F[Filter(age > 18)]
-    F --> S[IndexScan(users.idx_age)]
+```
+Project(name)
+  └── Filter(age > 18)
+        └── IndexScan(users.idx_age)
 ```
 
 执行过程是自顶向下的**拉模式（pull-based）**：
