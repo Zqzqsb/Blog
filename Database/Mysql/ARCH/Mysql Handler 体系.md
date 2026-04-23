@@ -15,7 +15,7 @@ permalink: /database/mysql/handler/
 
 ## 1. `handler` 接口的分类
 
-[sql/handler.h](/data/workspace/SQLEngine/sql/handler.h) 与 [sql/handler.cc](/data/workspace/SQLEngine/sql/handler.cc) 中定义的存储引擎抽象层包含数百个虚函数与回调。按关注点归类，这些接口可划分为六个族：
+`sql/handler.h` 与 `sql/handler.cc` 中定义的存储引擎抽象层包含数百个虚函数与回调。按关注点归类，这些接口可划分为六个族：
 
 | 接口族      | 代表方法                                                                                                               | 关注点                         |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
@@ -44,14 +44,14 @@ virtual int index_read_map(uchar *buf, const uchar *key, ...);
 
 事务族在挂载点上则呈现混合形态：
 
-**(a)** 语句边界钩子挂在 `handler` 上（每张表各有一个实例）。参见 [sql/handler.h:6167 / 7234](/data/workspace/SQLEngine/sql/handler.h)：
+**(a)** 语句边界钩子挂在 `handler` 上（每张表各有一个实例）：
 
 ```cpp
 virtual int start_stmt(THD *thd, thr_lock_type lock_type);
 virtual int external_lock(THD *thd, int lock_type);
 ```
 
-**(b)** 事务级回调挂在 `handlerton` 上（每个存储引擎只有一个单例）。参见 [sql/handler.h:1427-1431](/data/workspace/SQLEngine/sql/handler.h)：
+**(b)** 事务级回调挂在 `handlerton` 上（每个存储引擎只有一个单例）：
 
 ```cpp
 typedef int (*commit_t)  (handlerton *hton, THD *thd, bool all);
@@ -59,7 +59,7 @@ typedef int (*rollback_t)(handlerton *hton, THD *thd, bool all);
 typedef int (*prepare_t) (handlerton *hton, THD *thd, bool all);
 ```
 
-以及 [sql/handler.h:1401-1418](/data/workspace/SQLEngine/sql/handler.h)：
+以及 `savepoint` 相关回调：
 
 ```cpp
 typedef int (*savepoint_rollback_t)(handlerton *hton, THD *thd, void *sv);
