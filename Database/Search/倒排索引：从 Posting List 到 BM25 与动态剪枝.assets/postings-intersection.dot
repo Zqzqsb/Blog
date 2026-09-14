@@ -1,0 +1,112 @@
+digraph PostingsIntersection {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.42",
+    ranksep="0.70",
+    splines=ortho,
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="AND 查询：以短表驱动其他 Posting Iterator",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.16,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.4,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569"
+  ];
+
+  subgraph cluster_input {
+    label="有序输入";
+    style="rounded,filled";
+    color="#BFDBFE";
+    fillcolor="#EFF6FF";
+    margin=16;
+
+    short [
+      fillcolor="#DBEAFE",
+      color="#60A5FA",
+      label=<
+        <B>database（短表）</B><BR/>
+        <FONT FACE="monospace" POINT-SIZE="10">[1, 3, 8, 11, 20]</FONT>
+      >
+    ];
+    long [
+      label=<
+        <B>index（长表）</B><BR/>
+        <FONT FACE="monospace" POINT-SIZE="10">[2, 3, 7, 11, 18, 20]</FONT>
+      >
+    ];
+  }
+
+  candidate [
+    fillcolor="#EDE9FE",
+    color="#A78BFA",
+    label=<
+      <B>短表给出候选 docID</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#64748B">从最稀有 term 开始</FONT>
+    >
+  ];
+
+  advance [
+    fillcolor="#EDE9FE",
+    color="#A78BFA",
+    label=<
+      <B>其他迭代器 advance(docID)</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#64748B">利用 skip data 跨块跳跃</FONT>
+    >
+  ];
+
+  aligned [
+    shape=diamond,
+    style="filled",
+    width=1.25,
+    height=0.78,
+    fillcolor="#FEF3C7",
+    color="#F59E0B",
+    label="全部对齐？"
+  ];
+
+  collect [
+    fillcolor="#D1FAE5",
+    color="#34D399",
+    penwidth=1.6,
+    label=<
+      <B>收集匹配</B><BR/>
+      <FONT FACE="monospace" POINT-SIZE="10">[3, 11, 20]</FONT>
+    >
+  ];
+
+  next [
+    fillcolor="#F1F5F9",
+    color="#94A3B8",
+    label="推进落后的迭代器"
+  ];
+
+  short -> candidate;
+  long -> advance;
+  candidate -> advance;
+  advance -> aligned;
+  aligned -> collect [xlabel="是", color="#10B981", fontcolor="#047857"];
+  aligned -> next [xlabel="否", color="#F59E0B", fontcolor="#B45309"];
+  next -> advance [constraint=false];
+}

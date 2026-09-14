@@ -1,0 +1,139 @@
+digraph InvertedIndexPipeline {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.45",
+    ranksep="0.75",
+    splines=ortho,
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="从文档到可查询 Segment",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.16,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.4,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569"
+  ];
+
+  subgraph cluster_semantics {
+    label="① 定义词项语义";
+    style="rounded,filled";
+    color="#BFDBFE";
+    fillcolor="#EFF6FF";
+    penwidth=1.2;
+    margin=16;
+
+    document [
+      label=<
+        <B>文档字段</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#64748B">title / body / tags</FONT>
+      >
+    ];
+    analyzer [
+      fillcolor="#DBEAFE",
+      color="#60A5FA",
+      label=<
+        <B>Analyzer</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">字符规范 · 分词 · 归一化</FONT>
+      >
+    ];
+    tokens [
+      label=<
+        <B>Token Stream</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#64748B">term · position · offset</FONT>
+      >
+    ];
+
+    document -> analyzer -> tokens;
+  }
+
+  subgraph cluster_build {
+    label="② 聚合并写出";
+    style="rounded,filled";
+    color="#C4B5FD";
+    fillcolor="#F5F3FF";
+    penwidth=1.2;
+    margin=16;
+
+    buffer [
+      fillcolor="#EDE9FE",
+      color="#A78BFA",
+      label=<
+        <B>内存倒排结构</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">field → term → occurrences</FONT>
+      >
+    ];
+    segment [
+      fillcolor="#DDD6FE",
+      color="#8B5CF6",
+      penwidth=1.6,
+      label=<
+        <B>不可变 Segment</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">按 term / docID 排序并压缩</FONT>
+      >
+    ];
+
+    buffer -> segment [xlabel="flush"];
+  }
+
+  subgraph cluster_files {
+    label="③ 物理访问结构";
+    style="rounded,filled";
+    color="#A7F3D0";
+    fillcolor="#ECFDF5";
+    penwidth=1.2;
+    margin=16;
+
+    dictionary [
+      fillcolor="#D1FAE5",
+      color="#34D399",
+      label=<
+        <B>Term Dictionary</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">term → stats / pointer</FONT>
+      >
+    ];
+    postings [
+      fillcolor="#D1FAE5",
+      color="#34D399",
+      label=<
+        <B>Posting Lists</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">docID · freq · positions</FONT>
+      >
+    ];
+    columns [
+      fillcolor="#D1FAE5",
+      color="#34D399",
+      label=<
+        <B>旁路数据</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">norms · stored fields · doc values</FONT>
+      >
+    ];
+  }
+
+  tokens -> buffer;
+  segment -> dictionary;
+  segment -> postings;
+  segment -> columns;
+
+  { rank=same; dictionary; postings; columns; }
+}
