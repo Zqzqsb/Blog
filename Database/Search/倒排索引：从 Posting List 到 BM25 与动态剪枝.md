@@ -10,12 +10,7 @@ tags:
   - WAND
   - Block-Max WAND
 permalink: /database/search/inverted-index/
-cover: /images/inverted-index-cover.jpg
-coverStyle:
-  layout: right
-  ratio: "16/9"
-  width: 280
-excerpt: '<blockquote><p>倒排索引把「文档包含哪些词」反转为「一个词出现在哪些文档」，使全文检索不必扫描全部正文。但真正的搜索引擎不只有 <code>term → docID[]</code>：词典负责定位倒排表，posting 携带词频与位置，BM25 把命中文档排出次序，WAND / Block-Max WAND 再利用分数上界跳过不可能进入 Top-K 的候选。本文沿一条查询的数据流，把这些结构串起来。</p></blockquote>'
+excerpt: '<p style="text-align:center;margin:8px 0 12px"><img src="/images/inverted-index-cover.jpg" alt="" style="max-width:100%;max-height:240px;width:auto;height:auto;border-radius:8px" /></p><blockquote><p>倒排索引把「文档包含哪些词」反转为「一个词出现在哪些文档」，使全文检索不必扫描全部正文。但真正的搜索引擎不只有 <code>term → docID[]</code>：词典负责定位倒排表，posting 携带词频与位置，BM25 把命中文档排出次序，WAND / Block-Max WAND 再利用分数上界跳过不可能进入 Top-K 的候选。本文沿一条查询的数据流，把这些结构串起来。</p></blockquote>'
 ---
 
 ![](/images/inverted-index-cover.jpg)
