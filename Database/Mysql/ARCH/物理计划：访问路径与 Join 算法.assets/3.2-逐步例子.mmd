@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant O as Outer(users)
+    participant J as NLJ
+    participant I as Inner(orders 索引)
+    O->>J: 下一用户 u
+    J->>I: lookup user_id = u.id
+    I-->>J: 匹配订单们
+    J-->>J: 拼行输出
+    O->>J: 下一用户 u'
+    Note over O,I: 外表一行，触发一轮内表探测

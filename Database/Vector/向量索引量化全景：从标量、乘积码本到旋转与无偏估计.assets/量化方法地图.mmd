@@ -1,0 +1,8 @@
+%%{init: {'flowchart': {'curve': 'linear', 'padding': 12}}}%%
+flowchart TB
+  Q["量化方法"] --> P["精度截断<br/>FP16 / BF16"]
+  Q --> S["标量族<br/>SQ / LVQ …"]
+  Q --> B["二值族<br/>BQ / ITQ …"]
+  Q --> C["码本族<br/>PQ / OPQ / AQ / RQ / ScaNN …"]
+  Q --> R["旋转+解析/几何<br/>RaBitQ / TurboQuant / QJL …"]
+  Q --> H["混合精排<br/>粗码 + 高精重排"]

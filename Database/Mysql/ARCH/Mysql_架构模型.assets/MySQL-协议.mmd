@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant C as Client
+    participant S as MySQL Server
+
+    Note over C,S: 1. 建立连接 + 握手认证（每条新连接都要走一遍）
+    C->>S: TCP 三次握手
+    S->>C: Handshake Packet<br/>(协议版本, Server版本, Salt)
+    C->>S: Auth Response<br/>(用户名, 加密密码, 数据库名)
+
+    alt 认证成功
+        S->>C: OK Packet → 连接可用
+    else 认证失败
+        S->>C: ERR Packet → 连接关闭
+    end
+
+    Note over C,S: 2. 发送查询并流式接收结果
+    C->>S: COM_QUERY<br/>SELECT id,name FROM users WHERE age>18
+
+    S->>C: Column Count (2)
+    S->>C: Column Def: id (INT)
+    S->>C: Column Def: name (VARCHAR)
+    S->>C: EOF
+
+    loop 逐行返回
+        S->>C: Row Data: [1, "Alice"]
+        S->>C: Row Data: [2, "Bob"]
+    end
+
+    S->>C: EOF (查询结束)

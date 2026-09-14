@@ -1,0 +1,6 @@
+flowchart LR
+    TSO([授时服务]) --"txn_start_ts"--> W["写入数据的版本号\n冲突检测的基准线"]
+    TSO --"read_start_ts"--> R["读取可见性的上界\n只看此时间点前已提交的数据"]
+
+    style W fill:#eafbe7,stroke:#2f855a
+    style R fill:#e6f2ff,stroke:#2b6cb0

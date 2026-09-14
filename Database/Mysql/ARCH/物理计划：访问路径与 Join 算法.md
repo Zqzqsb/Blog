@@ -140,18 +140,7 @@ NestedLoopJoin (o.user_id = u.id)
 …直到 users 侧耗尽
 ```
 
-```mermaid
-sequenceDiagram
-    participant O as Outer(users)
-    participant J as NLJ
-    participant I as Inner(orders 索引)
-    O->>J: 下一用户 u
-    J->>I: lookup user_id = u.id
-    I-->>J: 匹配订单们
-    J-->>J: 拼行输出
-    O->>J: 下一用户 u'
-    Note over O,I: 外表一行，触发一轮内表探测
-```
+![3.2 逐步例子](./物理计划：访问路径与%20Join%20算法.assets/3.2-逐步例子.svg)
 
 要点：
 

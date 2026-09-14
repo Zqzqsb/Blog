@@ -1,0 +1,20 @@
+graph TD
+    A[CAP定理] --> B[一致性 C]
+    A --> C[可用性 A]
+    A --> D[分区容错 P]
+
+    E[CP系统] --> B
+    E --> D
+    E --> E1[etcd, HBase<br/>牺牲可用性]
+
+    F[AP系统] --> C
+    F --> D
+    F --> F1[Cassandra, DynamoDB<br/>牺牲强一致性]
+
+    G[CA系统] --> B
+    G --> C
+    G --> G1[单机数据库<br/>无分区容错]
+
+    style E1 fill:#FFE4B5
+    style F1 fill:#FFE4B5
+    style G1 fill:#FFE4B5

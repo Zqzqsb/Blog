@@ -1,0 +1,7 @@
+graph TB
+    L[改写后的逻辑计划] --> ENUM[枚举物理片段]
+    STAT[统计信息] --> CARD[基数估计]
+    ENUM --> CARD
+    CARD --> COST[代价公式]
+    COST --> DP[搜索 / 剪枝]
+    DP --> BEST[物理计划树]

@@ -92,34 +92,7 @@ unlock();
 
 场景还原（基于某分布式存储引擎的 lookup 路径）：主线程把 `&lookup_pending_.back()` 交给每个 lookup `bthread`，`bthread` 之后靠这个裸指针写回 `done` / `ret`；主线程的轮询逻辑一旦发现某请求 `done`，就把它从容器中间 `erase` 掉。
 
-```mermaid
-sequenceDiagram
-    participant Main as 主线程
-    participant C as lookup_pending_ (容器)
-    participant B1 as bthread A
-    participant B2 as bthread B
-
-    Main->>C: emplace_back(req_A)
-    Main->>B1: 传入 &req_A
-    Main->>C: emplace_back(req_B)
-    Main->>B2: 传入 &req_B
-
-    Note over B1,B2: bthread 并发执行 lookup
-
-    B1-->>C: req_A.done = true (经裸指针写)
-    Main->>C: erase(req_A) ← 删中间元素
-
-    alt deque：后续元素搬家
-        Note over C: req_B 被 move 到新地址
-        Note over B2: 裸指针仍指向旧地址
-        B2-->>C: req_B.done = true (写到旧槽位)
-        Main->>Main: 新地址上永远读到 done=false → 轮询死循环
-    else list：只摘除目标节点
-        Note over C: req_B 地址不变
-        B2-->>C: req_B.done = true (写到正确地址)
-        Main->>Main: 正常读到完成
-    end
-```
+![3. 一个真实案例：deque → list 的最小修复](./STL%20容器的线程安全性讨论.assets/3.-一个真实案例：deque-→-list-的最小修复.svg)
 
 - 同一个「并发写 + 中间删除」的模式，`deque` 搬家造成悬指针，`list` 因为只摘节点而安全。
 - Bug 的表象是 `Next()` 死循环、请求永远「没完成」，但根因在第 2 节那张表的一格：`deque` 中间 `erase` 不保证地址稳定。

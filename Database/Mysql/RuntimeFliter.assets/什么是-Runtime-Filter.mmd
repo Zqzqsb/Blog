@@ -1,0 +1,14 @@
+graph TD
+    A[小表 orders<br/>100万行] --> B[构建过滤器]
+    B --> C[Bloom Filter<br/>包含所有order_id]
+
+    D[大表 order_items<br/>1亿行] --> E[应用过滤器]
+    C --> E
+    E --> F[过滤后<br/>200万行]
+
+    F --> G[执行JOIN]
+    A --> G
+    G --> H[最终结果]
+
+    style C fill:#87CEEB
+    style F fill:#90EE90

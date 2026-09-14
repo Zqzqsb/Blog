@@ -15,36 +15,7 @@ permalink: /database/mysql/architecture/
 
 ## 单机 MYSQL 执行链路
 
-```mermaid
-graph LR
-    subgraph 客户端
-        CLI[mysql CLI<br/>一条命令一条连接]
-        DRV[Driver 裸连接<br/>mysqlclient / JDBC]
-        ORM[ORM + 连接池<br/>GORM / MyBatis + HikariCP]
-    end
-
-    subgraph MySQL Server
-        CONN[连接器]
-        PARSER[解析器]
-        OPT[优化器]
-        EXEC[执行器]
-    end
-
-    subgraph 存储引擎
-        INNODB[InnoDB]
-    end
-
-    CLI -->|TCP + MySQL Protocol| CONN
-    DRV -->|TCP + MySQL Protocol| CONN
-    ORM -->|TCP + MySQL Protocol| CONN
-
-    CONN --> PARSER --> OPT --> EXEC --> INNODB
-
-    style CLI fill:#ffcccc
-    style ORM fill:#87CEEB
-    style CONN fill:#FFE4B5
-    style INNODB fill:#90EE90
-```
+![单机 MYSQL 执行链路](./Mysql_架构模型.assets/单机-MYSQL-执行链路.svg)
 
 三种客户端形态最终都汇入同一个 TCP 端口。连接池、ORM 映射等复杂度存在于客户端进程内部，MySQL Server 侧看到的都是一条条 TCP 连接，没有区别。
 
@@ -70,32 +41,7 @@ mysql -h 127.0.0.1 -u root -p mydb
 
 内部流程：
 
-```mermaid
-sequenceDiagram
-    participant U as 终端
-    participant CLI as mysql 可执行文件
-    participant S as MySQL Server
-
-    U->>CLI: 执行命令，输入密码
-    CLI->>CLI: 解析参数 (-h, -u, -p)
-    CLI->>S: TCP 三次握手 (连接 3306 端口)
-    S->>CLI: Handshake Packet (Server 版本, Salt)
-    CLI->>S: Auth Response (用户名 + 加密密码)
-    S->>CLI: OK Packet (认证成功)
-
-    Note over U,S: 进入交互式会话，一条 TCP 连接保持
-
-    U->>CLI: 输入 SELECT * FROM users;
-    CLI->>CLI: 读取输入，遇到分号，识别为完整 SQL
-    CLI->>S: COM_QUERY 包 (SQL 文本)
-    S->>CLI: 列定义 + 行数据 + EOF
-    CLI->>CLI: 格式化为表格
-    CLI->>U: 打印结果
-
-    U->>CLI: 输入 exit
-    CLI->>S: COM_QUIT
-    S->>CLI: 关闭连接
-```
+![1. mysql 命令行](./Mysql_架构模型.assets/1.-mysql-命令行.svg)
 
 `mysql` 是一个编译好的 C 程序，内部链接 `libmysqlclient`（MySQL 官方 C Driver）。启动时建立一条 TCP 连接，整个会话复用。每条 SQL 封装为 `COM_QUERY` 包发送。没有连接池。`exit` 或 `Ctrl+D` 发送 `COM_QUIT`，关闭连接，进程退出。
 
@@ -121,23 +67,7 @@ conn.close()               # 关闭 TCP 连接
 
 Web 服务并发处理大量请求，每次新建/关闭 TCP 连接的开销（三次握手 + 认证 ≈ 1-3ms）不可接受。连接池预先建好一批连接，请求到来时从池中借出，用完归还。
 
-```mermaid
-graph LR
-    subgraph Web 服务进程
-        R1[请求1] --> POOL[连接池<br/>10条空闲连接]
-        R2[请求2] --> POOL
-        R3[请求3] --> POOL
-        POOL --> |借出| C1[连接1]
-        POOL --> |借出| C2[连接2]
-        POOL --> |借出| C3[连接3]
-    end
-
-    C1 --> S[(MySQL Server)]
-    C2 --> S
-    C3 --> S
-
-    style POOL fill:#87CEEB
-```
+![3. ORM + 连接池](./Mysql_架构模型.assets/3.-ORM-+-连接池.svg)
 
 **Example: Java: MyBatis + HikariCP + JDBC Driver**
 
@@ -158,37 +88,7 @@ HikariDataSource ds = new HikariDataSource(config);
 
 > TCP 连接建立后，所有客户端使用同一套 MySQL Protocol 通信。
 
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant S as MySQL Server
-
-    Note over C,S: 1. 建立连接 + 握手认证（每条新连接都要走一遍）
-    C->>S: TCP 三次握手
-    S->>C: Handshake Packet<br/>(协议版本, Server版本, Salt)
-    C->>S: Auth Response<br/>(用户名, 加密密码, 数据库名)
-
-    alt 认证成功
-        S->>C: OK Packet → 连接可用
-    else 认证失败
-        S->>C: ERR Packet → 连接关闭
-    end
-
-    Note over C,S: 2. 发送查询并流式接收结果
-    C->>S: COM_QUERY<br/>SELECT id,name FROM users WHERE age>18
-
-    S->>C: Column Count (2)
-    S->>C: Column Def: id (INT)
-    S->>C: Column Def: name (VARCHAR)
-    S->>C: EOF
-
-    loop 逐行返回
-        S->>C: Row Data: [1, "Alice"]
-        S->>C: Row Data: [2, "Bob"]
-    end
-
-    S->>C: EOF (查询结束)
-```
+![MySQL 协议](./Mysql_架构模型.assets/MySQL-协议.svg)
 
 **协议要点**：
 
@@ -204,20 +104,7 @@ sequenceDiagram
 
 一条 TCP 连接到达 MySQL Server 后的处理流程：
 
-```mermaid
-sequenceDiagram
-    participant C as 客户端 TCP 连接
-    participant CONN as 连接器
-    participant THD as THD 对象
-    participant T as 工作线程
-
-    C->>CONN: TCP 连接到达 (accept → socket fd)
-    CONN->>CONN: 认证（查 mysql.user 表）
-    CONN->>THD: 创建 THD，写入 fd + 权限 + 会话状态
-    CONN->>T: 分配工作线程，绑定 THD
-    T->>THD: 通过 THD->net.fd 读写该 TCP 连接
-    T->>THD: 通过 THD 中的权限快照做权限检查
-```
+![连接器：线程分配与会话管理](./Mysql_架构模型.assets/连接器：线程分配与会话管理.svg)
 
 连接器的三个职责：
 
@@ -273,18 +160,7 @@ Thread Pool:
 
 > 三个组件构成 SQL 处理流水线。
 
-```mermaid
-graph LR
-    A[SQL文本] --> B[解析器<br/>Parser]
-    B --> C[语法树<br/>AST]
-    C --> D[优化器<br/>Optimizer]
-    D --> E[执行计划<br/>Plan]
-    E --> F[执行器<br/>Executor]
-    F --> G[Handler API]
-    G --> H[InnoDB]
-
-    style D fill:#FFD700
-```
+![解析器 → 优化器 → 执行器](./Mysql_架构模型.assets/解析器-→-优化器-→-执行器.svg)
 
 **解析器**：将 SQL 文本转为语法树。这一步纯语法检查，不涉及数据。
 
@@ -332,17 +208,7 @@ handler->ha_delete_row()   -- 删除一行
 
 ### 读路径
 
-```mermaid
-graph LR
-    A[执行器调用<br/>ha_index_read] --> B{Buffer Pool<br/>中有该页?}
-    B -->|命中| C[直接返回行数据]
-    B -->|未命中| D[从磁盘读取 16KB 页]
-    D --> E[加载到 Buffer Pool]
-    E --> C
-
-    style B fill:#FFD700
-    style C fill:#90EE90
-```
+![读路径](./Mysql_架构模型.assets/读路径.svg)
 
 **Buffer Pool** 是 InnoDB 最核心的内存结构：
 
@@ -360,30 +226,7 @@ SHOW STATUS LIKE 'Innodb_buffer_pool%';
 
 ### 写路径
 
-```mermaid
-sequenceDiagram
-    participant E as 执行器
-    participant BP as Buffer Pool
-    participant RB as Redo Log Buffer
-    participant RL as Redo Log (磁盘)
-    participant BL as Binlog (磁盘)
-    participant UL as Undo Log
-    participant D as 数据文件 (磁盘)
-
-    E->>UL: 1. 写 Undo Log (用于回滚)
-    E->>BP: 2. 修改 Buffer Pool 中的页 (脏页)
-    E->>RB: 3. 写 Redo Log Buffer
-
-    Note over E: COMMIT (两阶段提交)
-
-    RB->>RL: 4. Redo Log prepare (fsync)
-    E->>BL: 5. 写 Binlog (fsync)
-    RL->>RL: 6. Redo Log commit
-    RL-->>E: 7. 返回 COMMIT 成功
-
-    Note over BP,D: 后台异步
-    BP->>D: 8. Checkpoint 刷脏页到磁盘 (O_DIRECT)
-```
+![写路径](./Mysql_架构模型.assets/写路径.svg)
 
 **关键设计**：
 
@@ -428,37 +271,13 @@ Redo Log:  Log Buffer → OS page cache → fsync → 磁盘
 
 ### 演进路线
 
-```mermaid
-graph TD
-    A[单机 MySQL] --> B[主从复制<br/>读写分离]
-    B --> C[DB Proxy<br/>透明分流]
-    B --> D[DB Agent<br/>Sidecar 模式]
-    C --> E[分库分表]
-    D --> E
-    E --> F[分布式数据库<br/>TiDB / Vitess]
-
-    style A fill:#ffcccc
-    style F fill:#90EE90
-```
+![演进路线](./Mysql_架构模型.assets/演进路线.svg)
 
 ### 主从复制 + 读写分离
 
 > 最基础的扩展方案。写走主库，读走从库。
 
-```mermaid
-graph LR
-    App[应用] --> W{写?}
-    W -->|INSERT/UPDATE/DELETE| M[(Master)]
-    W -->|SELECT| S1[(Slave 1)]
-    W -->|SELECT| S2[(Slave 2)]
-
-    M -->|Binlog 复制| S1
-    M -->|Binlog 复制| S2
-
-    style M fill:#FFE4B5
-    style S1 fill:#90EE90
-    style S2 fill:#90EE90
-```
+![主从复制 + 读写分离](./Mysql_架构模型.assets/主从复制-+-读写分离.svg)
 
 **Binlog 消费链路**：
 
@@ -514,37 +333,7 @@ MySQL 提供三种复制模式应对不同一致性需求：
 
 > DB Proxy 部署在应用和 MySQL 之间，作为独立服务，对应用透明。
 
-```mermaid
-graph LR
-    subgraph 应用集群
-        A1[App 1]
-        A2[App 2]
-        A3[App 3]
-    end
-
-    subgraph DB Proxy 集群
-        P1[ProxySQL / ShardingSphere-Proxy]
-        P2[ProxySQL / ShardingSphere-Proxy]
-    end
-
-    subgraph MySQL 集群
-        M[(Master)]
-        S1[(Slave 1)]
-        S2[(Slave 2)]
-    end
-
-    A1 --> P1
-    A2 --> P1
-    A3 --> P2
-
-    P1 --> M
-    P1 --> S1
-    P2 --> M
-    P2 --> S2
-
-    style P1 fill:#87CEEB
-    style P2 fill:#87CEEB
-```
+![DB Proxy](./Mysql_架构模型.assets/DB-Proxy.svg)
 
 **DB Proxy 的核心能力**：
 
@@ -565,24 +354,7 @@ graph LR
 
 > DB Agent 本质是部署在应用旁边的轻量级 DB Proxy。对应用暴露 `localhost:3306`，对后端 MySQL 负责路由、连接复用和保护。
 
-```mermaid
-graph LR
-    subgraph Pod 1
-        A1[App] --> AG1[DB Agent<br/>localhost:3306]
-    end
-
-    subgraph Pod 2
-        A2[App] --> AG2[DB Agent<br/>localhost:3306]
-    end
-
-    AG1 --> M[(Master)]
-    AG1 --> S1[(Slave)]
-    AG2 --> M
-    AG2 --> S2[(Slave)]
-
-    style AG1 fill:#FFE4B5
-    style AG2 fill:#FFE4B5
-```
+![DB Agent（Sidecar 模式）](./Mysql_架构模型.assets/DB-Agent（Sidecar-模式）.svg)
 
 **DB Agent vs DB Proxy**：
 
@@ -601,17 +373,7 @@ graph LR
 
 > 单库数据量超过千万级、单表超过 500 万行时，通常需要分库分表。
 
-```mermaid
-graph TD
-    A[应用] --> P[Proxy / Agent]
-
-    P --> |user_id % 4 = 0| DB0[(db_0.users_0)]
-    P --> |user_id % 4 = 1| DB1[(db_1.users_1)]
-    P --> |user_id % 4 = 2| DB2[(db_2.users_2)]
-    P --> |user_id % 4 = 3| DB3[(db_3.users_3)]
-
-    style P fill:#FFD700
-```
+![分库分表](./Mysql_架构模型.assets/分库分表.svg)
 
 **分片策略**：
 
@@ -628,57 +390,7 @@ graph TD
 
 ### 完整的生产架构
 
-```mermaid
-graph TB
-    subgraph 应用层
-        A1[微服务 A]
-        A2[微服务 B]
-    end
-
-    subgraph 接入层
-        VIP[VIP / LB]
-    end
-
-    subgraph 代理层
-        P1[DB Proxy 1]
-        P2[DB Proxy 2]
-    end
-
-    subgraph 主从集群 - 分片1
-        M1[(Master 1)]
-        S1a[(Slave 1a)]
-        S1b[(Slave 1b)]
-        M1 --> S1a
-        M1 --> S1b
-    end
-
-    subgraph 主从集群 - 分片2
-        M2[(Master 2)]
-        S2a[(Slave 2a)]
-        S2b[(Slave 2b)]
-        M2 --> S2a
-        M2 --> S2b
-    end
-
-    A1 --> VIP
-    A2 --> VIP
-    VIP --> P1
-    VIP --> P2
-    P1 --> M1
-    P1 --> S1a
-    P1 --> M2
-    P1 --> S2a
-    P2 --> M1
-    P2 --> S1b
-    P2 --> M2
-    P2 --> S2b
-
-    style VIP fill:#87CEEB
-    style P1 fill:#FFD700
-    style P2 fill:#FFD700
-    style M1 fill:#FFE4B5
-    style M2 fill:#FFE4B5
-```
+![完整的生产架构](./Mysql_架构模型.assets/完整的生产架构.svg)
 
 **这条链路上每一层的延迟**：
 

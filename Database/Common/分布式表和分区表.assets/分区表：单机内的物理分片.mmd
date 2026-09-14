@@ -1,0 +1,22 @@
+graph TB
+    subgraph 逻辑视图
+        T[orders 表]
+    end
+
+    subgraph 物理视图 - 同一台机器
+        P0[orders_p0<br/>2024-Q1]
+        P1[orders_p1<br/>2024-Q2]
+        P2[orders_p2<br/>2024-Q3]
+        P3[orders_p3<br/>2024-Q4]
+    end
+
+    T --> P0
+    T --> P1
+    T --> P2
+    T --> P3
+
+    style T fill:#FFE4B5
+    style P0 fill:#87CEEB
+    style P1 fill:#87CEEB
+    style P2 fill:#87CEEB
+    style P3 fill:#87CEEB

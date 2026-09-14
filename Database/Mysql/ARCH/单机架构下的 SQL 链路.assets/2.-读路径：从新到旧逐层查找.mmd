@@ -1,0 +1,11 @@
+graph LR
+    A["ha_index_read(key)"] --> B[查 MemTable]
+    B -->|命中| R[返回行数据]
+    B -->|未命中| C[查 Block Cache]
+    C -->|命中| R
+    C -->|未命中| D[读 L0 SST]
+    D -->|命中| RC[加载到 Block Cache] --> R
+    D -->|未命中| E[读 L1 / L2 / ... SST]
+    E --> RC
+
+    style R fill:#90EE90

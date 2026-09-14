@@ -185,30 +185,7 @@ export const updateProfile = (data) => {
 
 综合来看，`HttpOnly Cookie` 结合 `SameSite` 属性是存储 JWT 的最佳实践。下面是使用 `HttpOnly Cookie` 进行身份验证的前后端交互流程图：
 
-```mermaid
-sequenceDiagram
-    participant Client as 客户端 (浏览器)
-    participant Server as 服务端
-
-    Client->>Server: POST /login (用户名, 密码)
-    Server->>Server: 验证用户名和密码
-    alt 验证成功
-        Server->>Server: 生成 JWT
-        Server-->>Client: "响应 (Set-Cookie: jwt=...,HttpOnly,SameSite=Strict)"
-    else 验证失败
-        Server-->>Client: "响应 (401 Unauthorized)"
-    end
-
-    Note over Client,Server: 后续请求
-
-    Client->>Server: "GET /api/data (自动携带 Cookie)"
-    Server->>Server: 从 Cookie 中读取 JWT 并验证
-    alt JWT 有效
-        Server-->>Client: "响应 (200 OK, 返回数据)"
-    else JWT 无效或过期
-        Server-->>Client: "响应 (401 Unauthorized)"
-    end
-```
+![总结与交互图](./JWT.assets/总结与交互图.svg)
 
 ## 中间件实现
 

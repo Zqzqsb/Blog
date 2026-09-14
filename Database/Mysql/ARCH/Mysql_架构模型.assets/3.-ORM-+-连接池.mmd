@@ -1,0 +1,15 @@
+graph LR
+    subgraph Web 服务进程
+        R1[请求1] --> POOL[连接池<br/>10条空闲连接]
+        R2[请求2] --> POOL
+        R3[请求3] --> POOL
+        POOL --> |借出| C1[连接1]
+        POOL --> |借出| C2[连接2]
+        POOL --> |借出| C3[连接3]
+    end
+
+    C1 --> S[(MySQL Server)]
+    C2 --> S
+    C3 --> S
+
+    style POOL fill:#87CEEB

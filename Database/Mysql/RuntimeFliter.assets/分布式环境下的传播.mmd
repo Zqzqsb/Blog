@@ -1,0 +1,20 @@
+graph TD
+    subgraph 节点1
+        A1[小表扫描] --> B1[构建过滤器]
+    end
+
+    subgraph 节点2
+        A2[小表扫描] --> B2[构建过滤器]
+    end
+
+    B1 --> C[合并过滤器]
+    B2 --> C
+
+    C --> D1[节点1大表扫描]
+    C --> D2[节点2大表扫描]
+    C --> D3[节点3大表扫描]
+
+    style C fill:#FFD700
+    style D1 fill:#90EE90
+    style D2 fill:#90EE90
+    style D3 fill:#90EE90

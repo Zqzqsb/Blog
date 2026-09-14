@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant App as 写操作
+    participant WAL as WAL（顺序追加）
+    participant MT as MemTable（内存跳表）
+    participant L0 as L0 SST（Flush）
+    participant LN as L1/L2/... SST（Compaction）
+
+    App->>WAL: 顺序追加
+    App->>MT: 写入内存
+    Note over App: 返回成功
+    MT->>L0: MemTable 满后 Flush（顺序写）
+    L0->>LN: Compaction（顺序读 + 顺序写）

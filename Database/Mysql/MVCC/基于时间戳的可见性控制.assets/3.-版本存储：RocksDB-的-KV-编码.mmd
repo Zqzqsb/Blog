@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant R as 读操作
+    participant L as Lock CF
+    participant W as Write CF
+    participant D as Default CF
+
+    R->>L: 检查 key 是否有 lock.start_ts <= read_start_ts 的锁
+    alt 有未提交的锁
+        L-->>R: 等待 or 触发冲突解决
+    else 无锁
+        L-->>R: 通过
+        R->>W: Seek(key, read_start_ts)，找 commit_ts <= read_start_ts 的最新记录
+        W-->>R: WriteRecord { start_ts, write_type }
+        R->>D: Get(key, start_ts)
+        D-->>R: value
+    end

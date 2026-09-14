@@ -1,0 +1,28 @@
+graph LR
+    subgraph 客户端
+        CLI[mysql CLI<br/>一条命令一条连接]
+        DRV[Driver 裸连接<br/>mysqlclient / JDBC]
+        ORM[ORM + 连接池<br/>GORM / MyBatis + HikariCP]
+    end
+
+    subgraph MySQL Server
+        CONN[连接器]
+        PARSER[解析器]
+        OPT[优化器]
+        EXEC[执行器]
+    end
+
+    subgraph 存储引擎
+        INNODB[InnoDB]
+    end
+
+    CLI -->|TCP + MySQL Protocol| CONN
+    DRV -->|TCP + MySQL Protocol| CONN
+    ORM -->|TCP + MySQL Protocol| CONN
+
+    CONN --> PARSER --> OPT --> EXEC --> INNODB
+
+    style CLI fill:#ffcccc
+    style ORM fill:#87CEEB
+    style CONN fill:#FFE4B5
+    style INNODB fill:#90EE90

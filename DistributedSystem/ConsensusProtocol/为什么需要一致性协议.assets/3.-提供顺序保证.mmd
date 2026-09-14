@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant C as 客户端
+    participant L as Leader
+    participant F1 as Follower1
+    participant F2 as Follower2
+
+    C->>L: 操作1: x = 1
+    C->>L: 操作2: x = x + 1
+    C->>L: 操作3: y = x
+
+    L->>F1: 日志[1,2,3]
+    L->>F2: 日志[1,2,3]
+
+    Note over L,F2: 所有节点按相同顺序执行<br/>最终状态一致: x=2, y=2

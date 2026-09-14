@@ -1,0 +1,16 @@
+flowchart TD
+    A(["行版本 tid"]) --> B{"tid == creator_trx_id?"}
+    B --是--> V1[可见]
+    B --否--> C{"tid < m_up_limit_id?"}
+    C --是--> V2[可见]
+    C --否--> D{"tid >= m_low_limit_id?"}
+    D --是--> N1[不可见]
+    D --否--> E{"tid ∈ m_ids?"}
+    E --是--> N2[不可见]
+    E --否--> V3[可见]
+
+    style V1 fill:#eafbe7,stroke:#2f855a
+    style V2 fill:#eafbe7,stroke:#2f855a
+    style V3 fill:#eafbe7,stroke:#2f855a
+    style N1 fill:#fff0f0,stroke:#c53030
+    style N2 fill:#fff0f0,stroke:#c53030

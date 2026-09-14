@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant A as 节点A
+    participant N as 网络
+    participant B as 节点B
+
+    A->>N: 消息1 (延迟)
+    A->>N: 消息2
+    N--xB: 消息1 (丢失)
+    N->>B: 消息2 (先到达)
+
+    Note over A,B: 节点B只收到消息2<br/>且不知道消息1是否发送过

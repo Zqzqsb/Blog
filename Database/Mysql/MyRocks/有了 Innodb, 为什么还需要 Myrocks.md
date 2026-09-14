@@ -96,20 +96,7 @@ LSM-tree（Log-Structured Merge Tree）的核心思想是**写只追加到内存
 
 关键特征：**所有写入都是顺序 I/O**，无论是 WAL（追加日志）、Flush（顺序写新文件）还是 Compaction（顺序读多个 SST、顺序写新 SST）。B+ 树的随机写页问题被彻底消除。
 
-```mermaid
-sequenceDiagram
-    participant App as 写操作
-    participant WAL as WAL（顺序追加）
-    participant MT as MemTable（内存跳表）
-    participant L0 as L0 SST（Flush）
-    participant LN as L1/L2/... SST（Compaction）
-
-    App->>WAL: 顺序追加
-    App->>MT: 写入内存
-    Note over App: 返回成功
-    MT->>L0: MemTable 满后 Flush（顺序写）
-    L0->>LN: Compaction（顺序读 + 顺序写）
-```
+![2.1 顺序写取代随机写](./有了%20Innodb,%20为什么还需要%20Myrocks.assets/2.1-顺序写取代随机写.svg)
 
 对 SSD 而言，顺序写比随机写更能均匀分布擦写，延长寿命；对 HDD 则能充分利用磁道顺序带宽。
 

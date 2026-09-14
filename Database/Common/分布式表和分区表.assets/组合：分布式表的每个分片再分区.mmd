@@ -1,0 +1,39 @@
+graph TB
+    subgraph 应用层
+        APP[应用]
+    end
+
+    subgraph 中间层
+        PROXY[ShardingSphere]
+    end
+
+    subgraph 分片0 - 独立实例
+        P00[orders_0_p0<br/>2024-Q1]
+        P01[orders_0_p1<br/>2024-Q2]
+        P02[orders_0_p2<br/>2024-Q3]
+        P03[orders_0_p3<br/>2024-Q4]
+    end
+
+    subgraph 分片1 - 独立实例
+        P10[orders_1_p0<br/>2024-Q1]
+        P11[orders_1_p1<br/>2024-Q2]
+        P12[orders_1_p2<br/>2024-Q3]
+        P13[orders_1_p3<br/>2024-Q4]
+    end
+
+    APP --> PROXY
+    PROXY -->|user_id % 2 = 0| P00
+    PROXY --> P01
+    PROXY --> P02
+    PROXY --> P03
+    PROXY -->|user_id % 2 = 1| P10
+    PROXY --> P11
+    PROXY --> P12
+    PROXY --> P13
+
+    style APP fill:#FFE4B5
+    style PROXY fill:#FFD700
+    style P00 fill:#87CEEB
+    style P01 fill:#87CEEB
+    style P10 fill:#87CEEB
+    style P11 fill:#87CEEB

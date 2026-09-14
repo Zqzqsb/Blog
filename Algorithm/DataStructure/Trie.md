@@ -17,34 +17,7 @@ permalink: /algorithm/ds/trie/
 
 字典树的主要操作包括插入、删除和查找。通过逐字符插入或查找,字典树能够在 `O(L)` 时间复杂度内完成操作,其中 `L` 是字符串的长度。
 
-```mermaid
-graph TD
-    Root((Root))
-    Root -->|a| A((a))
-    Root -->|c| C((c))
-
-    A -->|p| AP((p))
-    A -->|n| AN((n))
-
-    AP -->|p| APP((p))
-    APP -->|l| APPL((l))
-    APPL -->|e| APPLE[apple*]
-
-    AN -->|d| AND[and*]
-
-    C -->|a| CA((a))
-    CA -->|t| CAT[cat*]
-    CA -->|r| CAR((r))
-    CAR -->|d| CARD[card*]
-
-    style APPLE fill:#90EE90
-    style AND fill:#90EE90
-    style CAT fill:#90EE90
-    style CARD fill:#90EE90
-
-    classDef endNode stroke:#2E8B57,stroke-width:3px
-    class APPLE,AND,CAT,CARD endNode
-```
+![概述](./Trie.assets/概述.svg)
 
 > **示例说明**：上图展示了一个包含 "apple"、"and"、"cat"、"card" 四个单词的字典树。绿色节点标记了单词的结束位置,每条路径代表一个字符序列。
 

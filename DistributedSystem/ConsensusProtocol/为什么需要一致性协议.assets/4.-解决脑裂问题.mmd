@@ -1,0 +1,9 @@
+graph TD
+    A[原始集群<br/>5个节点] -->|网络分区| B[分区1<br/>3个节点]
+    A -->|网络分区| C[分区2<br/>2个节点]
+
+    B --> D[拥有多数派<br/>可继续服务]
+    C --> E[无多数派<br/>停止写入]
+
+    style D fill:#90EE90
+    style E fill:#ffcccc

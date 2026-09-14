@@ -1,0 +1,9 @@
+flowchart TD
+    Start[改写后逻辑计划] --> Gen[生成物理片段]
+    Gen --> Est[估基数 + 代价]
+    Est --> Cmp{优于当前最优?}
+    Cmp -->|否| Drop[剪枝]
+    Cmp -->|是| Keep[更新最优 / 扩展]
+    Keep --> More{还有未连接表?}
+    More -->|是| Gen
+    More -->|否| Out[输出物理计划]

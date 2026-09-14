@@ -39,12 +39,7 @@ WHERE u.country = 'CN' AND o.amount > 100;
 | **逻辑计划** | 语义上要算什么 | `Project` / `Filter` / `Join` / `Scan`，无索引名 |
 | **物理计划** | 机器准备怎么算 | `IndexRangeScan` / `NestedLoopJoin` / `HashJoin`… |
 
-```mermaid
-graph LR
-    SQL[SQL 文本] --> AST[AST<br/>语法形状]
-    AST --> LP[逻辑计划<br/>算什么]
-    LP --> PP[物理计划<br/>怎么算]
-```
+![1. 三种「树」，别混在一起](./从%20SQL%20到逻辑计划.assets/1.-三种「树」，别混在一起.svg)
 
 常见误解：
 
@@ -127,14 +122,7 @@ Project[u.name]
 - **父节点消费子节点的输出**：`Filter` 的孩子是「被过滤的输入」；`Join` 通常有左右两个孩子。
 - **执行器真正跑的是物理树**，但读逻辑树时同样按「自底向上出数」的直觉理解数据流即可。
 
-```mermaid
-flowchart BT
-    S1[Scan users] --> F1[Filter country=CN]
-    S2[Scan orders] --> F2[Filter amount>100]
-    F1 --> J[Join on id]
-    F2 --> J
-    J --> P[Project name]
-```
+![3.2 树怎么读](./从%20SQL%20到逻辑计划.assets/3.2-树怎么读.svg)
 
 这张图表达的是：**语义管道**，不是已经选定的执行算法。
 

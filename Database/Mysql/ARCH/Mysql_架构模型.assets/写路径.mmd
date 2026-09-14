@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant E as 执行器
+    participant BP as Buffer Pool
+    participant RB as Redo Log Buffer
+    participant RL as Redo Log (磁盘)
+    participant BL as Binlog (磁盘)
+    participant UL as Undo Log
+    participant D as 数据文件 (磁盘)
+
+    E->>UL: 1. 写 Undo Log (用于回滚)
+    E->>BP: 2. 修改 Buffer Pool 中的页 (脏页)
+    E->>RB: 3. 写 Redo Log Buffer
+
+    Note over E: COMMIT (两阶段提交)
+
+    RB->>RL: 4. Redo Log prepare (fsync)
+    E->>BL: 5. 写 Binlog (fsync)
+    RL->>RL: 6. Redo Log commit
+    RL-->>E: 7. 返回 COMMIT 成功
+
+    Note over BP,D: 后台异步
+    BP->>D: 8. Checkpoint 刷脏页到磁盘 (O_DIRECT)

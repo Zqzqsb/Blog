@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant C1 as 客户端1
+    participant C2 as 客户端2
+    participant E as etcd集群
+
+    C1->>E: 获取锁 /lock/resource
+    E->>C1: 成功，租约ID=1
+
+    C2->>E: 获取锁 /lock/resource
+    E->>C2: 失败，锁已被占用
+
+    Note over C1: 执行临界区操作
+
+    C1->>E: 释放锁
+    E->>C1: 成功
+
+    C2->>E: 重试获取锁
+    E->>C2: 成功，租约ID=2

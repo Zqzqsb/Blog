@@ -1,0 +1,6 @@
+flowchart BT
+    S1[Scan users] --> F1[Filter country=CN]
+    S2[Scan orders] --> F2[Filter amount>100]
+    F1 --> J[Join on id]
+    F2 --> J
+    J --> P[Project name]

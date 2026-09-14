@@ -1,0 +1,10 @@
+graph TD
+    A[单机 MySQL] --> B[主从复制<br/>读写分离]
+    B --> C[DB Proxy<br/>透明分流]
+    B --> D[DB Agent<br/>Sidecar 模式]
+    C --> E[分库分表]
+    D --> E
+    E --> F[分布式数据库<br/>TiDB / Vitess]
+
+    style A fill:#ffcccc
+    style F fill:#90EE90

@@ -1,0 +1,9 @@
+graph TD
+    A[应用] --> P[Proxy / Agent]
+
+    P --> |user_id % 4 = 0| DB0[(db_0.users_0)]
+    P --> |user_id % 4 = 1| DB1[(db_1.users_1)]
+    P --> |user_id % 4 = 2| DB2[(db_2.users_2)]
+    P --> |user_id % 4 = 3| DB3[(db_3.users_3)]
+
+    style P fill:#FFD700

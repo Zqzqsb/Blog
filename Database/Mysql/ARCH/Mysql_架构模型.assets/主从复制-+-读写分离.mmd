@@ -1,0 +1,12 @@
+graph LR
+    App[应用] --> W{写?}
+    W -->|INSERT/UPDATE/DELETE| M[(Master)]
+    W -->|SELECT| S1[(Slave 1)]
+    W -->|SELECT| S2[(Slave 2)]
+
+    M -->|Binlog 复制| S1
+    M -->|Binlog 复制| S2
+
+    style M fill:#FFE4B5
+    style S1 fill:#90EE90
+    style S2 fill:#90EE90

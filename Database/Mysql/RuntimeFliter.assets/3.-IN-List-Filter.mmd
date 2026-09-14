@@ -1,0 +1,17 @@
+graph TD
+    A[Runtime Filter 类型] --> B[Bloom Filter]
+    A --> C[Min-Max Filter]
+    A --> D[IN List Filter]
+
+    B --> B1[高基数列<br/>如: user_id, order_id]
+    B --> B2[空间效率高<br/>有假阳性]
+
+    C --> C1[数值/日期列<br/>如: price, date]
+    C --> C2[精确过滤<br/>无假阳性]
+
+    D --> D1[低基数列<br/>如: status, type]
+    D --> D2[精确过滤<br/>值列表小]
+
+    style B fill:#FFE4B5
+    style C fill:#90EE90
+    style D fill:#87CEEB

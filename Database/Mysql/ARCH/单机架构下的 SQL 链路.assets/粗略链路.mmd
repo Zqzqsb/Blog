@@ -1,0 +1,11 @@
+graph LR
+    C[Client<br/>CLI / Driver / ORM+Pool]
+    S[MySQL Server<br/>连接器 / 解析器 / 优化器 / 执行器]
+    H[Handler API]
+    IDB[InnoDB<br/>B+ Tree / Buffer Pool / Redo Log]
+    RDB[RocksDB / MyRocks<br/>LSM-tree / MemTable / SST]
+
+    C -->|MySQL 协议| S
+    S --> H
+    H --> IDB
+    H --> RDB

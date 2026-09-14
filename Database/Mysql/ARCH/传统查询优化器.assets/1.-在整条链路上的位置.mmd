@@ -1,0 +1,9 @@
+graph LR
+    SQL[SQL 文本] --> P[解析器]
+    P --> AST[AST]
+    AST --> L[逻辑计划]
+    L --> R[规则改写<br/>RBO]
+    R --> C[代价选型<br/>CBO]
+    C --> PLAN[物理计划]
+    PLAN --> E[执行器]
+    E --> H[Handler / 引擎]

@@ -1,0 +1,49 @@
+graph TB
+    subgraph 应用层
+        A1[微服务 A]
+        A2[微服务 B]
+    end
+
+    subgraph 接入层
+        VIP[VIP / LB]
+    end
+
+    subgraph 代理层
+        P1[DB Proxy 1]
+        P2[DB Proxy 2]
+    end
+
+    subgraph 主从集群 - 分片1
+        M1[(Master 1)]
+        S1a[(Slave 1a)]
+        S1b[(Slave 1b)]
+        M1 --> S1a
+        M1 --> S1b
+    end
+
+    subgraph 主从集群 - 分片2
+        M2[(Master 2)]
+        S2a[(Slave 2a)]
+        S2b[(Slave 2b)]
+        M2 --> S2a
+        M2 --> S2b
+    end
+
+    A1 --> VIP
+    A2 --> VIP
+    VIP --> P1
+    VIP --> P2
+    P1 --> M1
+    P1 --> S1a
+    P1 --> M2
+    P1 --> S2a
+    P2 --> M1
+    P2 --> S1b
+    P2 --> M2
+    P2 --> S2b
+
+    style VIP fill:#87CEEB
+    style P1 fill:#FFD700
+    style P2 fill:#FFD700
+    style M1 fill:#FFE4B5
+    style M2 fill:#FFE4B5

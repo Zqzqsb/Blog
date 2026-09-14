@@ -1,0 +1,7 @@
+%%{init: {'flowchart': {'curve': 'linear', 'padding': 12}}}%%
+flowchart TB
+  X["x ∈ R^d"] --> S1["子空间 1…m"]
+  S1 --> CODE["m 个码字 id"]
+  Q["查询 q"] --> LUT["子空间 LUT"]
+  CODE --> SUM["查表求和 ≈ 距离"]
+  LUT --> SUM

@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant E as 执行器
+    participant MT as MemTable（内存）
+    participant WL as RocksDB WAL（磁盘）
+    participant L0 as L0 SST（磁盘）
+    participant LN as L1/L2/... SST
+
+    E->>WL: 1. 追加写 WAL（顺序 I/O）
+    E->>MT: 2. 写入 MemTable
+
+    Note over E: COMMIT 返回
+
+    Note over MT,L0: 后台异步
+    MT->>L0: 3. MemTable 满后 Flush 为 L0 SST
+    L0->>LN: 4. Compaction 合并 SST，消除旧版本

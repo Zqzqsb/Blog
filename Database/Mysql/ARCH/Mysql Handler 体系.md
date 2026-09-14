@@ -167,46 +167,7 @@ handlerton::commit / rollback  ──→  消费事务上下文、做持久化�
 
 ### 4.1 两个维度的正交关系（Mermaid 图）
 
-```mermaid
-flowchart TB
-    subgraph TD["事务维度 — 主语为 handlerton + THD"]
-        direction LR
-        EL["external_lock F_WRLCK<br/>lazy init 事务上下文<br/>trans_register_ha 登记"]
-        SS["start_stmt<br/>LOCK TABLES 下的语句边界"]
-        ELU["external_lock F_UNLCK<br/>table_in_use 递减<br/>autocommit 触发提交或回滚"]
-        CMT["handlerton.commit<br/>刷日志 / 写 WriteBatch<br/>释放行锁"]
-        RB["handlerton.rollback<br/>丢弃未提交写入"]
-        SP["savepoint_set / savepoint_rollback"]
-        EL --> SS --> ELU --> CMT
-        ELU -.-> RB
-        SS -.-> SP
-    end
-
-    subgraph RD["行维度 — 主语为 handler + 表中一行"]
-        direction LR
-        WR["write_row buf"]
-        UR["update_row old new"]
-        IR["index_read_map"]
-        DR["delete_row buf"]
-        WR ---  UR --- IR --- DR
-    end
-
-    CTX[["引擎事务上下文<br/>InnoDB 中为 trx_t<br/>MyRocks 中为 Rdb_transaction<br/>挂在 THD 上"]]
-
-    EL  ==>|创建与挂载| CTX
-    CTX ==>|提供 WriteBatch 或 snapshot| WR
-    CTX ==>|提供 snapshot 用于 MVCC 读| IR
-    WR  ==>|内部写入 KV 或 undo| CTX
-    DR  ==>|登记删除操作| CTX
-    CTX ==>|在提交时被消费| CMT
-
-    classDef ctx fill:#fff3b0,stroke:#d4a017,color:#000
-    classDef txFamily fill:#e6f2ff,stroke:#2b6cb0,color:#000
-    classDef rwFamily fill:#eafbe7,stroke:#2f855a,color:#000
-    class CTX ctx
-    class EL,SS,ELU,CMT,RB,SP txFamily
-    class WR,UR,IR,DR rwFamily
-```
+![4.1 两个维度的正交关系（Mermaid 图）](./Mysql%20Handler%20体系.assets/4.1-两个维度的正交关系（Mermaid-图）.svg)
 
 图中几处关键视觉表达：
 

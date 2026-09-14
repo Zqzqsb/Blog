@@ -1,0 +1,40 @@
+graph TB
+    subgraph 应用层
+        APP[应用]
+    end
+
+    subgraph 中间层
+        PROXY[ShardingSphere / DBProxy]
+    end
+
+    subgraph 分片集群 - 路由由中间件完成
+        subgraph 实例1
+            D1[(db_shard_0)]
+            T1[orders_0<br/>user_id % 4 = 0]
+        end
+        subgraph 实例2
+            D2[(db_shard_1)]
+            T2[orders_1<br/>user_id % 4 = 1]
+        end
+        subgraph 实例3
+            D3[(db_shard_2)]
+            T3[orders_2<br/>user_id % 4 = 2]
+        end
+        subgraph 实例4
+            D4[(db_shard_3)]
+            T4[orders_3<br/>user_id % 4 = 3]
+        end
+    end
+
+    APP --> PROXY
+    PROXY --> D1
+    PROXY --> D2
+    PROXY --> D3
+    PROXY --> D4
+
+    style APP fill:#FFE4B5
+    style PROXY fill:#FFD700
+    style D1 fill:#87CEEB
+    style D2 fill:#87CEEB
+    style D3 fill:#87CEEB
+    style D4 fill:#87CEEB

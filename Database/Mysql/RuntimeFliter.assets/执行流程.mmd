@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant Q as 查询协调器
+    participant S as 小表扫描
+    participant B as 构建过滤器
+    participant L as 大表扫描
+    participant J as JOIN算子
+
+    Q->>S: 1. 启动小表扫描
+    S->>B: 2. 传递数据
+    B->>B: 3. 构建 Runtime Filter
+
+    par 并行执行
+        B->>L: 4. 分发过滤器
+        L->>L: 5. 应用过滤器扫描
+    end
+
+    L->>J: 6. 传递过滤后的数据
+    S->>J: 7. 传递小表数据
+    J->>Q: 8. 返回JOIN结果
+
+    Note over B,L: 过滤器传递可能跨节点

@@ -1,0 +1,8 @@
+graph LR
+    A[扫描 users 表<br/>10万行符合条件] --> B[生成 Bloom Filter<br/>包含10万个user_id]
+    B --> C[扫描 orders 表<br/>应用过滤器]
+    C --> D[过滤后约 500万行<br/>减少 99.5%]
+    D --> E[执行 JOIN]
+
+    style B fill:#FFD700
+    style D fill:#90EE90

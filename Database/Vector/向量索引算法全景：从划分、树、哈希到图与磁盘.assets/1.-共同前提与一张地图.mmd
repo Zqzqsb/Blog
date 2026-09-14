@@ -1,0 +1,10 @@
+%%{init: {'flowchart': {'curve': 'linear', 'padding': 12}}}%%
+flowchart TB
+  ANN["ANN 索引"] --> H["哈希族<br/>LSH …"]
+  ANN --> T["树族<br/>KD / RP / Annoy …"]
+  ANN --> P["划分族<br/>IVF / IMI …"]
+  ANN --> G["图族<br/>NSW / HNSW / NSG / Vamana …"]
+  ANN --> S["系统层<br/>DiskANN / SPANN / CAGRA …"]
+  P -.-> Q["量化打分<br/>PQ / ScaNN / RaBitQ …"]
+  G -.-> Q
+  S -.-> Q

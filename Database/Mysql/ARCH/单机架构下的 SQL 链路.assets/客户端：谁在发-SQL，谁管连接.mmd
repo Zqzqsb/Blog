@@ -1,0 +1,6 @@
+graph LR
+    CLI[CLI<br/>mysql 命令行] --> NET
+    DRV[Driver 裸连接<br/>脚本] --> NET
+    ORM[ORM + 连接池<br/>Web 服务] --> NET
+
+    NET[MySQL Protocol<br/>TCP 连接]

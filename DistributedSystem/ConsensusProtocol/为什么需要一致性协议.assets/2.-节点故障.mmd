@@ -1,0 +1,11 @@
+graph TD
+    A[节点故障类型] --> B[崩溃故障]
+    A --> C[遗漏故障]
+    A --> D[拜占庭故障]
+
+    B --> B1[节点宕机<br/>不再响应]
+    C --> C1[节点运行<br/>但丢失消息]
+    D --> D1[节点异常<br/>发送错误数据]
+
+    style D fill:#ffcccc
+    style D1 fill:#ffcccc

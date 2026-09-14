@@ -1,0 +1,16 @@
+graph LR
+    subgraph Pod 1
+        A1[App] --> AG1[DB Agent<br/>localhost:3306]
+    end
+
+    subgraph Pod 2
+        A2[App] --> AG2[DB Agent<br/>localhost:3306]
+    end
+
+    AG1 --> M[(Master)]
+    AG1 --> S1[(Slave)]
+    AG2 --> M
+    AG2 --> S2[(Slave)]
+
+    style AG1 fill:#FFE4B5
+    style AG2 fill:#FFE4B5

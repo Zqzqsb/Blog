@@ -1,0 +1,29 @@
+graph LR
+    subgraph 应用集群
+        A1[App 1]
+        A2[App 2]
+        A3[App 3]
+    end
+
+    subgraph DB Proxy 集群
+        P1[ProxySQL / ShardingSphere-Proxy]
+        P2[ProxySQL / ShardingSphere-Proxy]
+    end
+
+    subgraph MySQL 集群
+        M[(Master)]
+        S1[(Slave 1)]
+        S2[(Slave 2)]
+    end
+
+    A1 --> P1
+    A2 --> P1
+    A3 --> P2
+
+    P1 --> M
+    P1 --> S1
+    P2 --> M
+    P2 --> S2
+
+    style P1 fill:#87CEEB
+    style P2 fill:#87CEEB

@@ -1,0 +1,12 @@
+graph TD
+    A[dim_product<br/>过滤 category] --> B[生成 Filter1<br/>product_id]
+    C[dim_store<br/>过滤 region] --> D[生成 Filter2<br/>store_id]
+    E[dim_date<br/>过滤 year] --> F[生成 Filter3<br/>date_id]
+
+    B --> G[fact_sales 扫描]
+    D --> G
+    F --> G
+
+    G --> H[应用3个过滤器<br/>大幅减少数据量]
+
+    style H fill:#90EE90

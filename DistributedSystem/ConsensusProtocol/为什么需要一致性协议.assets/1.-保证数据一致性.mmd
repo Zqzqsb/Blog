@@ -1,0 +1,24 @@
+graph LR
+    A[账户A: 1000元] -->|转账500元| B[账户B: 500元]
+
+    subgraph 节点1
+    A1[A: 500元]
+    B1[B: 1000元]
+    end
+
+    subgraph 节点2
+    A2[A: 500元]
+    B2[B: 1000元]
+    end
+
+    subgraph 节点3
+    A3[A: 500元]
+    B3[B: 1000元]
+    end
+
+    style A1 fill:#90EE90
+    style B1 fill:#90EE90
+    style A2 fill:#90EE90
+    style B2 fill:#90EE90
+    style A3 fill:#90EE90
+    style B3 fill:#90EE90

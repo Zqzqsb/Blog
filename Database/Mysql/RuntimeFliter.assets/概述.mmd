@@ -1,0 +1,13 @@
+graph LR
+    A[传统JOIN] --> A1[扫描全部大表数据]
+    A1 --> A2[执行JOIN]
+    A2 --> A3[返回结果]
+
+    B[Runtime Filter] --> B1[先扫描小表]
+    B1 --> B2[生成过滤器]
+    B2 --> B3[过滤后扫描大表]
+    B3 --> B4[执行JOIN]
+    B4 --> B5[返回结果]
+
+    style B3 fill:#90EE90
+    style A1 fill:#ffcccc

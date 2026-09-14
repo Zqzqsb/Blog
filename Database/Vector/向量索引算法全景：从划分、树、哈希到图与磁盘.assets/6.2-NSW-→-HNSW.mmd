@@ -1,0 +1,6 @@
+%%{init: {'flowchart': {'curve': 'linear', 'padding': 12}}}%%
+flowchart TB
+  E["最高层入口"] --> L2["高层贪心下降"]
+  L2 --> L1["中间层"]
+  L1 --> L0["layer 0 束搜索"]
+  L0 --> R["Top-K"]

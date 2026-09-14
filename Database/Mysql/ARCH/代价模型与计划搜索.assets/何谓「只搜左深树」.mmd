@@ -1,0 +1,9 @@
+flowchart TB
+  subgraph LD [左深]
+    AB1["A ⋈ B"] --> ABC1["(A⋈B) ⋈ C"]
+    ABC1 --> ABCD1["… ⋈ D"]
+  end
+  subgraph BY [bushy]
+    AB2["A ⋈ B"] --> ABCD2["(A⋈B) ⋈ (C⋈D)"]
+    CD2["C ⋈ D"] --> ABCD2
+  end

@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant Main as 主线程
+    participant C as lookup_pending_ (容器)
+    participant B1 as bthread A
+    participant B2 as bthread B
+
+    Main->>C: emplace_back(req_A)
+    Main->>B1: 传入 &req_A
+    Main->>C: emplace_back(req_B)
+    Main->>B2: 传入 &req_B
+
+    Note over B1,B2: bthread 并发执行 lookup
+
+    B1-->>C: req_A.done = true (经裸指针写)
+    Main->>C: erase(req_A) ← 删中间元素
+
+    alt deque：后续元素搬家
+        Note over C: req_B 被 move 到新地址
+        Note over B2: 裸指针仍指向旧地址
+        B2-->>C: req_B.done = true (写到旧槽位)
+        Main->>Main: 新地址上永远读到 done=false → 轮询死循环
+    else list：只摘除目标节点
+        Note over C: req_B 地址不变
+        B2-->>C: req_B.done = true (写到正确地址)
+        Main->>Main: 正常读到完成
+    end

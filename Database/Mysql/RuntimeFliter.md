@@ -20,21 +20,7 @@ permalink: /database/runtime-filter/
 
 这项技术在 Apache Impala、Apache Doris、ClickHouse 等现代分析型数据库中得到广泛应用，是提升 OLAP 查询性能的关键技术之一。
 
-```mermaid
-graph LR
-    A[传统JOIN] --> A1[扫描全部大表数据]
-    A1 --> A2[执行JOIN]
-    A2 --> A3[返回结果]
-
-    B[Runtime Filter] --> B1[先扫描小表]
-    B1 --> B2[生成过滤器]
-    B2 --> B3[过滤后扫描大表]
-    B3 --> B4[执行JOIN]
-    B4 --> B5[返回结果]
-
-    style B3 fill:#90EE90
-    style A1 fill:#ffcccc
-```
+![概述](./RuntimeFliter.assets/概述.svg)
 
 ## 核心概念
 
@@ -49,22 +35,7 @@ Runtime Filter 是在查询执行时动态生成的过滤条件，用于在数�
 3. 将过滤器传递给大表（Probe Side）的扫描算子
 4. 大表扫描时应用过滤器，跳过不可能匹配的数据
 
-```mermaid
-graph TD
-    A[小表 orders<br/>100万行] --> B[构建过滤器]
-    B --> C[Bloom Filter<br/>包含所有order_id]
-
-    D[大表 order_items<br/>1亿行] --> E[应用过滤器]
-    C --> E
-    E --> F[过滤后<br/>200万行]
-
-    F --> G[执行JOIN]
-    A --> G
-    G --> H[最终结果]
-
-    style C fill:#87CEEB
-    style F fill:#90EE90
-```
+![什么是 Runtime Filter](./RuntimeFliter.assets/什么是-Runtime-Filter.svg)
 
 ### Runtime Filter 的类型
 
@@ -137,53 +108,13 @@ class BloomFilter {
 WHERE category_id IN (1, 5, 9)
 ```
 
-```mermaid
-graph TD
-    A[Runtime Filter 类型] --> B[Bloom Filter]
-    A --> C[Min-Max Filter]
-    A --> D[IN List Filter]
-
-    B --> B1[高基数列<br/>如: user_id, order_id]
-    B --> B2[空间效率高<br/>有假阳性]
-
-    C --> C1[数值/日期列<br/>如: price, date]
-    C --> C2[精确过滤<br/>无假阳性]
-
-    D --> D1[低基数列<br/>如: status, type]
-    D --> D2[精确过滤<br/>值列表小]
-
-    style B fill:#FFE4B5
-    style C fill:#90EE90
-    style D fill:#87CEEB
-```
+![3. IN List Filter](./RuntimeFliter.assets/3.-IN-List-Filter.svg)
 
 ## 实现原理
 
 ### 执行流程
 
-```mermaid
-sequenceDiagram
-    participant Q as 查询协调器
-    participant S as 小表扫描
-    participant B as 构建过滤器
-    participant L as 大表扫描
-    participant J as JOIN算子
-
-    Q->>S: 1. 启动小表扫描
-    S->>B: 2. 传递数据
-    B->>B: 3. 构建 Runtime Filter
-
-    par 并行执行
-        B->>L: 4. 分发过滤器
-        L->>L: 5. 应用过滤器扫描
-    end
-
-    L->>J: 6. 传递过滤后的数据
-    S->>J: 7. 传递小表数据
-    J->>Q: 8. 返回JOIN结果
-
-    Note over B,L: 过滤器传递可能跨节点
-```
+![执行流程](./RuntimeFliter.assets/执行流程.svg)
 
 ### 过滤器生成时机
 
@@ -225,28 +156,7 @@ def choose_filter_type(column_stats):
 
 在分布式数据库中，Runtime Filter 需要跨节点传播：
 
-```mermaid
-graph TD
-    subgraph 节点1
-        A1[小表扫描] --> B1[构建过滤器]
-    end
-
-    subgraph 节点2
-        A2[小表扫描] --> B2[构建过滤器]
-    end
-
-    B1 --> C[合并过滤器]
-    B2 --> C
-
-    C --> D1[节点1大表扫描]
-    C --> D2[节点2大表扫描]
-    C --> D3[节点3大表扫描]
-
-    style C fill:#FFD700
-    style D1 fill:#90EE90
-    style D2 fill:#90EE90
-    style D3 fill:#90EE90
-```
+![分布式环境下的传播](./RuntimeFliter.assets/分布式环境下的传播.svg)
 
 **传播策略**：
 
@@ -275,16 +185,7 @@ WHERE u.country = 'China'
 
 **优化效果**：
 
-```mermaid
-graph LR
-    A[扫描 users 表<br/>10万行符合条件] --> B[生成 Bloom Filter<br/>包含10万个user_id]
-    B --> C[扫描 orders 表<br/>应用过滤器]
-    C --> D[过滤后约 500万行<br/>减少 99.5%]
-    D --> E[执行 JOIN]
-
-    style B fill:#FFD700
-    style D fill:#90EE90
-```
+![案例1: 星型模型查询优化](./RuntimeFliter.assets/案例1-星型模型查询优化.svg)
 
 **性能提升**：
 
@@ -341,20 +242,7 @@ WHERE p.category = 'Electronics'
 
 **Runtime Filter 链**：
 
-```mermaid
-graph TD
-    A[dim_product<br/>过滤 category] --> B[生成 Filter1<br/>product_id]
-    C[dim_store<br/>过滤 region] --> D[生成 Filter2<br/>store_id]
-    E[dim_date<br/>过滤 year] --> F[生成 Filter3<br/>date_id]
-
-    B --> G[fact_sales 扫描]
-    D --> G
-    F --> G
-
-    G --> H[应用3个过滤器<br/>大幅减少数据量]
-
-    style H fill:#90EE90
-```
+![案例3: 多表 JOIN 优化](./RuntimeFliter.assets/案例3-多表-JOIN-优化.svg)
 
 ## 最佳实践
 

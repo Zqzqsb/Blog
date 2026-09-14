@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant U as 终端
+    participant CLI as mysql 可执行文件
+    participant S as MySQL Server
+
+    U->>CLI: 执行命令，输入密码
+    CLI->>CLI: 解析参数 (-h, -u, -p)
+    CLI->>S: TCP 三次握手 (连接 3306 端口)
+    S->>CLI: Handshake Packet (Server 版本, Salt)
+    CLI->>S: Auth Response (用户名 + 加密密码)
+    S->>CLI: OK Packet (认证成功)
+
+    Note over U,S: 进入交互式会话，一条 TCP 连接保持
+
+    U->>CLI: 输入 SELECT * FROM users;
+    CLI->>CLI: 读取输入，遇到分号，识别为完整 SQL
+    CLI->>S: COM_QUERY 包 (SQL 文本)
+    S->>CLI: 列定义 + 行数据 + EOF
+    CLI->>CLI: 格式化为表格
+    CLI->>U: 打印结果
+
+    U->>CLI: 输入 exit
+    CLI->>S: COM_QUIT
+    S->>CLI: 关闭连接

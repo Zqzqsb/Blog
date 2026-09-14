@@ -1,0 +1,9 @@
+graph LR
+    A[执行器调用<br/>ha_index_read] --> B{Buffer Pool<br/>中有该页?}
+    B -->|命中| C[直接返回行数据]
+    B -->|未命中| D[从磁盘读取 16KB 页]
+    D --> E[加载到 Buffer Pool]
+    E --> C
+
+    style B fill:#FFD700
+    style C fill:#90EE90

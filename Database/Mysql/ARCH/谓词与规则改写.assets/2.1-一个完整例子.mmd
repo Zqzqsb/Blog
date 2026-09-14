@@ -1,0 +1,12 @@
+flowchart TB
+    subgraph before [下推前]
+      F1[Filter country=CN] --> J1[Join]
+      J1 --> O1[Scan orders]
+      J1 --> U1[Scan users]
+    end
+    subgraph after [下推后]
+      J2[Join] --> O2[Scan orders]
+      J2 --> F2[Filter country=CN]
+      F2 --> U2[Scan users]
+    end
+    before --> after

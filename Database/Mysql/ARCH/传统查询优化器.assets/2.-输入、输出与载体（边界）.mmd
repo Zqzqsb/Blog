@@ -1,0 +1,18 @@
+flowchart LR
+    subgraph 边界外
+        AST[AST]
+        CAT[Catalog / 统计]
+        HINT[Hint / 开关]
+    end
+    subgraph 优化器内
+        LP[逻辑计划树]
+        MEMO[候选空间]
+        PP[物理计划树]
+    end
+    AST -->|绑定表列| LP
+    CAT -.-> LP
+    CAT -.-> MEMO
+    HINT -.-> MEMO
+    LP -->|改写| LP
+    LP -->|枚举| MEMO
+    MEMO -->|选最优| PP

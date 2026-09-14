@@ -1,0 +1,10 @@
+graph LR
+    A[SQL文本] --> B[解析器<br/>Parser]
+    B --> C[语法树<br/>AST]
+    C --> D[优化器<br/>Optimizer]
+    D --> E[执行计划<br/>Plan]
+    E --> F[执行器<br/>Executor]
+    F --> G[Handler API]
+    G --> H[InnoDB]
+
+    style D fill:#FFD700

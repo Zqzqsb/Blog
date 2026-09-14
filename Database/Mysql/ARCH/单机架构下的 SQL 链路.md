@@ -17,19 +17,7 @@ permalink: /database/mysql/-sql-/
 
 ## 粗略链路
 
-```mermaid
-graph LR
-    C[Client<br/>CLI / Driver / ORM+Pool]
-    S[MySQL Server<br/>连接器 / 解析器 / 优化器 / 执行器]
-    H[Handler API]
-    IDB[InnoDB<br/>B+ Tree / Buffer Pool / Redo Log]
-    RDB[RocksDB / MyRocks<br/>LSM-tree / MemTable / SST]
-
-    C -->|MySQL 协议| S
-    S --> H
-    H --> IDB
-    H --> RDB
-```
+![粗略链路](./单机架构下的%20SQL%20链路.assets/粗略链路.svg)
 
 Client → Server 这段对两种引擎完全一样。分叉点在 Handler API：执行器调用同一套虚函数接口，引擎各自实现。后续小节先讲公共路径（客户端、Server、执行器），再分别讲两条引擎路径：
 
@@ -43,14 +31,7 @@ Client → Server 这段对两种引擎完全一样。分叉点在 Handler API�
 
 单机场景下，客户端可以抽象成三种形态：
 
-```mermaid
-graph LR
-    CLI[CLI<br/>mysql 命令行] --> NET
-    DRV[Driver 裸连接<br/>脚本] --> NET
-    ORM[ORM + 连接池<br/>Web 服务] --> NET
-
-    NET[MySQL Protocol<br/>TCP 连接]
-```
+![客户端：谁在发 SQL，谁管连接](./单机架构下的%20SQL%20链路.assets/客户端：谁在发-SQL，谁管连接.svg)
 
 - **CLI (`mysql`)**：每次手动连库，整个会话复用一条 TCP 连接，退出时关闭
 - **Driver 裸连接**：脚本中直接 `connect → execute → close`，一条 SQL 或几条 SQL 用一条连接
@@ -184,17 +165,7 @@ handler->ha_index_next();      // 取下一行
 
 读路径可以用刚才的横向图来表示：
 
-```mermaid
-graph LR
-    A[执行器调用<br/>ha_index_read/next] --> B{Buffer Pool<br/>中有该页?}
-    B -->|命中| C[从页中解析出行数据]
-    B -->|未命中| D[从磁盘读取 16KB 页]
-    D --> E[加载到 Buffer Pool]
-    E --> C
-
-    style B fill:#FFD700
-    style C fill:#90EE90
-```
+![1. 从索引到页，再到行](./单机架构下的%20SQL%20链路.assets/1.-从索引到页，再到行.svg)
 
 - 命中：直接在 Buffer Pool 中找到页，读取行
 - 未命中：从磁盘读整个 16KB 页，放入 Buffer Pool，再读取行
@@ -234,27 +205,7 @@ COMMIT;
 
 在 InnoDB 内部，写路径大致如下：
 
-```mermaid
-sequenceDiagram
-    participant E as 执行器
-    participant BP as Buffer Pool
-    participant RB as Redo Log Buffer
-    participant RL as Redo Log (磁盘)
-    participant UL as Undo Log
-    participant D as 数据文件 (磁盘)
-
-    E->>UL: 1. 写 Undo Log (用于回滚)
-    E->>BP: 2. 修改 Buffer Pool 中的页 (脏页)
-    E->>RB: 3. 写 Redo Log Buffer
-
-    Note over E: COMMIT
-
-    RB->>RL: 4. 刷 Redo Log (WAL)
-    RL-->>E: 5. 返回 COMMIT 成功
-
-    Note over BP,D: 后台异步
-    BP->>D: 6. Checkpoint 刷脏页到磁盘 (O_DIRECT)
-```
+![1. 写入顺序](./单机架构下的%20SQL%20链路.assets/1.-写入顺序.svg)
 
 关键点：
 
@@ -297,19 +248,7 @@ RocksDB 的数据按写入时间分层存储：
 
 ### 2. 读路径：从新到旧逐层查找
 
-```mermaid
-graph LR
-    A["ha_index_read(key)"] --> B[查 MemTable]
-    B -->|命中| R[返回行数据]
-    B -->|未命中| C[查 Block Cache]
-    C -->|命中| R
-    C -->|未命中| D[读 L0 SST]
-    D -->|命中| RC[加载到 Block Cache] --> R
-    D -->|未命中| E[读 L1 / L2 / ... SST]
-    E --> RC
-
-    style R fill:#90EE90
-```
+![2. 读路径：从新到旧逐层查找](./单机架构下的%20SQL%20链路.assets/2.-读路径：从新到旧逐层查找.svg)
 
 - **MemTable**：写入最新，优先查找；读写均在内存，延迟最低
 - **Block Cache**：RocksDB 自己管理的 SST block 缓存，类似 InnoDB Buffer Pool 的角色，但粒度是 block（默认 4KB）而非整页
@@ -330,23 +269,7 @@ MyRocks 在 RocksDB 之上通过 handler API 将行数据编码为 KV：主键�
 
 ### 1. 写入顺序
 
-```mermaid
-sequenceDiagram
-    participant E as 执行器
-    participant MT as MemTable（内存）
-    participant WL as RocksDB WAL（磁盘）
-    participant L0 as L0 SST（磁盘）
-    participant LN as L1/L2/... SST
-
-    E->>WL: 1. 追加写 WAL（顺序 I/O）
-    E->>MT: 2. 写入 MemTable
-
-    Note over E: COMMIT 返回
-
-    Note over MT,L0: 后台异步
-    MT->>L0: 3. MemTable 满后 Flush 为 L0 SST
-    L0->>LN: 4. Compaction 合并 SST，消除旧版本
-```
+![1. 写入顺序](./单机架构下的%20SQL%20链路.assets/1.-写入顺序-2.svg)
 
 关键点：
 

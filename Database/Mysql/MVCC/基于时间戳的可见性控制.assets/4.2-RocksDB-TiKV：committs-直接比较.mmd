@@ -1,0 +1,7 @@
+flowchart TD
+    A(["Write CF 版本 commit_ts"]) --> B{"commit_ts <= read_start_ts?"}
+    B --是--> V[可见]
+    B --否--> N[不可见]
+
+    style V fill:#eafbe7,stroke:#2f855a
+    style N fill:#fff0f0,stroke:#c53030

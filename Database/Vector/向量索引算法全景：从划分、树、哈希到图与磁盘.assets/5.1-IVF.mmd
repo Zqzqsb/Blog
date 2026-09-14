@@ -1,0 +1,6 @@
+%%{init: {'flowchart': {'curve': 'linear', 'padding': 12}}}%%
+flowchart LR
+  Q["查询 q"] --> C["比较 K 个质心"]
+  C --> P["选出 nprobe 个簇"]
+  P --> S["扫描簇内向量/码"]
+  S --> T["Top-K"]

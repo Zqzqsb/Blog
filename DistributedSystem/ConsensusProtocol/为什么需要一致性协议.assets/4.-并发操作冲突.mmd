@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant C1 as 客户端1
+    participant N1 as 节点1
+    participant N2 as 节点2
+    participant C2 as 客户端2
+
+    Note over N1,N2: 初始值: x = 0
+
+    C1->>N1: 写入 x = 1
+    C2->>N2: 写入 x = 2
+
+    N1->>N2: 同步 x = 1
+    N2->>N1: 同步 x = 2
+
+    Note over N1,N2: 冲突！最终值是多少？

@@ -1,0 +1,8 @@
+%%{init: {'flowchart': {'curve': 'linear', 'padding': 12}}}%%
+flowchart LR
+  X["x"] --> R["随机旋转"]
+  R --> LM["Lloyd-Max b-1 bit"]
+  LM --> RES["残差"]
+  RES --> QJL["QJL 1-bit"]
+  LM --> IP["内积估计"]
+  QJL --> IP
