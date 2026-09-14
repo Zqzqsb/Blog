@@ -49,3 +49,4 @@ Use only the short English labels spelled exactly as written above.
 
 - 路径：博客仓库下 `covers/<博文文件名>.prompt.txt`（一篇一文件）。
 - `covers/` 已被 `.gitignore` 忽略——提示词是本地中间产物，留在本地、不入库。
+- 出图后要挂到列表 / 正文：按 [how-to-put-cover-on-blog](../how-to-put-cover-on-blog/SKILL.md)（`public/images/` + `<!-- more -->` 前的 Markdown 图，不要写 frontmatter `cover`）。
