@@ -45,22 +45,23 @@ digraph InvertedIndexPipeline {
 
     document [
       label=<
-        <B>文档字段</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#64748B">title / body / tags</FONT>
+        <B>doc 1 · title</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#64748B">数据库索引优化与数据库实践</FONT>
       >
     ];
     analyzer [
       fillcolor="#DBEAFE",
       color="#60A5FA",
       label=<
-        <B>Analyzer</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#475569">字符规范 · 分词 · 归一化</FONT>
+        <B>领域 Analyzer</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">分词 · 去停用词「与」</FONT>
       >
     ];
     tokens [
       label=<
         <B>Token Stream</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#64748B">term · position · offset</FONT>
+        <FONT POINT-SIZE="9" COLOR="#64748B">数据库@0 · 索引@1 · 优化@2</FONT><BR/>
+        <FONT POINT-SIZE="9" COLOR="#64748B">数据库@3 · 实践@4</FONT>
       >
     ];
 
@@ -80,7 +81,7 @@ digraph InvertedIndexPipeline {
       color="#A78BFA",
       label=<
         <B>内存倒排结构</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#475569">field → term → occurrences</FONT>
+        <FONT POINT-SIZE="9" COLOR="#475569">title → 数据库 → doc 1:[0,3]</FONT>
       >
     ];
     segment [
@@ -89,7 +90,7 @@ digraph InvertedIndexPipeline {
       penwidth=1.6,
       label=<
         <B>不可变 Segment</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#475569">按 term / docID 排序并压缩</FONT>
+        <FONT POINT-SIZE="9" COLOR="#475569">term 有序 · docID 差分 · 块压缩</FONT>
       >
     ];
 
@@ -109,15 +110,15 @@ digraph InvertedIndexPipeline {
       color="#34D399",
       label=<
         <B>Term Dictionary</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#475569">term → stats / pointer</FONT>
+        <FONT POINT-SIZE="9" COLOR="#475569">数据库 → df=3 · ttf=4 · pointer</FONT>
       >
     ];
     postings [
       fillcolor="#D1FAE5",
       color="#34D399",
       label=<
-        <B>Posting Lists</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#475569">docID · freq · positions</FONT>
+        <B>Posting List：数据库</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">d0:(1,[0]) · d1:(2,[0,3]) · d3:(1,[0])</FONT>
       >
     ];
     columns [
@@ -125,7 +126,7 @@ digraph InvertedIndexPipeline {
       color="#34D399",
       label=<
         <B>旁路数据</B><BR/>
-        <FONT POINT-SIZE="9" COLOR="#475569">norms · stored fields · doc values</FONT>
+        <FONT POINT-SIZE="9" COLOR="#475569">norm：字段长度信号 · stored：原始 title</FONT>
       >
     ];
   }

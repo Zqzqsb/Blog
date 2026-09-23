@@ -46,14 +46,14 @@ digraph PostingsIntersection {
       fillcolor="#DBEAFE",
       color="#60A5FA",
       label=<
-        <B>database（短表）</B><BR/>
-        <FONT FACE="monospace" POINT-SIZE="10">[1, 3, 8, 11, 20]</FONT>
+        <B>数据库</B><BR/>
+        <FONT FACE="monospace" POINT-SIZE="10">[0, 1, 3]</FONT>
       >
     ];
     long [
       label=<
-        <B>index（长表）</B><BR/>
-        <FONT FACE="monospace" POINT-SIZE="10">[2, 3, 7, 11, 18, 20]</FONT>
+        <B>索引</B><BR/>
+        <FONT FACE="monospace" POINT-SIZE="10">[0, 1, 2]</FONT>
       >
     ];
   }
@@ -92,7 +92,7 @@ digraph PostingsIntersection {
     penwidth=1.6,
     label=<
       <B>收集匹配</B><BR/>
-      <FONT FACE="monospace" POINT-SIZE="10">[3, 11, 20]</FONT>
+        <FONT FACE="monospace" POINT-SIZE="10">[0, 1]</FONT>
     >
   ];
 

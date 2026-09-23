@@ -1,0 +1,106 @@
+digraph TermDictionarySeek {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.42",
+    ranksep="0.72",
+    splines=ortho,
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="title:数据库：从查询 term 到 Posting Iterator",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=10,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.15,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.4,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569"
+  ];
+
+  query [
+    fillcolor="#DBEAFE",
+    color="#60A5FA",
+    label=<
+      <B>Query Analyzer</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">(field=title, term=数据库)</FONT>
+    >
+  ];
+
+  subgraph cluster_dictionary {
+    label="Term Dictionary";
+    style="rounded,filled";
+    color="#C4B5FD";
+    fillcolor="#F5F3FF";
+    margin=14;
+
+    term_index [
+      fillcolor="#EDE9FE",
+      color="#A78BFA",
+      label=<
+        <B>.tip · Prefix Trie</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">前缀「数据」→ block@0x80</FONT>
+      >
+    ];
+
+    term_block [
+      label=<
+        <B>.tim · Term Block</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">数据仓库 · 数据库 · 查询 · …</FONT>
+      >
+    ];
+
+    metadata [
+      fillcolor="#FEF3C7",
+      color="#F59E0B",
+      label=<
+        <B>命中「数据库」</B><BR/>
+        <FONT POINT-SIZE="9" COLOR="#475569">df=3 · ttf=4 · postings metadata</FONT>
+      >
+    ];
+
+    term_index -> term_block [xlabel="定位词块"];
+    term_block -> metadata [xlabel="块内确认"];
+  }
+
+  postings [
+    fillcolor="#D1FAE5",
+    color="#34D399",
+    penwidth=1.6,
+    label=<
+      <B>Posting Iterator</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">d0:(1,[0]) · d1:(2,[0,3]) · d3:(1,[0])</FONT>
+    >
+  ];
+
+  prefix [
+    shape=note,
+    fillcolor="#ECFDF5",
+    color="#6EE7B7",
+    label=<
+      <B>若查询 title:数据*</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">自动机与词块求交：「数据仓库」「数据库」</FONT>
+    >
+  ];
+
+  query -> term_index [xlabel="seekExact"];
+  metadata -> postings [xlabel="打开倒排流"];
+  term_block -> prefix [style=dashed, color="#10B981"];
+}

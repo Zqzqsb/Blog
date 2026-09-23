@@ -1,404 +1,440 @@
 ---
-title: 倒排索引：从 Posting List 到 BM25 与动态剪枝
+title: 倒排索引（一）：从 CJK 分词到 Term Dictionary 与 Posting List
 createTime: 2026-09-14
 author: ZQ
 tags:
   - 搜索引擎
   - 倒排索引
   - Lucene
-  - BM25
-  - WAND
-  - Block-Max WAND
+  - CJK
 permalink: /database/search/inverted-index/
 ---
 
 ![](/images/inverted-index-cover.jpg)
 
-> 倒排索引把「文档包含哪些词」反转为「一个词出现在哪些文档」，使全文检索不必扫描全部正文。但真正的搜索引擎不只有 `term → docID[]`：词典负责定位倒排表，posting 携带词频与位置，BM25 把命中文档排出次序，WAND / Block-Max WAND 再利用分数上界跳过不可能进入 Top-K 的候选。本文沿一条查询的数据流，把这些结构串起来。
+> 倒排索引不只是 `term → docID[]`。在这条映射出现之前，Analyzer 必须先决定中文里的「词」是什么；在它之后，Term Dictionary 负责从海量有序词项中定位词块，Posting List 再携带 docID、词频与位置。本文用四篇中文文档贯穿写入链路，把 CJK 分词、词典、倒排表、压缩与 Segment 串成一个可查询的结构。
 
 <!-- more -->
 
 ---
 
-## 1. 为什么普通索引不够
+本文是倒排索引系列的第一篇：
 
-> 全文检索的查询键不是一整列值，而是文档中数量不定、位置不定的词项集合。
+1. **从 CJK 分词到 Term Dictionary 与 Posting List**（本文）
+2. [从 Posting Iterator 到 BM25 排序](/database/search/inverted-index-query-bm25/)
+3. [WAND、Block-Max 与 Top-K 动态剪枝](/database/search/inverted-index-top-k-pruning/)
 
-设有三篇文档：
+## 1. 先固定一组贯穿全文的数据
 
-```text
-doc 1: 向量数据库支持语义检索
-doc 2: 搜索引擎使用倒排索引
-doc 3: 数据库索引加速检索
-```
+> 抽象的 `term → postings` 很容易懂，也很容易让人误以为实现只是一个哈希表。先把字符串、token、词典项与 posting 全部落到同一组数据上。
 
-按文档保存内容得到的是正排方向：
+假设索引里只有一个全文字段 `title`，包含四篇文档：
 
 ```text
-docID → 文档内容 / 文档中的词
+doc 0: 数据库索引原理
+doc 1: 数据库索引优化与数据库实践
+doc 2: 数据仓库索引设计
+doc 3: 数据库查询优化
 ```
 
-查「索引」时，如果只保留正排数据，就要依次打开三篇文档并检查内容。倒排索引把关系反过来：
+本文暂时假定一个领域分词器产生如下 token。停用词「与」被移除，位置是否保留空洞由具体配置决定；为简化示例，这里把剩余 token 的 position 连续编号：
 
 ```text
-索引 → [doc 2, doc 3]
-检索 → [doc 1, doc 3]
-数据库 → [doc 1, doc 3]
+doc 0: 数据库@0, 索引@1, 原理@2
+doc 1: 数据库@0, 索引@1, 优化@2, 数据库@3, 实践@4
+doc 2: 数据仓库@0, 索引@1, 设计@2
+doc 3: 数据库@0, 查询@1, 优化@2
 ```
 
-查询先定位词项，再读取对应文档编号列表，工作量从「文档总数」收缩为「查询词命中的文档数」。
+聚合后，`title` 字段里会出现这样的两层结构：
 
-这和 B+ 树并不冲突：
+```text
+(title, 数据库)
+  stats: docFreq=3, totalTermFreq=4
+  postings:
+    doc 0: freq=1, positions=[0]
+    doc 1: freq=2, positions=[0, 3]
+    doc 3: freq=1, positions=[0]
 
-| 结构 | 键从哪里来 | 擅长的查询 |
-|---|---|---|
-| B+ 树 | 一列完整、可排序的值 | 等值、范围、排序 |
-| 哈希索引 | 一列完整值的哈希 | 等值 |
-| 倒排索引 | 文档经分析后产生的多个词项 | 包含、布尔、短语、相关性 Top-K |
+(title, 索引)
+  stats: docFreq=3, totalTermFreq=3
+  postings:
+    doc 0: freq=1, positions=[1]
+    doc 1: freq=1, positions=[1]
+    doc 2: freq=1, positions=[1]
+```
 
-B+ 树可以索引完整标题，却不能自然表达「标题里任意位置出现某个词」；倒排索引为每个词项建立入口，代价是一次文档写入会展开成许多 posting。
+这里已经能看到三个边界：
 
-还要避免一个同名误会：向量检索里的 IVF（Inverted File）也使用「中心 → 向量列表」的倒排组织，但键是聚类中心，候选依据是向量空间距离；本文的键是文本词项，候选依据是词法命中。二者共享「从键反查对象集合」的组织思想，不是同一种检索算法。
+- 完整查找键不是裸 `term`，而是 **`field + term`**。`title:数据库` 与 `body:数据库` 属于两套词典和统计。
+- `docFreq` 是包含该词的文档数；同一文档出现两次仍只计一篇。
+- `totalTermFreq` 是所有文档中出现次数之和，因此「数据库」分别为 3 和 4。
+
+倒排方向与普通的正排方向正好相反：
+
+```text
+正排：docID → 这篇文档有哪些 token
+倒排：(field, term) → 哪些 docID 包含它
+```
+
+查「数据库」不再打开四篇原文逐一检查，而是定位 `(title, 数据库)` 后直接读取 `[0, 1, 3]`。
+
+这和 B+ 树并不冲突。B+ 树的键通常是一列完整、可排序的值；倒排索引把一段文本展开为数量不定的 token，每个 token 都成为可查入口。一次写入会变成许多 posting，换来包含、布尔、短语和相关性 Top-K 查询。
+
+还要避免一个同名误会：向量检索里的 IVF（Inverted File）保存的是「聚类中心 → 向量列表」，候选依据是向量距离；本文保存的是「文本词项 → 文档列表」，候选依据是词法命中。二者共享倒排组织思想，不是同一种检索算法。
 
 ---
 
-## 2. 最小数据模型：词典与倒排表
+## 2. Analyzer 先定义什么是 term
 
-> 倒排索引至少由两层组成：`term → posting list 的位置`，以及有序的 posting list。
+> Term Dictionary 不负责理解中文。它只保存 Analyzer 已经产出的字节序列；切错词之后，词典会非常高效地保存并查找这些错误结果。
 
-### 2.1 Term Dictionary：先找到词
-
-词典保存一个 field 下所有不同词项及其统计、倒排表指针：
-
-```text
-term → {
-  docFreq,
-  totalTermFreq,
-  postingsPointer
-}
-```
-
-词典不能简单理解为内存哈希表。词项可能有千万级，既要支持精确查找，又要支持前缀、范围、通配符等按字典序枚举。Lucene 的 BlockTree Terms Dictionary 使用前缀树索引词块；FST（Finite State Transducer）可以通过共享前缀与后缀压缩词典或词项元数据。
-
-词典回答的是：**词存不存在，posting list 在哪里**。
-
-### 2.2 Posting List：再找到文档
-
-每个词项对应一条按 `docID` 递增的列表。posting 不一定只有文档编号：
-
-```text
-term
-  └─ posting[]
-       ├─ docID       文档编号
-       ├─ freq        该词在文档中的出现次数
-       ├─ positions   出现位置
-       ├─ offsets     原文字符区间
-       └─ payload     可选的应用侧附加值
-```
-
-不同字段可以选择不同精度：
-
-| 保存内容 | 能支持什么 | 代价 |
-|---|---|---|
-| 只存 docID | 是否包含词项 | 最省空间 |
-| docID + freq | BM25 等词频相关评分 | 多一列整数 |
-| docID + freq + positions | 短语、邻近查询 | 位置数据通常很大 |
-| 再加 offsets / payload | 高亮、自定义打分 | 更多存储与解码 |
-
-文档长度等字段级统计通常单独保存为 norms，不必在每个 posting 中重复。
-
----
-
-## 3. 写入链路：正文如何变成倒排索引
-
-> 写入不是把原字符串直接塞进词典，而是先定义「什么算同一个词」，再按词项聚合 posting。
-
-### 3.1 Analyzer 决定索引语义
-
-典型文本分析链路是：
+一条典型分析链是：
 
 ```text
 原始字段
   → Character Filter
   → Tokenizer
   → Token Filter
-  → token(term, position, offsets)
+  → token(term, position, startOffset, endOffset)
 ```
 
-- Character Filter 在切词前规范字符，例如处理 HTML 或字符映射。
-- Tokenizer 决定边界；中文通常需要分词，而不是照搬英文空格切分。
-- Token Filter 可做小写化、停用词、词干化、同义词扩展等。
+- **Character Filter**：在切词前规范字符，例如去除 HTML、映射异体字符。
+- **Tokenizer**：决定 token 边界。
+- **Token Filter**：做大小写、宽窄字符、停用词、词干、同义词等转换。
+- **Token Stream**：不仅有 term，还携带 position 与原文 offset。
 
-例如 `Database indexes` 可能得到：
+### 2.1 CJK 不是某一种固定分词算法
+
+CJK 是 Chinese、Japanese、Korean 的合称，描述的是一组文字系统，不等于「中文词典分词」。同一个字符串可以采用完全不同的 token 语义。
+
+以 `数据库索引` 为例：
 
 ```text
-database(position=0), index(position=1)
+单字 unigram:
+  数 / 据 / 库 / 索 / 引
+
+重叠 bigram:
+  数据 / 据库 / 库索 / 索引
+
+词语分割:
+  数据库 / 索引
 ```
 
-分析器不是无害的预处理：它直接定义了可搜索单位。索引期把 `databases` 归一成 `database`，查询期却不做同样归一化，就不可能命中。字段类型、语言和查询语义必须共同决定 analyzer。
+Lucene 文档中的几类实现恰好展示了这些差异：
 
-### 3.2 从 token 流到 segment
+- CJK 包说明会用历史 `ChineseAnalyzer` 展示单字方案，但这个类在 Lucene 10.x API 中已经不存在；现代代码若确实需要 unigram，应基于 `StandardTokenizer` 等组件自建 Analyzer，不能直接实例化 `ChineseAnalyzer`。
+- `CJKAnalyzer` 对相邻 CJK 字符产生重叠 bigram，并处理宽窄字符、大小写和停用词。默认不会同时保留 unigram，孤立且无法组成 bigram 的字符除外。
+- `SmartChineseAnalyzer` 使用内置统计词典和 HMM 为简体中文选择词语边界，API 标记为 experimental；领域新词与人名仍可能切错。
+- ICU analysis 更侧重 Unicode 分段、规范化与跨文字系统处理，不应直接等同于中文领域词典。
 
-![从文档到可查询 Segment](./倒排索引：从%20Posting%20List%20到%20BM25%20与动态剪枝.assets/indexing-pipeline.svg)
+它们没有绝对优劣：
 
-建索引时，系统为每篇文档分配 segment 内部的 `docID`，按 field 和 term 收集出现记录，再把同一 term 的记录按 docID 排序写出。数据太大时可分批生成有序块并归并；经典 SPIMI（Single-Pass In-Memory Indexing）就是按内存批次构建词典和倒排表，再合并磁盘块。
+- 单字几乎不受未登录词影响，但 posting 更长，`数据库` 与「数、据、库」分别出现也可能产生噪声。
+- bigram 仍不依赖完整词库，搜索新品名和组合词较稳；代价是 token 数增多，查询通常展开成多个相邻 bigram。
+- 词语分割让词频和短语语义更直观，但「数据库索引」是 `[数据库, 索引]` 还是 `[数据库索引]` 依赖词库、模型和领域配置。
 
-注意三种数据的职责不同：
+因此，中文搜索的第一个工程问题不是「选哪个倒排算法」，而是：**业务希望什么字符串在检索时被视为同一个 term？**
 
-- **倒排索引**：从词项找文档，用于召回和评分。
-- **Stored Fields**：取回原文、标题等返回内容。
-- **Doc Values**：面向列式访问，用于排序、聚合和脚本，不替代全文倒排。
+### 2.2 索引期与查询期必须共享语义
+
+如果索引期得到：
+
+```text
+数据库索引 → [数据库, 索引]
+```
+
+查询期却得到：
+
+```text
+数据库索引 → [数据, 据库, 库索, 索引]
+```
+
+两边只有「索引」可能直接相交。倒排索引不会回看原文猜测用户意图，它只能匹配已经写入的 term。
+
+「使用同一个 Analyzer」是安全起点，但不意味着两边配置永远完全相同。例如索引期可保留同义词原词，查询期再把一个词展开为多个 OR 分支；关键是明确这种不对称会怎样改变召回与成本。
+
+### 2.3 多字段比让一个 Analyzer 包办一切更可控
+
+常见做法是把同一份标题写入多个逻辑字段：
+
+```text
+title.zh       领域词语分割，用于主要相关性召回
+title.cjk      重叠 bigram，用于未登录词与召回兜底
+title.keyword  整个标题作为一个值，用于精确过滤、排序或聚合
+```
+
+它们在存储上是三套 term namespace 和 postings。查询可以让 `title.zh` 权重大、`title.cjk` 权重小，而不是把所有行为塞进一个不可解释的 Analyzer。
+
+### 2.4 position 与 offset 不是装饰
+
+Token Stream 中的附加信息决定后续能力：
+
+- `position` 支持短语和邻近查询；
+- `positionIncrement` 能表达停用词留下的距离与同义词占据同一位置；
+- `startOffset/endOffset` 把 token 映射回原文区间，用于高亮；
+- payload 可以为某个位置附加业务数据，但会增加存储与解码成本。
+
+若只需要「是否包含」，可以关闭 freq、position 或 offset；但这是索引协议的一部分，关闭后不能在查询时凭空恢复。
 
 ---
 
-## 4. 为什么 posting 必须有序且压缩
+## 3. 从 Token Stream 到内存倒排结构
 
-> 有序既让多词查询能线性合并，也让 docID 差分后变成大量小整数。
+> Analyzer 逐文档输出 token；索引器按 `field → term → occurrences` 重新聚合，再一次性写成有序、不可变的 Segment。
 
-假设「索引」的 docID 列表为：
+![从文档到可查询 Segment](./倒排索引：从%20Posting%20List%20到%20BM25%20与动态剪枝.assets/indexing-pipeline.svg)
+
+处理 `doc 1` 时，内存中可以把出现记录理解为：
+
+```text
+title
+├─ 数据库
+│  └─ doc 1: freq=2, positions=[0, 3]
+├─ 索引
+│  └─ doc 1: freq=1, positions=[1]
+├─ 优化
+│  └─ doc 1: freq=1, positions=[2]
+└─ 实践
+   └─ doc 1: freq=1, positions=[4]
+```
+
+继续接收文档后，同一 term 下追加新的 docID。达到内存阈值时，系统把 term、docID 和位置编码成有序文件并生成不可变 Segment。数据超出单批内存时，可以生成多个有序块再归并；经典 SPIMI（Single-Pass In-Memory Indexing）就是这类思路。
+
+最终 Segment 中几类数据职责不同：
+
+- **Term Dictionary + Postings**：从词项找文档，用于召回与评分。
+- **Stored Fields**：按 docID 取回标题、正文等原始返回内容。
+- **Doc Values**：面向列式扫描，用于排序、聚合和脚本。
+- **Norms**：每文档、每字段的紧凑评分统计，例如字段长度。
+
+Doc Values 和 Stored Fields 都不能替代全文倒排：它们的访问方向仍然以 docID 或列为中心。
+
+---
+
+## 4. Term Dictionary：一次查词到底发生了什么
+
+> 词典的职责不是保存一个漂亮的 `Map<String, List>`，而是在海量有序 term 中快速判断「是否存在、统计是什么、postings 从哪里读」。
+
+### 4.1 先看一份具体词典
+
+四篇示例文档分析后，`title` 字段的词典可概念化为：
+
+```text
+term        docFreq  totalTermFreq  postingsPointer
+优化        2        2              0x120
+原理        1        1              0x148
+实践        1        1              0x160
+数据仓库    1        1              0x178
+数据库      3        4              0x1A0
+查询        1        1              0x1D8
+索引        3        3              0x1F0
+设计        1        1              0x228
+```
+
+地址只是说明元数据会把 term 接到 postings，实际文件指针通常经过差分与变长编码，不会真以这张定长表落盘。保存 freq、position、offset 时，一个 term state 还可能分别形成 `docStartFP`、`posStartFP`、`payStartFP` 等入口，因此 `postingsPointer` 是概念缩写，不保证物理上只有一个指针。
+
+单词查询 `title:数据库` 的路径是：
+
+```text
+查询 Analyzer
+  → term bytes: "数据库"
+  → Term Index 根据前缀定位候选词块
+  → 在词块中确认完整 term
+  → 读取 docFreq / totalTermFreq / postings 元数据
+  → 打开 postings，得到 doc 0、1、3
+```
+
+![从查询 term 到 Posting Iterator](./倒排索引：从%20Posting%20List%20到%20BM25%20与动态剪枝.assets/term-dictionary-seek.svg)
+
+落到 Lucene API，一次 Segment 内查词大致对应：
+
+```java
+Terms terms = leafReader.terms("title");
+TermsEnum termsEnum = terms.iterator();
+
+if (termsEnum.seekExact(new BytesRef("数据库"))) {
+    int docFreq = termsEnum.docFreq();
+    long totalTermFreq = termsEnum.totalTermFreq();
+    PostingsEnum postings =
+        termsEnum.postings(null, PostingsEnum.POSITIONS);
+}
+```
+
+`LeafReader` 面向单个 Segment；上层 `IndexReader` 会把各 Segment 的 Terms / Postings 视图组合起来。`TermsEnum` 负责词典 seek 与枚举，`PostingsEnum` 才负责推进 docID、freq 和 positions。两层没有混成一个 Map。
+
+Term Index 的前缀路径不存在时，查询可能在读取对应 `.tim` 词块前就判定失败；但 mmap 页面是否已驻留、底层是否发生真实磁盘 I/O 属于另一层问题，不能把它绝对化为「不存在 term 时零 I/O」。
+
+### 4.2 为什么不只用哈希表
+
+哈希适合 `seekExact("数据库")`，但全文词典还要支持有序操作。概念上，前缀查询等价于从前缀下界开始枚举，直到越过前缀范围：
+
+```text
+数据*
+  → seekCeil("数据")
+  → 枚举 数据仓库
+  → 枚举 数据库
+  → 第一个不再以“数据”开头的 term 处停止
+```
+
+范围查询可以用 `seekCeil(lowerBound)` 后按序枚举。Lucene 的 `PrefixQuery`、Wildcard 和 Regex 则更进一步：模式会编译为自动机，`Terms.intersect()` 联合遍历自动机状态、BlockTree term blocks 与 floor blocks，直接跳过不可能匹配的分支，而不是找到第一个词后无条件扫描整份词典。前导 `*` 缺少固定前缀，仍可能逼近大范围枚举。
+
+如果只有哈希表，就必须额外维护一份有序结构，或扫描全部 term。Term Dictionary 因而同时追求：
+
+- 精确 seek；
+- 按字节序枚举；
+- 前缀共享和块压缩；
+- 将热的导航结构留在内存，把完整词典按块放在磁盘或 page cache。
+
+### 4.3 BlockTree 把相同前缀的 term 放进块
+
+Lucene 的 BlockTree Terms Dictionary 按共享前缀组织 term block。一个 block 的 entry 可能是 term 后缀，也可能指向更深的 sub-block；过大的 block 会按下一个字节拆成 floor blocks。
+
+以概念化的词项集合为例：
+
+```text
+数据
+├─ 仓库
+├─ 库
+│  ├─ 索引
+│  └─ 查询
+└─ 治理
+```
+
+索引层只需把前缀「数据」导向相应词块，块内再恢复后缀并查找完整 term。大量共同前缀不必在每一项里重复保存。
+
+具体实现必须注明 codec 版本：
+
+- Lucene 10 的 `Lucene103` BlockTree 中，`.tim` 保存 term block 及每 term 的统计和 postings 元数据，`.tmd` 保存字段级统计以及 `.tim/.tip` 的入口与边界，`.tip` 使用每字段的稀疏 prefix trie 定位 `.tim` block；它不是包含每个完整 term 的另一份 trie。
+- 较早的 `Lucene90` BlockTree 在 `.tip` 中使用每字段 FST。FST 是某些 codec 的 term index 实现，不是「倒排索引必然含有 FST」。
+
+这一区分很重要：**BlockTree 是词典如何分块，trie/FST 是如何为这些块建立导航索引，逐 term postings metadata 再把词典项接到 `.doc/.pos/.pay` 数据流。** 小 Segment 启用 compound file 时，这些逻辑文件还可能被打包进 `.cfs/.cfe`，不一定都以独立文件出现在目录中。
+
+---
+
+## 5. Posting List：词找到了，接下来读什么
+
+每个 term 对应一条按 `docID` 递增的 posting list。单个 posting 可以包含：
+
+```text
+posting
+├─ docID       Segment 内部文档编号
+├─ freq        term 在该字段出现次数
+├─ positions   出现位置
+├─ offsets     原文字符区间
+└─ payloads    可选位置级附加值
+```
+
+不同字段可以选择不同精度：
+
+| 保存内容 | 支持能力 | 主要代价 |
+|---|---|---|
+| docID | 包含、AND、OR、过滤 | 最省空间 |
+| docID + freq | BM25 等词频评分 | 额外整数与解码 |
+| 再加 positions | Phrase、邻近查询 | 高频词位置数据很大 |
+| 再加 offsets / payloads | 高亮、自定义位置评分 | 更多 I/O 与存储 |
+
+### 5.1 有序让多词查询不需要哈希
+
+假设：
+
+```text
+数据库 → [0, 1, 3]
+索引   → [0, 1, 2]
+```
+
+两条升序列表用双指针即可求交为 `[0, 1]`。列表长度悬殊时，短表提供候选，长表调用 `advance(target)` 跳到首个不小于目标的 docID。
+
+下一篇会沿这组数据展开 AND、OR、Phrase 与 BM25：
+
+[倒排索引（二）：从 Posting Iterator 到 BM25 排序](/database/search/inverted-index-query-bm25/)
+
+### 5.2 有序也让 docID 容易压缩
+
+一条较长列表：
 
 ```text
 [105, 107, 108, 130, 131]
 ```
 
-保存相邻差值（d-gap）后变成：
+保存相邻差值 d-gap 后：
 
 ```text
 [105, 2, 1, 22, 1]
 ```
 
-除第一个数外，大部分 gap 很小，更适合 Variable-Byte、FOR / PForDelta、SIMD-BP128 等编码。位置列表也可在单篇文档内做位置差分。
+除首项外，大部分 gap 变成小整数，更适合 Variable-Byte、Frame of Reference、PForDelta、SIMD-BP128 等编码。positions 也可以在单篇文档内保存位置差。
 
-常见策略的取舍：
+常见块编码取舍：
 
-| 编码 | 核心思路 | 取舍 |
-|---|---|---|
-| Variable-Byte | 每 7 bit 数据配延续标记 | 简单、解码快，至少占整字节 |
-| Frame of Reference | 一个块用固定 bit width | SIMD 友好，受块内最大值影响 |
-| PForDelta | 大多数值定宽，异常值单独保存 | 兼顾压缩率与批量解码 |
+- **Variable-Byte**：实现简单、单值可解码，但至少按整字节占用。
+- **Frame of Reference**：一块整数共享 bit width，适合 SIMD 批量解码；块内离群大值会抬高整块宽度。
+- **PForDelta**：多数值定宽，异常值旁路保存，在压缩率和批量解码间折中。
 
-压缩不一定让查询变慢：全文检索通常受内存层级与带宽限制。更小的倒排块能进入 page cache 和 CPU cache，批量解码成本可能低于搬运未压缩整数的成本。
+压缩不一定让查询变慢。倒排读取常受内存带宽与 cache miss 限制；更小的块能留在 page cache 和 CPU cache，省下的数据搬运可能超过解码开销。
 
-长 posting list 还会建立多级 skip data。迭代器调用 `advance(target)` 时，可以跳到第一个不小于 `target` 的 docID，而不是逐项执行 `nextDoc()`。Lucene 的 postings 以块编码保存 docID、freq、position，并在跳跃元数据中关联相关文件偏移。
+长列表还会保存 skip data。`advance(10000)` 可以跨过若干编码块，而不是执行上万次 `nextDoc()`。skip 元数据还要关联 freq、position 等流的文件位置，确保跳过 docID 后仍能继续读取同一 posting 的附加数据。
 
 ---
 
-## 5. 查询执行：一条倒排表不难，多条才是算法
+## 6. 为什么最终写成不可变 Segment
 
-> 词典定位是入口；AND、OR、短语与 Top-K 的成本，取决于多条有序 posting 如何协同推进。
-
-### 5.1 单词查询
-
-查询 `database`：
-
-```text
-analyze query
-  → term dictionary.seek("database")
-  → 打开 postings(database)
-  → 遍历 docID
-```
-
-成本大致随 `docFreq(database)` 增长。稀有词很便宜；停用词可能命中几乎全部文档，即使有索引也不便宜。
-
-### 5.2 AND：有序列表求交
-
-假设：
-
-```text
-database → [1, 3, 8, 11, 20]
-index    → [2, 3, 7, 11, 18, 20]
-```
-
-双指针线性求交得到 `[3, 11, 20]`。列表长度严重不平衡时，通常从最短列表产生候选，让长列表用 `advance(target)` 跳跃；实现也可能使用 galloping / exponential search。
-
-![AND 查询的 Posting Iterator 推进过程](./倒排索引：从%20Posting%20List%20到%20BM25%20与动态剪枝.assets/postings-intersection.svg)
-
-这也是为什么 posting 按 docID 排序：布尔交集不需要哈希，也不必物化全部中间集合。
-
-### 5.3 OR：并集不是简单拼接
-
-OR 查询要合并多条有序流。若只求所有匹配文档，可用最小堆归并；若求相关性 Top-K，则每个候选还要累加各词项的评分。高频词一多，枚举所有并集成员会成为主要成本，WAND 系算法因此出现。
-
-### 5.4 Phrase：先近似召回，再验证位置
-
-短语 `"vector database"` 不只要求两个词出现在同一篇文档，还要求 position 相邻：
-
-1. 先对 `vector` 与 `database` 的 docID posting 求交。
-2. 只对共同文档读取 position。
-3. 判断是否存在 `pos(database) = pos(vector) + 1`。
-
-这是典型的 two-phase execution：便宜的 docID 交集是 approximation，昂贵的位置校验是 confirmation。若索引不保存 positions，无法仅靠倒排表精确回答短语查询。
-
-### 5.5 Prefix / Wildcard / Regex
-
-`data*` 先在词典中枚举 `data` 前缀下的词，再合并各自 posting。FST / BlockTree 的价值在这里更明显：查询可以把自动机与词典求交，跳过不可能匹配的词项分支，而不是扫完整词典。
-
----
-
-## 6. BM25：从「命中」到「谁排前面」
-
-> 倒排索引负责找到匹配文档；评分模型利用 posting 和全局统计对这些文档排序。
-
-一种常见 BM25 形式为：
-
-$$
-\operatorname{score}(D,Q)
-=
-\sum_{t \in Q}
-\operatorname{IDF}(t)
-\cdot
-\frac{tf(t,D)(k_1+1)}
-{tf(t,D)+k_1\left(1-b+b\frac{|D|}{avgdl}\right)}
-$$
-
-其中：
-
-- `tf(t,D)` 来自 posting 的词频；增加会提高分数，但收益逐渐饱和。
-- `docFreq(t)` 与文档总数 $N$ 形成 IDF；稀有词贡献更大。
-- $|D|/avgdl$ 做文档长度归一化，避免长文仅因词多占优。
-- $k_1,b$ 控制词频饱和与长度惩罚。
-
-这解释了倒排索引为什么还要保存 `freq`、norms 与 `docFreq`：它们不是为了判断「是否命中」，而是为了相关性排序。
-
-BM25 不是倒排索引本身。TF-IDF、BM25、语言模型或学习排序都可以消费同一套倒排结构；反过来，改变 analyzer 会改变 term、tf、df，评分分布也会随之改变。
-
----
-
-## 7. Top-K 动态剪枝：WAND 与 Block-Max
-
-> 搜索通常只要前 10 条。若能证明某些候选的最高可能分数也进不了前 10，就没必要计算它们的精确分数。
-
-### 7.1 最低竞争分数
-
-维护大小为 $K$ 的结果堆。堆未满时阈值低；一旦装入较强结果，堆顶成为 `minCompetitiveScore`。此后只有理论最高分超过阈值的候选才值得完整评分。
-
-关键是**上界必须安全**：可以高估，不能低估。只要剪枝依据的上界正确，WAND / MAXSCORE 返回的 Top-K 仍是精确的评分 Top-K；它们优化的是执行，不是把相关性结果改成近似。若系统同时跳过文档，总命中数可能只给下界或需要额外计算。
-
-### 7.2 WAND
-
-每个查询词有一个最大贡献上界。WAND 按当前 docID 排序各 posting 迭代器，累加上界寻找 pivot：
-
-- 累计上界仍低于阈值：前面的迭代器可以向 pivot 跳跃。
-- 累计上界超过阈值：该 pivot 才可能有竞争力，再做更完整的匹配与评分。
-
-随着结果堆变强，阈值升高，更多候选可跳过。
-
-### 7.3 Block-Max WAND / MAXSCORE
-
-整条 posting 只存一个最大分，会被极端高分文档拖高，导致上界太松。Block-Max 把 posting 切成块，为每块记录最大 impact（由 tf、文档长度等决定）：
-
-```text
-term A postings:
-  block 0 [doc 0..127]   maxScore = 0.7
-  block 1 [doc 128..255] maxScore = 2.8
-  block 2 [doc 256..383] maxScore = 0.4
-```
-
-若当前阈值是 1.5，且当前块内所有查询词的上界之和仍不到 1.5，整块可以跳过。局部上界不受别处离群点影响，比 term 级上界紧得多。
-
-Lucene 8 引入了 BM25 兼容的 Block-Max WAND；后续版本在部分顶层 OR 查询中采用 block-max MAXSCORE。二者目标相同，调度方式不同：WAND 通常少评估更多候选但每次调度开销高，MAXSCORE 把词项分成 essential / non-essential，单次开销较低。具体选择属于查询执行器实现，不改变索引的基本数据模型。
-
----
-
-## 8. 增量写入：不可变 segment 如何做到近实时
-
-> 倒排表适合顺序、压缩、不可变存储；频繁在中间插入 docID 会破坏这些优势。Lucene 以多 segment 换近实时写入。
-
-以 Lucene / Elasticsearch 为现实模型：
+> 压缩 posting 适合批量顺序写，不适合在中间频繁插入。Lucene 用多个不可变 Segment 承接增量写入，再在后台归并。
 
 ![Lucene 与 Elasticsearch 的 Segment 生命周期](./倒排索引：从%20Posting%20List%20到%20BM25%20与动态剪枝.assets/segment-lifecycle.svg)
 
-- **Refresh**：把缓冲区内容写成可打开的新 segment，使其可搜索；不等于完整持久化提交。
-- **查询**：在每个 segment 上各跑一次，过滤删除文档，再合并 Top-K。
-- **更新**：写入新版本，同时把旧 docID 标记删除；倒排结构不原地改写。
-- **删除**：先记录 live-doc bitmap，segment 合并时才物理清除。
-- **Merge**：合并小 segment，重写词典与 postings，减少查询扇出并回收删除空间，但消耗磁盘 I/O 与 CPU。
-- **Translog**：这是 Elasticsearch 在 Lucene 之外提供的恢复日志；不要把它误认成倒排索引文件。
+以 Lucene / Elasticsearch 为现实模型：
 
-不可变 segment 的收益是读路径几乎无需与写线程争锁，压缩布局稳定，也能充分利用 page cache。代价是写放大、短期删除空间和多 segment 查询开销。
+- **Refresh**：发布包含新 Segment 的搜索视图，使文档可搜索；它不等同于完整持久化提交。
+- **查询**：在各 Segment 上分别查词、遍历 postings，再归并结果。
+- **更新**：写入新版本，并把旧 docID 标记删除；压缩 posting 不在原位置修改。
+- **删除**：先更新 live-doc bitmap，Merge 时再物理回收。
+- **Merge**：把多个小 Segment 重写成大 Segment，减少查询扇出并回收删除空间，代价是 CPU、磁盘带宽与写放大。
+- **Translog**：是 Elasticsearch 在 Lucene 之外提供的恢复日志，不属于倒排文件。
+
+不可变带来的收益是：
+
+- 词典、postings 和 skip 布局在发布后稳定；
+- 读线程不必与写线程争抢同一份压缩结构；
+- 文件可以直接利用操作系统 page cache；
+- 查询时一个 `IndexReader` 能看到一致的 Segment 集合。
+
+对应代价是多 Segment 查询、删除空间延迟回收和后台 Merge 写放大。倒排索引没有消灭写成本，只是把随机原地更新转成批量顺序重写。
 
 ---
 
-## 9. 分布式与混合检索
-
-### 9.1 分片 Top-K
-
-分布式搜索通常按 shard 放置若干 Lucene index：
+## 7. 把写入链路重新串起来
 
 ```text
-Coordinator
-  → 每个 shard 执行本地 query，返回 local Top-K
-  → Coordinator 合并并取 global Top-K
-  → 按 docID 回取文档内容
+原始 title
+  → Analyzer 定义 CJK token、position、offset
+  → 按 field + term 聚合 occurrences
+  → Term Dictionary 按前缀分块并保存统计 / postings 元数据
+  → Posting List 按 docID 排序并压缩
+  → norms / stored fields / doc values 旁路写出
+  → 发布不可变 Segment
 ```
 
-每个 shard 只返回少量候选，减少网络传输。但 BM25 的 df / 文档数若使用 shard 本地统计，分片分布不均时可能产生评分偏差；系统可通过全局统计预取或更均匀的路由缓解，代价是额外网络往返。
+其中每层都在给下一层设定边界：
 
-### 9.2 与向量检索组合
+- Analyzer 改变 term，会同时改变词典规模、posting 长度、tf 和 df。
+- 关闭 positions 能省大量空间，但 Phrase 查询随之失去精确验证依据。
+- 更激进的压缩减少 I/O，却增加块解码成本。
+- 更频繁 Refresh 降低可见延迟，却制造更多小 Segment 和 Merge 压力。
 
-倒排检索擅长精确实体、术语、数字和可解释词项贡献；向量检索擅长语义近似。混合搜索常有三种执行形态：
+至此只解决了「怎样从词找到匹配文档」。当查询同时包含多个 term，还要回答两个问题：
 
-| 形态 | 数据流 | 主要风险 |
-|---|---|---|
-| 并行召回 | BM25 Top-N 与 ANN Top-N 分别召回，再 RRF / 加权融合 | 两路分数不可直接比较 |
-| 词法前置 | 倒排先过滤/召回，再做向量精排 | 语义相关但无关键词的文档进不了候选 |
-| 向量前置 | ANN 召回，再用 BM25 / 规则精排 | 精确词项文档可能被 ANN 漏掉 |
+1. 多条 posting iterator 如何协同推进？
+2. 同时命中的文档为什么排在不同位置？
 
-这里的倒排索引与 HNSW / IVF 是两个检索器，不是「倒排索引里存向量」。它们可以共享文档 ID，在查询计划层汇合。向量索引的结构见 [向量索引算法全景](/database/vector/ann-index-landscape/)，向量压缩见 [向量索引量化全景](/database/vector/quantization-landscape/)。
-
----
-
-## 10. 设计边界：它擅长什么，又放弃什么
-
-> 倒排索引以词项为边界换来极快的稀疏召回；语义泛化、写放大与高频词长列表是对应代价。
-
-| 场景 | 表现 | 原因 |
-|---|---|---|
-| 精确术语、编号、人名 | 强 | 词项可直接定位 |
-| AND / OR / Phrase | 强 | posting 有序且可保存位置 |
-| 前缀、通配符 | 可做但可能昂贵 | 需要展开多个 term |
-| 高频停用词 | 容易昂贵 | posting 接近全库 |
-| 同义表达、跨语言语义 | 原生较弱 | 不共享词项就无 posting 交集 |
-| 高频更新 | 可近实时，但有写放大 | 新 segment + merge |
-| 精确总命中数 + Top-K | 可能拖慢 | 动态剪枝难以跳过所有非竞争文档 |
-
-因此，倒排索引的优化不是单个「算法」：
-
-```text
-Analyzer 定义词项
-  → Term Dictionary 定位
-  → Compressed Postings 召回
-  → Boolean / Phrase 算法合并
-  → BM25 评分
-  → Block-Max 动态剪枝
-  → Segment / Shard 汇总
-```
-
-改变其中一层，会把成本推向下一层。例如同义词在索引期展开会增大 postings，在查询期展开会增加 OR 分支；关闭 positions 能省空间，但短语查询随之失去精确依据。
-
----
-
-## 11. 小结
-
-倒排索引的核心映射只有一句：`term → postings`。它之所以能成为搜索引擎底座，是因为围绕这条映射补齐了一整条执行链：
-
-1. Analyzer 把字符串变成稳定词项与位置。
-2. 词典用前缀结构 / FST 快速定位 term 与倒排表。
-3. postings 按 docID 排序，以 d-gap 和块编码压缩，并携带 freq / positions。
-4. AND 用有序交集，Phrase 做位置验证，OR 进入 Top-K 评分。
-5. BM25 利用 tf、df 与文档长度排序。
-6. WAND / Block-Max 依据安全分数上界跳过不可能进入 Top-K 的文档块。
-7. 不可变 segment、refresh、删除标记与 merge 把批量压缩结构接入近实时写入。
-8. 分片在本地执行后合并，混合检索再与 ANN 在候选或排序层汇合。
-
-理解这条链后，「倒排索引」就不再是一张 `word → docIDs` 的示意图，而是从文本语义边界一直延伸到 CPU cache、磁盘段和分布式 Top-K 的完整查询结构。
+这两部分进入下一篇：[从 Posting Iterator 到 BM25 排序](/database/search/inverted-index-query-bm25/)。
 
 ---
 
 ## 延伸阅读
 
-- [Introduction to Information Retrieval](https://nlp.stanford.edu/IR-book/)：倒排索引、布尔查询与压缩的经典教材。
-- [Lucene BlockTree Terms Dictionary](https://lucene.apache.org/core/10_4_0/core/org/apache/lucene/codecs/lucene103/blocktree/Lucene103BlockTreeTermsReader.html)：词典与词块的现实实现。
-- [Lucene Postings Format](https://lucene.apache.org/core/10_5_1/backward-codecs/org/apache/lucene/backward_codecs/lucene103/Lucene103PostingsFormat.html)：doc、freq、position、payload 与 skip data 的文件布局。
-- [Faster retrieval with Block-Max WAND](https://www.elastic.co/blog/faster-retrieval-of-top-hits-in-elasticsearch-with-block-max-wand)：动态剪枝进入 Lucene 的背景与效果。
-- [Near real-time search](https://www.elastic.co/docs/manage-data/data-store/near-real-time-search)：segment、refresh 与近实时可见性。
+- [Lucene CJK analysis package](https://lucene.apache.org/core/10_5_0/analysis/common/org/apache/lucene/analysis/cjk/package-summary.html)：历史单字方案、CJK bigram 与 SmartChineseAnalyzer 的行为对比。
+- [Lucene103 BlockTree Terms Dictionary](https://lucene.apache.org/core/10_5_1/core/org/apache/lucene/codecs/lucene103/blocktree/Lucene103BlockTreeTermsWriter.html)：`.tim`、`.tmd`、`.tip` 与 prefix trie。
+- [Lucene103 Postings Format](https://lucene.apache.org/core/10_5_1/backward-codecs/org/apache/lucene/backward_codecs/lucene103/Lucene103PostingsFormat.html)：doc、freq、position、payload 与 skip data 的文件布局。
+- [Introduction to Information Retrieval](https://nlp.stanford.edu/IR-book/)：倒排构建、词典与 postings 压缩的经典教材。
+- [Near real-time search](https://www.elastic.co/docs/manage-data/data-store/near-real-time-search)：Refresh、Segment 与近实时可见性。

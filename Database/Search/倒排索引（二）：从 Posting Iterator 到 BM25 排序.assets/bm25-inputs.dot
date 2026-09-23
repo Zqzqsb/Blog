@@ -1,0 +1,98 @@
+digraph BM25Inputs {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.42",
+    ranksep="0.68",
+    splines=ortho,
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="BM25 的输入分别来自哪里",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=10,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.15,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.4,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569"
+  ];
+
+  dictionary [
+    fillcolor="#DBEAFE",
+    color="#60A5FA",
+    label=<
+      <B>Term Dictionary / 字段统计</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">df(t)=3 · N=4 · avgdl=3.5</FONT>
+    >
+  ];
+
+  posting [
+    fillcolor="#EDE9FE",
+    color="#A78BFA",
+    label=<
+      <B>当前 Posting</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">docID=1 · tf(数据库,doc1)=2</FONT>
+    >
+  ];
+
+  norms [
+    fillcolor="#FEF3C7",
+    color="#F59E0B",
+    label=<
+      <B>Norms</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">doc 1 的 title 长度信号 · dl≈5</FONT>
+    >
+  ];
+
+  scorer [
+    shape=diamond,
+    style="filled",
+    width=1.45,
+    height=0.90,
+    fillcolor="#FCE7F3",
+    color="#F472B6",
+    label="BM25\nScorer"
+  ];
+
+  contribution [
+    fillcolor="#D1FAE5",
+    color="#34D399",
+    penwidth=1.6,
+    label=<
+      <B>term 对 doc 1 的贡献</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">本文教科书形式：≈ 0.4377</FONT>
+    >
+  ];
+
+  collector [
+    fillcolor="#ECFDF5",
+    color="#10B981",
+    label=<
+      <B>Top-K Collector</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">累加查询中各 term 的贡献</FONT>
+    >
+  ];
+
+  dictionary -> scorer [xlabel="IDF / 全局长度"];
+  posting -> scorer [xlabel="tf"];
+  norms -> scorer [xlabel="dl"];
+  scorer -> contribution -> collector;
+}
