@@ -1,0 +1,38 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="将可执行代码与控制凭证分开；评分侧也要隔离候选程序";
+  subgraph cluster_trust {
+    label="可信控制层"; color="#93c5fd"; style="rounded";
+    harness [label="harness\n业务状态机", fillcolor="#dbeafe", color="#60a5fa"];
+    proxy [label="模型代理\n凭证、采样元数据"];
+    record [label="训练记录\n优势、奖励、版本"];
+    harness -> proxy [label="普通模型接口"];
+    proxy -> record [label="旁路记录", style=dashed];
+  }
+  subgraph cluster_untrusted {
+    label="不可信执行边界"; color="#f87171"; style="rounded,dashed";
+    tool [label="工具进程\n模型生成的操作", fillcolor="#fee2e2", color="#f87171"];
+    repo [label="任务工作区\n可写代码、公开测试"];
+    tool -> repo;
+  }
+  subgraph cluster_grader {
+    label="独立评分层"; color="#fbbf24"; style="rounded";
+    control [label="可信评分控制器\n私有规则、验收结果", fillcolor="#fef3c7", color="#fbbf24"];
+    candidate [label="验证沙箱\n候选代码仍不可信", fillcolor="#fee2e2", color="#f87171"];
+    control -> candidate [label="受控输入"];
+    candidate -> control [label="执行状态与输出"];
+  }
+  harness -> tool [label="受限执行接口"];
+  tool -> harness [label="业务观察"];
+  repo -> control [label="受约束的产物提交"];
+  control -> record [label="评分回传", color="#059669"];
+
+}

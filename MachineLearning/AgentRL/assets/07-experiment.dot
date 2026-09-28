@@ -1,0 +1,29 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="最小实测闭环：有限动作策略，独立评分入口，记录真实更新";
+  rankdir=TB;
+  policy [label="策略后端\n参数表 / 本地因果 LM", fillcolor="#dbeafe", color="#60a5fa"];
+  env [label="Harness\n六个动作、六步预算", fillcolor="#ede9fe", color="#a78bfa"];
+  verify [label="终局验证\n边界与随机输入", fillcolor="#fef3c7", color="#fbbf24"];
+  group [label="4 组 × 8 条轨迹\n动作、行为概率、奖励"];
+  rl [label="组内优势 + clip + KL", fillcolor="#d1fae5", color="#34d399"];
+  sft [label="对照：筛选成功轨迹\n监督拟合动作"];
+  eval [label="更新后评估\n500 次采样、JSON 记录"];
+  {rank=same; policy; env; verify;}
+  {rank=same; rl; sft;}
+  policy -> env [label="采样动作"];
+  env -> policy [label="可见状态"];
+  env -> verify [label="提交产物"];
+  verify -> group [label="R = 0 / 1"];
+  group -> rl; group -> sft;
+  rl -> eval; sft -> eval;
+
+}

@@ -1,0 +1,25 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="成功轨迹中的退步：负 TD 残差不保证负 GAE 优势";
+  s1 [label="状态 1\n边界已修好\nV = 0.8", fillcolor="#dbeafe", color="#60a5fa"];
+  s2 [label="状态 2\nlow 被改坏\nV = 0.3", fillcolor="#fee2e2", color="#f87171"];
+  s3 [label="状态 3\n重新修复\nV = 0.9", fillcolor="#d1fae5", color="#34d399"];
+  end [label="终止\n私有检查通过\nR = 1"];
+  s1 -> s2 [label="undo_low\nδ = −0.5"];
+  s2 -> s3 [label="fix_low\nδ = +0.6"];
+  s3 -> end [label="finish\nδ = +0.1"];
+  mc [shape=note, label="γ = 1，无中间奖励\n所有位置的 MC 回报均为 1", fillcolor="#fef3c7", color="#fbbf24"];
+  gae [shape=note, label="动作 1 的 GAE\nλ = 0.5：−0.175\nλ = 1：+0.2", fillcolor="#ede9fe", color="#a78bfa"];
+  {rank=same; s1; mc;}
+  {rank=same; s3; gae;}
+  mc -> gae [style=dashed, label="状态估计改变时间信号", arrowhead=none];
+
+}

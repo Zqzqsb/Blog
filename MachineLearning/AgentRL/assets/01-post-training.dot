@@ -1,0 +1,31 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="后训练的方法选择 · Agent RL 的反馈来自环境交互";
+  base [label="预训练模型", fillcolor="#dbeafe", color="#60a5fa"];
+  subgraph cluster_post {
+    label="后训练：方法可组合、可迭代";
+    color="#cbd5e1"; style="rounded";
+    sft [label="SFT\n拟合示范选择"];
+    dpo [label="偏好优化\n比较候选轨迹"];
+    rl [label="Agent RL\n优化交互回报", fillcolor="#d1fae5", color="#34d399"];
+    {rank=same; sft; dpo; rl;}
+  }
+  base -> sft;
+  base -> dpo;
+  base -> rl;
+  env [label="环境\n执行工具、产生观察", fillcolor="#ede9fe", color="#a78bfa"];
+  score [label="评分器\n评价最终产物"];
+  rl -> env [label="生成动作"];
+  env -> rl [label="返回观察", color="#8b5cf6"];
+  env -> score [label="产物"];
+  score -> rl [label="奖励 → 参数更新", color="#059669", constraint=false];
+
+}

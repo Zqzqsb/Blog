@@ -1,0 +1,28 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="一条轨迹，两条回传通道：业务观察与训练评分";
+  policy [label="策略 LLM\n生成工具调用", fillcolor="#dbeafe", color="#60a5fa"];
+  subgraph cluster_runtime {
+    label="任务执行"; color="#c4b5fd"; style="rounded";
+    harness [label="可信 harness\n组织历史与调用"];
+    workspace [label="工具环境\n可写仓库、公开测试", fillcolor="#ede9fe", color="#a78bfa"];
+    harness -> workspace [label="read / edit / test"];
+    workspace -> harness [label="工具观察"];
+  }
+  verifier [label="独立验证器\n私有检查", fillcolor="#fef3c7", color="#fbbf24"];
+  data [label="训练记录\n动作概率、mask、R", fillcolor="#d1fae5", color="#34d399"];
+  policy -> harness [label="动作"];
+  harness -> policy [label="历史 + 观察", color="#8b5cf6"];
+  workspace -> verifier [label="finish 后提交产物"];
+  policy -> data [label="生成 token / logprob", style=dashed];
+  verifier -> data [label="终局评分", color="#059669"];
+
+}

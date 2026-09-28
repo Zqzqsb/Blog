@@ -1,0 +1,49 @@
+{
+  "config": {
+    "backend": "hf",
+    "method": "grpo",
+    "model": "/tmp/agentrl-hf-60kbbib7",
+    "device": "cpu",
+    "seed": 7,
+    "iterations": 1,
+    "groups": 1,
+    "group_size": 64,
+    "epochs": 1,
+    "lr": null,
+    "clip": 0.2,
+    "beta": 0.02,
+    "eval_episodes": 8,
+    "output": "/data/SoftLinkedData/Projects/Learning/Obsidian/Blog/MachineLearning/AgentRL/mini/results/hf-smoke.json",
+    "effective_lr": 1e-06
+  },
+  "runtime": {
+    "python": "3.12.4",
+    "torch": "2.12.0+cu130",
+    "platform": "Linux-6.1.0-52-amd64-x86_64-with-glibc2.36"
+  },
+  "before": {
+    "episodes": 8,
+    "successes": 1,
+    "success_rate": 0.125,
+    "mean_actions": 4.25
+  },
+  "after": {
+    "episodes": 8,
+    "successes": 1,
+    "success_rate": 0.125,
+    "mean_actions": 4.25
+  },
+  "train_and_final_eval_seconds": 3.4672960719908588,
+  "history": [
+    {
+      "loss": -7.450580596923828e-09,
+      "mean_kl": 0.0,
+      "ratio_outside_clip_fraction": 0.0,
+      "optimizer_steps": 1,
+      "iteration": 0,
+      "train_success_rate": 0.125,
+      "mixed_groups": 1
+    }
+  ],
+  "scope": "offline integration smoke test using a random tiny GPT-2; no pretrained-LM capability claim"
+}

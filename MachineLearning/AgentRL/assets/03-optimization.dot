@@ -1,0 +1,28 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="优势决定更新方向；clip 与 KL 约束不同的分布变化";
+  batch [label="行为策略 π_old\n采样并记录 logprob", fillcolor="#dbeafe", color="#60a5fa"];
+  subgraph cluster_adv {
+    label="优势来源"; color="#cbd5e1"; style="rounded";
+    ppo [label="PPO 常用路径\ncritic + GAE"];
+    grpo [label="GRPO 结果监督\n同题组内相对奖励", fillcolor="#ede9fe", color="#a78bfa"];
+    {rank=same; ppo; grpo;}
+  }
+  clip [label="裁剪代理目标\n当前 / 行为策略比率", fillcolor="#d1fae5", color="#34d399"];
+  ref [label="冻结参考策略 π_ref\n提供 KL 参照"];
+  update [label="优化器\n更新策略参数"];
+  batch -> ppo; batch -> grpo;
+  ppo -> clip [label="逐步优势"];
+  grpo -> clip [label="轨迹级优势"];
+  clip -> update;
+  ref -> update [label="KL 项", style=dashed];
+
+}

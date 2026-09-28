@@ -1,0 +1,40 @@
+digraph AgentRL {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.4",
+         ranksep="0.65", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="GPU / CPU 协同：服务请求、轨迹数据与权重发布分别管理";
+  subgraph cluster_control {
+    label="可信控制与数据层"; color="#cbd5e1"; style="rounded";
+    scheduler [label="协调器\n任务、租约、版本"];
+    collector [label="轨迹组装\n校验、mask、奖励", fillcolor="#d1fae5", color="#34d399"];
+  }
+  subgraph cluster_cpu {
+    label="CPU 环境池"; color="#c4b5fd"; style="rounded";
+    harness [label="可信 harness\n维护交互状态"];
+    sandbox [label="工具沙箱\n独立工作副本", fillcolor="#ede9fe", color="#a78bfa"];
+    harness -> sandbox [label="调用"];
+    sandbox -> harness [label="观察"];
+  }
+  subgraph cluster_gpu {
+    label="GPU 计算层"; color="#93c5fd"; style="rounded";
+    rollout [label="rollout 推理\n版本化权重、批处理", fillcolor="#dbeafe", color="#60a5fa"];
+    trainer [label="trainer\n策略更新、优化器", fillcolor="#dbeafe", color="#60a5fa"];
+    trainer -> rollout [label="完整权重发布", color="#2563eb", penwidth=2];
+  }
+  verifier [label="独立评分\n隔离执行候选程序", fillcolor="#fef3c7", color="#fbbf24"];
+  scheduler -> harness [label="任务"];
+  harness -> rollout [label="生成请求"];
+  rollout -> harness [label="生成结果"];
+  sandbox -> verifier [label="终局产物"];
+  verifier -> collector [label="奖励", color="#059669"];
+  harness -> collector [label="调用与观察", style=dashed];
+  rollout -> collector [label="token / logprob / 版本", style=dashed];
+  collector -> trainer [label="训练 batch", color="#059669", penwidth=2];
+
+}
