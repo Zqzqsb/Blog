@@ -1,0 +1,42 @@
+digraph InterfaceBoundary {
+  graph [rankdir=LR, bgcolor="#f8fafc", pad="0.35", nodesep="0.45",
+         ranksep="0.7", splines=spline, fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l];
+  node [shape=box, style="rounded,filled", fillcolor="#ffffff", color="#cbd5e1",
+        fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033",
+        penwidth=1.4, margin="0.17,0.12"];
+  edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
+        color="#64748b", arrowsize=0.7, penwidth=1.2];
+
+  label="分层调用与可替换依赖边界";
+
+  subgraph cluster_process {
+    label="同一进程：职责分层，不自动产生接口";
+    color="#cbd5e1"; style="rounded";
+    ctrl [label="Controller / Handler"];
+    svc [label="OrderService\n（具体类型）", fillcolor="#dbeafe", color="#60a5fa"];
+    ctrl -> svc [label="具体调用"];
+  }
+
+  subgraph cluster_boundary {
+    label="变化 / 替换 / 控制边界：消费方定义 port";
+    color="#fbbf24"; style="rounded,dashed";
+    repo [label="OrderRepository\n接口", fillcolor="#fef3c7", color="#f59e0b"];
+    payment [label="PaymentGateway\n接口", fillcolor="#fef3c7", color="#f59e0b"];
+  }
+
+  subgraph cluster_external {
+    label="外部技术或不可控依赖：adapter";
+    color="#cbd5e1"; style="rounded";
+    mysql [label="MySQL Adapter", fillcolor="#ede9fe", color="#a78bfa"];
+    stripe [label="Stripe Adapter", fillcolor="#ede9fe", color="#a78bfa"];
+  }
+
+  main [label="组合根\nmain / 测试入口", fillcolor="#d1fae5", color="#34d399"];
+  main -> ctrl [label="装配"];
+  main -> svc [label="注入"];
+  svc -> repo [label="依赖"];
+  svc -> payment [label="依赖"];
+  repo -> mysql [style=dashed, label="实现"];
+  payment -> stripe [style=dashed, label="实现"];
+}
