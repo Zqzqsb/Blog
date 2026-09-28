@@ -1,6 +1,6 @@
 ---
 title: Agent RL（七）：跑通一个可验证的训练闭环
-createTime: 2026-09-23
+createTime: 2026-09-28
 author: ZQ
 tags:
   - Agent
@@ -65,11 +65,11 @@ finish     提交当前产物
 
 | 文件 | 内容 |
 |---|---|
-| [environment.py](./mini/environment.py) | 固定候选算法、harness 与独立调用的验证函数 |
-| [train.py](./mini/train.py) | 策略后端、采样、优势、更新、评估和 JSON 记录 |
-| [test_demo.py](./mini/test_demo.py) | 环境、评分、概率重放与梯度行为测试 |
-| [smoke_hf.py](./mini/smoke_hf.py) | 无需下载模型的本地语言模型接口检查 |
-| [results](./mini/results/seed-7.json) | 实际运行的配置、运行时版本、逐步指标与评估 |
+| [environment.py](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/environment.py) | 固定候选算法、harness 与独立调用的验证函数 |
+| [train.py](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/train.py) | 策略后端、采样、优势、更新、评估和 JSON 记录 |
+| [test_demo.py](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/test_demo.py) | 环境、评分、概率重放与梯度行为测试 |
+| [smoke_hf.py](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/smoke_hf.py) | 无需下载模型的本地语言模型接口检查 |
+| [results](https://github.com/Zqzqsb/Blog/tree/master/MachineLearning/AgentRL/mini/results) | 实际运行的配置、运行时版本、逐步指标与评估 |
 
 `Harness.step()` 只接受工具动作并返回观察。它不知道 group、策略版本、优势或优化步数。训练器在回合结束后取得产物，再调用验证器，把奖励写入训练记录。
 
@@ -137,7 +137,7 @@ KL(πθ || πref) = Σa πθ(a|h) [log πθ(a|h) - log πref(a|h)]
 | 19 | 6.4%（32/500） | 100%（500/500） | 99.2%（496/500） |
 | 42 | 5.8%（29/500） | 99.6%（498/500） | 100%（500/500） |
 
-原始记录：[GRPO 7](./mini/results/seed-7.json)、[19](./mini/results/seed-19.json)、[42](./mini/results/seed-42.json)；[SFT 7](./mini/results/rs-sft-7.json)、[19](./mini/results/rs-sft-19.json)、[42](./mini/results/rs-sft-42.json)。
+原始记录：[GRPO 7](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/seed-7.json)、[19](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/seed-19.json)、[42](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/seed-42.json)；[SFT 7](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/rs-sft-7.json)、[19](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/rs-sft-19.json)、[42](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/rs-sft-42.json)。
 
 两种方法都学会了这个小任务。每组评估只有 500 次，小幅百分比差异不支持优劣结论；两者的正则与实际梯度计算量也并未完全匹配。
 
@@ -175,7 +175,7 @@ python3 train.py --backend hf --model /absolute/path/to/local-model \
 python3 smoke_hf.py
 ```
 
-脚本临时创建一个随机初始化的微型 GPT-2 和 tokenizer，检查本地加载、动作分布归一化、反向传播及一轮训练，再删除临时模型。这个检查已经运行通过，结果在 [hf-smoke.json](./mini/results/hf-smoke.json)。它证明接口能跑通，不衡量语言理解或修 bug 能力。
+脚本临时创建一个随机初始化的微型 GPT-2 和 tokenizer，检查本地加载、动作分布归一化、反向传播及一轮训练，再删除临时模型。这个检查已经运行通过，结果在 [hf-smoke.json](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/results/hf-smoke.json)。它证明接口能跑通，不衡量语言理解或修 bug 能力。
 
 ## 8. 测试覆盖了哪些容易出错的边界
 
@@ -206,4 +206,4 @@ python3 smoke_hf.py
 
 上一篇：[Agent RL（六）：安全隔离与 Harness 解耦](/machine-learning/agent-rl/isolation/)
 
-配图源文件：[Graphviz DOT](./assets/07-experiment.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/07-experiment.dot)。

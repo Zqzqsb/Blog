@@ -1,6 +1,6 @@
 ---
 title: Agent RL（六）：安全隔离与 Harness 解耦
-createTime: 2026-09-23
+createTime: 2026-09-27
 author: ZQ
 tags:
   - Agent
@@ -180,4 +180,4 @@ spec:
 
 下一篇：[Agent RL（七）：跑通一个可验证的训练闭环](/machine-learning/agent-rl/minimal-experiment/)
 
-配图源文件：[Graphviz DOT](./assets/06-isolation.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/06-isolation.dot)。

@@ -1,6 +1,6 @@
 ---
 title: Agent RL（三）：从 PPO 到 GRPO
-createTime: 2026-09-23
+createTime: 2026-09-24
 author: ZQ
 tags:
   - Agent
@@ -188,4 +188,4 @@ DPO 则消费同一输入下的偏好对：获胜轨迹与失败轨迹。更新�
 
 下一篇：[Agent RL（四）：长轨迹上的信用分配](/machine-learning/agent-rl/credit-assignment/)
 
-配图源文件：[Graphviz DOT](./assets/03-optimization.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/03-optimization.dot)。

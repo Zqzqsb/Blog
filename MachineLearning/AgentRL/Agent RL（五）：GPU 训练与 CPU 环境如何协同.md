@@ -1,6 +1,6 @@
 ---
 title: Agent RL（五）：GPU 训练与 CPU 环境如何协同
-createTime: 2026-09-23
+createTime: 2026-09-26
 author: ZQ
 tags:
   - Agent
@@ -178,4 +178,4 @@ PPO / GRPO 的局部概率比率不保证修复所有 off-policy 问题。应先
 
 下一篇：[Agent RL（六）：安全隔离与 Harness 解耦](/machine-learning/agent-rl/isolation/)
 
-配图源文件：[Graphviz DOT](./assets/05-cluster.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/05-cluster.dot)。

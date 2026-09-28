@@ -1,6 +1,6 @@
 ---
 title: Agent RL（四）：长轨迹上的信用分配
-createTime: 2026-09-23
+createTime: 2026-09-25
 author: ZQ
 tags:
   - Agent
@@ -180,4 +180,4 @@ r'_t = r_t + γ Φ(s_{t+1}) - Φ(s_t)
 
 下一篇：[Agent RL（五）：GPU 训练与 CPU 环境如何协同](/machine-learning/agent-rl/training-system/)
 
-配图源文件：[Graphviz DOT](./assets/04-credit.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/04-credit.dot)。

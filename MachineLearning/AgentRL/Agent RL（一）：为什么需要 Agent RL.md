@@ -1,6 +1,6 @@
 ---
 title: Agent RL（一）：为什么需要 Agent RL
-createTime: 2026-09-23
+createTime: 2026-09-21
 author: ZQ
 tags:
   - Agent
@@ -157,4 +157,4 @@ J(θ) = E_{x ~ D, τ ~ (πθ, E)} [R(τ)]
 
 下一篇：[Agent RL（二）：从工具调用到可训练轨迹](/machine-learning/agent-rl/trajectory/)
 
-配图源文件：[Graphviz DOT](./assets/01-post-training.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/01-post-training.dot)。

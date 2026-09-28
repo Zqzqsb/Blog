@@ -1,6 +1,6 @@
 ---
 title: Agent RL（二）：从工具调用到可训练轨迹
-createTime: 2026-09-23
+createTime: 2026-09-22
 author: ZQ
 tags:
   - Agent
@@ -190,4 +190,4 @@ GRPO 会对同一道题采样多条轨迹。每条轨迹必须从同一任务定
 
 下一篇：[Agent RL（三）：从 PPO 到 GRPO](/machine-learning/agent-rl/policy-optimization/)
 
-配图源文件：[Graphviz DOT](./assets/02-trajectory.dot)。
+配图源文件：[Graphviz DOT](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/assets/02-trajectory.dot)。
