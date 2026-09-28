@@ -29,7 +29,7 @@ permalink: /machine-learning/agent-rl/minimal-experiment/
 
 前六篇定义了训练对象、轨迹、算法和工程边界。现在把最小闭环真正运行起来，而不是再写一段省略了环境和优化器的伪代码。
 
-配套代码位于 [mini 目录](./mini/README.md)，提供两个策略后端：
+配套代码位于 [GitHub 上的 mini 目录](https://github.com/Zqzqsb/Blog/tree/master/MachineLearning/AgentRL/mini)，提供两个策略后端：
 
 | 后端 | 更新什么 | 本文验证到哪里 |
 |---|---|---|
@@ -70,6 +70,8 @@ finish     提交当前产物
 | [test_demo.py](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/test_demo.py) | 环境、评分、概率重放与梯度行为测试 |
 | [smoke_hf.py](https://github.com/Zqzqsb/Blog/blob/master/MachineLearning/AgentRL/mini/smoke_hf.py) | 无需下载模型的本地语言模型接口检查 |
 | [results](https://github.com/Zqzqsb/Blog/tree/master/MachineLearning/AgentRL/mini/results) | 实际运行的配置、运行时版本、逐步指标与评估 |
+
+结果文件名相同会覆盖；个人实验建议使用 `local-` 前缀。示例不保存可部署 checkpoint，重新运行会从初始策略开始。
 
 `Harness.step()` 只接受工具动作并返回观察。它不知道 group、策略版本、优势或优化步数。训练器在回合结束后取得产物，再调用验证器，把奖励写入训练记录。
 
@@ -184,6 +186,8 @@ python3 smoke_hf.py
 梯度测试还检查 clip 在正负优势下的不对称行为、采样 logprob 能否用原策略重算、一次更新是否改变策略而不改变参考模型，以及 SFT 是否忽略纯失败样本。
 
 这类测试验证的是训练链路正确性。奖励上涨本身不能替代它们，因为一个有 bug 的训练器也可能在简单任务上产生漂亮曲线。
+
+顺带说明实验边界：本示例中 harness 与验证器在代码职责上分离，但处于同一进程，既不是容器隔离，也不是可以安全执行任意不可信代码的环境；JSON 记录中的训练与评估是同一个修复任务，评估只是换了验证输入。
 
 ## 9. 从最小闭环走向真实 Agent RL
 
