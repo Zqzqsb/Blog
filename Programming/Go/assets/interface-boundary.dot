@@ -8,21 +8,28 @@ digraph InterfaceBoundary {
   edge [fontname="WenQuanYi Zen Hei", fontsize=10, fontcolor="#475569",
         color="#64748b", arrowsize=0.7, penwidth=1.2];
 
-  label="分层调用与可替换依赖边界";
+  label="纵向管线、横向能力与依赖边界";
 
   subgraph cluster_process {
-    label="同一进程：职责分层，不自动产生接口";
+    label="纵向管线：职责分层，不自动产生接口";
     color="#cbd5e1"; style="rounded";
     ctrl [label="Controller / Handler"];
     svc [label="OrderService\n（具体类型）", fillcolor="#dbeafe", color="#60a5fa"];
     ctrl -> svc [label="具体调用"];
   }
 
+  subgraph cluster_obs {
+    label="横向能力 · 观测类：标准边界已存在";
+    color="#cbd5e1"; style="rounded,dotted";
+    obs [label="slog / OTel API", fillcolor="#f1f5f9", color="#94a3b8"];
+  }
+
   subgraph cluster_boundary {
-    label="变化 / 替换 / 控制边界：消费方定义 port";
+    label="变化 / 验证 / 装饰边界：消费方定义 port";
     color="#fbbf24"; style="rounded,dashed";
     repo [label="OrderRepository\n接口", fillcolor="#fef3c7", color="#f59e0b"];
     payment [label="PaymentGateway\n接口", fillcolor="#fef3c7", color="#f59e0b"];
+    reviewer [label="RiskReviewer\n接口（LLM 能力）", fillcolor="#fef3c7", color="#f59e0b"];
   }
 
   subgraph cluster_external {
@@ -30,13 +37,21 @@ digraph InterfaceBoundary {
     color="#cbd5e1"; style="rounded";
     mysql [label="MySQL Adapter", fillcolor="#ede9fe", color="#a78bfa"];
     stripe [label="Stripe Adapter", fillcolor="#ede9fe", color="#a78bfa"];
+    deco [label="装饰器\n限流 / 重试 / 打点", fillcolor="#fce7f3", color="#f472b6"];
+    llm [label="LLM Runtime\n（具体类型）", fillcolor="#ede9fe", color="#a78bfa"];
   }
 
   main [label="组合根\nmain / 测试入口", fillcolor="#d1fae5", color="#34d399"];
   main -> ctrl [label="装配"];
   main -> svc [label="注入"];
+  main -> obs [style=dotted, label="配置 Handler / SDK"];
+  ctrl -> obs [style=dotted, color="#94a3b8"];
+  svc -> obs [style=dotted, color="#94a3b8", label="直接使用"];
   svc -> repo [label="依赖"];
   svc -> payment [label="依赖"];
+  svc -> reviewer [label="依赖"];
   repo -> mysql [style=dashed, label="实现"];
   payment -> stripe [style=dashed, label="实现"];
+  reviewer -> deco [style=dashed, label="实现"];
+  deco -> llm [label="包裹"];
 }

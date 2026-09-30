@@ -1,0 +1,31 @@
+digraph LayerCapabilityMatrix {
+  graph [bgcolor="#f8fafc", pad="0.3", fontname="WenQuanYi Zen Hei",
+         fontsize=15, fontcolor="#0f172a", labelloc=t, labeljust=l,
+         label="纵向分层 × 横向能力"];
+  node [shape=plain, fontname="WenQuanYi Zen Hei", fontsize=12, fontcolor="#172033"];
+
+  matrix [label=<
+    <table border="0" cellborder="1" cellspacing="0" cellpadding="10" color="#cbd5e1">
+      <tr>
+        <td bgcolor="#e2e8f0"></td>
+        <td bgcolor="#e2e8f0"><b>log / metrics</b></td>
+        <td bgcolor="#e2e8f0"><b>LLM</b></td>
+        <td bgcolor="#e2e8f0"><b>clock</b></td>
+        <td bgcolor="#e2e8f0"><b>DB / 第三方</b></td>
+      </tr>
+      <tr>
+        <td bgcolor="#e2e8f0"><b>controller</b></td>
+        <td rowspan="3" bgcolor="#f1f5f9">直接用<br/>slog / OTel</td>
+        <td colspan="3" bgcolor="#ffffff"><font color="#94a3b8">—</font></td>
+      </tr>
+      <tr>
+        <td bgcolor="#e2e8f0"><b>service</b></td>
+        <td colspan="3" bgcolor="#fef3c7">定义 port</td>
+      </tr>
+      <tr>
+        <td bgcolor="#e2e8f0"><b>adapter</b></td>
+        <td colspan="3" bgcolor="#ede9fe">实现 port</td>
+      </tr>
+    </table>
+  >];
+}
