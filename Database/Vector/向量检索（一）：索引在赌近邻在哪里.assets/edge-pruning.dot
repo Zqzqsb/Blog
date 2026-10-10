@@ -1,0 +1,53 @@
+graph EdgePruning {
+  graph [
+    layout=neato,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="选边：能经由更近的邻居走到的点，就不再直连",
+    labelloc=t,
+    labeljust=l,
+    splines=line
+  ];
+
+  node [
+    shape=circle,
+    style=filled,
+    fixedsize=true,
+    width=0.42,
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#94A3B8",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2
+  ];
+
+  edge [
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569",
+    penwidth=1.6
+  ];
+
+  p [pos="0,0!", fillcolor="#DBEAFE", color="#2563EB", label=<<B>p</B>>];
+  a [pos="1.4,0.3!", label="a"];
+  b [pos="2.3,1.6!", label="b"];
+  c [pos="2.5,-0.9!", label="c"];
+  d [pos="-1.3,1.4!", label="d"];
+  e [pos="-0.9,-1.5!", label="e"];
+
+  p -- a [color="#10B981", label="保留"];
+  p -- d [color="#10B981", label="保留"];
+  p -- e [color="#10B981", label="保留"];
+  p -- b [color="#F87171", style=dashed, label="剪掉"];
+  p -- c [color="#F87171", style=dashed, label="剪掉"];
+  a -- b [color="#94A3B8", penwidth=1.1];
+  a -- c [color="#94A3B8", penwidth=1.1];
+
+  note [shape=rect, style="rounded,filled", fixedsize=false, fillcolor="#FFFFFF", color="#CBD5E1",
+        pos="0.9,-2.3!", fontsize=9, fontcolor="#475569",
+        label="a 离 b、c 都比 p 近：从 p 先走到 a，再走一步就能到。\n省下这两条边，p 有限的出度就能留给 d、e 这些别的方向。"];
+}

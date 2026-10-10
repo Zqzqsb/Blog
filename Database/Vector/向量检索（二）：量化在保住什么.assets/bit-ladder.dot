@@ -1,0 +1,55 @@
+digraph BitLadder {
+  graph [
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="1000 万条 1536 维向量：每种表示要多少内存",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [shape=plain, fontname="Noto Sans CJK SC", fontsize=11, fontcolor="#172033"];
+
+  ladder [label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7">
+      <TR>
+        <TD ALIGN="LEFT"><FONT COLOR="#64748B" POINT-SIZE="10">表示</FONT></TD>
+        <TD ALIGN="RIGHT"><FONT COLOR="#64748B" POINT-SIZE="10">每条</FONT></TD>
+        <TD ALIGN="RIGHT"><FONT COLOR="#64748B" POINT-SIZE="10">总量</FONT></TD>
+        <TD ALIGN="LEFT"></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>FP32</B></TD>
+        <TD ALIGN="RIGHT">6144 B</TD>
+        <TD ALIGN="RIGHT">≈ 61 GB</TD>
+        <TD ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="360" HEIGHT="14" BGCOLOR="#94A3B8"></TD><TD FIXEDSIZE="TRUE" WIDTH="1" HEIGHT="14"></TD></TR></TABLE></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>FP16</B></TD>
+        <TD ALIGN="RIGHT">3072 B</TD>
+        <TD ALIGN="RIGHT">≈ 31 GB</TD>
+        <TD ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="180" HEIGHT="14" BGCOLOR="#93C5FD"></TD><TD FIXEDSIZE="TRUE" WIDTH="180" HEIGHT="14"></TD></TR></TABLE></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>SQ8</B></TD>
+        <TD ALIGN="RIGHT">1536 B</TD>
+        <TD ALIGN="RIGHT">≈ 15 GB</TD>
+        <TD ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="90" HEIGHT="14" BGCOLOR="#60A5FA"></TD><TD FIXEDSIZE="TRUE" WIDTH="270" HEIGHT="14"></TD></TR></TABLE></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>1 bit / 维</B></TD>
+        <TD ALIGN="RIGHT">192 B</TD>
+        <TD ALIGN="RIGHT">≈ 1.9 GB</TD>
+        <TD ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="12" HEIGHT="14" BGCOLOR="#F59E0B"></TD><TD FIXEDSIZE="TRUE" WIDTH="348" HEIGHT="14"></TD></TR></TABLE></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>PQ（m = 96）</B></TD>
+        <TD ALIGN="RIGHT">96 B</TD>
+        <TD ALIGN="RIGHT">≈ 0.96 GB</TD>
+        <TD ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="6" HEIGHT="14" BGCOLOR="#A78BFA"></TD><TD FIXEDSIZE="TRUE" WIDTH="354" HEIGHT="14"></TD></TR></TABLE></TD>
+      </TR>
+    </TABLE>
+  >];
+}

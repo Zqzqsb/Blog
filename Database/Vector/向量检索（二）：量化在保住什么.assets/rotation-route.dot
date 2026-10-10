@@ -1,0 +1,83 @@
+digraph RotationRoute {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.45",
+    ranksep="0.5",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="旋转路线：先让分布可预知，再决定怎么量化、怎么估计",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.16,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.3,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569"
+  ];
+
+  x [label=<
+    <B>x</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">中心化、归一化</FONT>
+  >];
+  rot [fillcolor="#DBEAFE", color="#60A5FA", label=<
+    <B>随机正交旋转</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">消掉坐标轴偏好，各维信息摊平</FONT>
+  >];
+
+  subgraph cluster_rabitq {
+    label="RaBitQ";
+    style="rounded,filled";
+    color="#A7F3D0";
+    fillcolor="#ECFDF5";
+    margin=12;
+    r1 [fillcolor="#D1FAE5", color="#34D399", label=<
+      <B>取最近的超立方体顶点</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">即每维一个符号位</FONT>
+    >];
+    r2 [fillcolor="#D1FAE5", color="#34D399", label=<
+      <B>无偏内积估计 + 误差界</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">用存下的少量标量做校正</FONT>
+    >];
+    r1 -> r2;
+  }
+
+  subgraph cluster_tq {
+    label="TurboQuant";
+    style="rounded,filled";
+    color="#C4B5FD";
+    fillcolor="#F5F3FF";
+    margin=12;
+    t1 [fillcolor="#EDE9FE", color="#A78BFA", label=<
+      <B>按已知分布做最优标量量化</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">量化档位事先算好，不看数据</FONT>
+    >];
+    t2 [fillcolor="#EDE9FE", color="#A78BFA", label=<
+      <B>残差再补 1 bit</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">把内积估计的偏差修掉</FONT>
+    >];
+    t1 -> t2;
+  }
+
+  x -> rot;
+  rot -> r1;
+  rot -> t1;
+}

@@ -1,0 +1,80 @@
+digraph IVFProbe {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.35",
+    ranksep="0.6",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="IVF 一次查询：1024 个质心里只打开 16 个簇",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.16,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.3,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#475569"
+  ];
+
+  q [shape=circle, width=0.5, fixedsize=true, fillcolor="#DBEAFE", color="#60A5FA", label=<<B>q</B>>];
+
+  centroids [fillcolor="#F5F3FF", color="#A78BFA", label=<
+    <B>比较全部质心</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">1024 次距离</FONT>
+  >];
+
+  subgraph cluster_open {
+    label="打开的 16 个簇（nprobe = 16）";
+    style="rounded,filled";
+    color="#A7F3D0";
+    fillcolor="#ECFDF5";
+    fontsize=10;
+    margin=12;
+    open [fillcolor="#D1FAE5", color="#34D399", label=<
+      <B>簇 1 … 簇 16</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#475569">约 1.6 万条向量，逐条算距离</FONT>
+    >];
+  }
+
+  subgraph cluster_closed {
+    label="没打开的 1008 个簇";
+    style="rounded,dashed";
+    color="#CBD5E1";
+    fontsize=10;
+    margin=12;
+    miss [fillcolor="#FEF2F2", color="#F87171", style="rounded,filled,dashed", label=<
+      <B>簇 17</B><BR/>
+      <FONT POINT-SIZE="9" COLOR="#B91C1C">q 恰好在边界上时，真近邻可能在这里</FONT>
+    >];
+    rest [fillcolor="#F1F5F9", color="#CBD5E1", fontcolor="#94A3B8", label="其余簇"];
+  }
+
+  topk [fillcolor="#FEF3C7", color="#F59E0B", label=<
+    <B>Top-10</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">合计约 1.7 万次距离 ≈ Flat 的 1.7%</FONT>
+  >];
+
+  q -> centroids;
+  centroids -> open [label="最近的 16 个"];
+  centroids -> miss [style=dashed, color="#F87171", label="第 17 近", fontcolor="#B91C1C"];
+  centroids -> rest [style=invis];
+  open -> topk;
+}
