@@ -1,0 +1,15 @@
+---
+title: Gutiérrez 等：用 PageRank 在图上做多跳
+createTime: 2026-10-14
+author: ZQ
+tags:
+  - Papers
+  - GraphRAG
+permalink: /notes/papers/graphrag/gutierrez-2024-hipporag/
+---
+
+@[pdf height="80vh" width="100%"](/papers/graphrag/gutierrez-2024-hipporag.pdf)
+
+Gutiérrez 等人的 *HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models*（arXiv:2405.14831）要解决的是多跳：答案要先找到实体 A，再沿关系走到 B，向量相似度经常在第一跳就偏了。
+
+索引同样是知识图。查询时先把问题里的实体标到图上，再跑 Personalized PageRank，让概率沿边扩散，最后取被走到的段落。它不生产社区摘要，也不打算替代单跳的向量检索；图在这里是多跳时的通路，不是一份可以通读的全局综述。

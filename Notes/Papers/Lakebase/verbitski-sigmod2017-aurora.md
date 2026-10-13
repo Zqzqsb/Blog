@@ -1,0 +1,15 @@
+---
+title: Verbitski 等：Aurora 把 redo 和页拆开
+createTime: 2026-10-14
+author: ZQ
+tags:
+  - Papers
+  - Lakebase
+permalink: /notes/papers/lakebase/verbitski-sigmod2017-aurora/
+---
+
+@[pdf height="80vh" width="100%"](/papers/lakebase/verbitski-sigmod2017-aurora.pdf)
+
+Verbitski 等人的 *Amazon Aurora: Design Considerations for High Throughput Cloud-Native Relational Databases*（SIGMOD 2017）是 Lakebase 论文里的上一代对照。计算节点只把 redo 写到存储层，页的物化、恢复和副本都在存储服务里完成。网络上少传数据页，多传日志，这是它吞吐高的原因。
+
+这一代已经把计算和持久层拆开，所以缩容和快速克隆后来能做出来。拆开之后存储仍然是厂商私有服务，页格式也只有主引擎认识。Lakebase 沿用了「计算节点不自己管页」这一点，换掉的是持久层：通用对象存储，加上引擎外面也能读的 PostgreSQL 页。

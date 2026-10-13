@@ -1,0 +1,15 @@
+---
+title: Edge 等：用社区摘要回答需要通读的问题
+createTime: 2026-10-14
+author: ZQ
+tags:
+  - Papers
+  - GraphRAG
+permalink: /notes/papers/graphrag/edge-2024-graphrag/
+---
+
+@[pdf height="80vh" width="100%"](/papers/graphrag/edge-2024-graphrag.pdf)
+
+Edge 等人的 *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*（arXiv:2404.16130）针对的是一类向量检索不擅长的问题：答案散在很多段落里，需要先对整库有一个综合，而不是捞出最像的几段。
+
+索引阶段用 LLM 抽出实体和关系，再对图做社区检测，自下而上为每个社区写摘要。查询时先让这些社区摘要各自作答，再汇总。代价是索引贵，语料一变，社区和摘要往往要重做。后面的 LightRAG 主要在改这一点。
