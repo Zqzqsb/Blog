@@ -6,9 +6,9 @@ tags:
   - Papers
 ---
 
-按领域收论文。每篇页内嵌 PDF，下面是我们自己写的几句结论，方便之后往博客里引。
+按领域收论文。每篇先是摘要和总结的翻译，PDF 收在下面的一个组件里。
 
-现在有两个领域：
+现在有两个领域，各一篇：
 
-- [Lakebase](./Lakebase/)：对象存储上的 OLTP，以及它对照的上一代
-- [GraphRAG](./GraphRAG/)：先建图、再检索的 RAG
+- [Lakebase](./Lakebase/)：对象存储上的 serverless Postgres
+- [GraphRAG](./GraphRAG/)：先建图、再用社区摘要回答全局问题
