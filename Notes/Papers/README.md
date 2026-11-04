@@ -8,7 +8,8 @@ tags:
 
 按领域收论文。每篇先是摘要和总结的翻译，PDF 收在下面的一个组件里。
 
-现在有两个领域，各一篇：
+现在有三个领域，各收一到两篇：
 
 - [Lakebase](./Lakebase/)：对象存储上的 serverless Postgres
-- [GraphRAG](./GraphRAG/)：先建图、再用社区摘要回答全局问题
+- [GraphRAG](./GraphRAG/)：建图做 RAG——社区摘要答全局问题，知识原子化做多跳推理
+- [Ontology](./Ontology/)：从关系库学本体——用映射式指标评「指对了」而不是「说对了」
