@@ -1,0 +1,67 @@
+digraph ConstraintDerivation {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.28",
+    ranksep="0.6",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="一个部署约束，推出一组设计",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.18,0.10"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.2,
+    arrowsize=0.7
+  ];
+
+  root [fillcolor="#EFF6FF", color="#60A5FA", width=2.4, label=<
+    <B>数据库是一个库</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">嵌在宿主进程里 · 单机 · 零运维</FONT>
+  >];
+
+  node [width=4.2];
+
+  a [label=<
+    <B>没有网络边界</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">结果直接交给宿主内存：Arrow、DataFrame</FONT>
+  >];
+  b [label=<
+    <B>不能带重依赖</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">向量化解释执行，不做 JIT 编译</FONT>
+  >];
+  c [label=<
+    <B>只有一台机器</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">把多核用满：推模型 pipeline + morsel 调度</FONT>
+  >];
+  d [label=<
+    <B>不能独占机器</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">有内存上限，大算子可以落盘</FONT>
+  >];
+  e [fillcolor="#ECFDF5", color="#34D399", label=<
+    <B>数据往往不在库里</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">直接扫 Parquet / CSV / S3，自有格式是可选项</FONT>
+  >];
+  f [fillcolor="#FEF3C7", color="#F59E0B", label=<
+    <B>只有一个写进程</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">MVCC 为批量写优化，不追求多写者并发</FONT>
+  >];
+
+  root -> {a b c d e f};
+}

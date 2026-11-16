@@ -1,0 +1,76 @@
+digraph PipelineMorsel {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.25",
+    ranksep="0.5",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="一条 GROUP BY 查询：pipeline 在 breaker 处断开，morsel 分给线程",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.14,0.08"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.2,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#B45309"
+  ];
+
+  subgraph cluster_src {
+    label="Parquet row group（morsel）";
+    fontsize=10;
+    style="rounded,filled";
+    fillcolor="#ECFDF5";
+    color="#34D399";
+    m1 [label="RG 1"];
+    m2 [label="RG 2"];
+    m3 [label="RG 3"];
+    m4 [fillcolor="#F1F5F9", fontcolor="#94A3B8", label=<RG 4<BR/><FONT POINT-SIZE="8">统计量不满足，跳过</FONT>>];
+  }
+
+  subgraph cluster_p1 {
+    label="Pipeline 1：并行执行，推模型";
+    fontsize=10;
+    style="rounded,dashed";
+    color="#94A3B8";
+    t1 [label=<线程 1<BR/><FONT POINT-SIZE="8" COLOR="#475569">扫描 → 过滤 → 局部哈希表</FONT>>];
+    t2 [label=<线程 2<BR/><FONT POINT-SIZE="8" COLOR="#475569">扫描 → 过滤 → 局部哈希表</FONT>>];
+    t3 [label=<线程 3<BR/><FONT POINT-SIZE="8" COLOR="#475569">扫描 → 过滤 → 局部哈希表</FONT>>];
+  }
+
+  merge [fillcolor="#FEF3C7", color="#F59E0B", label=<<B>聚合 sink</B><BR/><FONT POINT-SIZE="8" COLOR="#475569">pipeline breaker：合并局部结果</FONT>>];
+
+  subgraph cluster_p2 {
+    label="Pipeline 2";
+    fontsize=10;
+    style="rounded,dashed";
+    color="#94A3B8";
+    out [label=<读取聚合结果 → 交给宿主<BR/><FONT POINT-SIZE="8" COLOR="#475569">DataFrame / Arrow</FONT>>];
+  }
+
+  m1 -> t1;
+  m2 -> t2;
+  m3 -> t3;
+  t1 -> merge;
+  t2 -> merge;
+  t3 -> merge;
+  merge -> out [label="  上一条 pipeline\n  全部完成后开始"];
+}

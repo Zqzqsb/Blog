@@ -1,0 +1,93 @@
+digraph Deployment {
+  graph [
+    rankdir=TB,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.5",
+    ranksep="0.4",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="两种部署形态：结果要不要穿过一次进程边界",
+    labelloc=t,
+    labeljust=l,
+    compound=true
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.16,0.08",
+    width=2.2
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.2,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#B45309"
+  ];
+
+  subgraph cluster_cs {
+    label="客户端-服务器（PostgreSQL、数据仓库）";
+    fontsize=11;
+    style="rounded,dashed";
+    color="#94A3B8";
+
+    subgraph cluster_cs_app {
+      label="应用进程";
+      fontsize=10;
+      style="rounded,filled";
+      fillcolor="#F1F5F9";
+      color="#CBD5E1";
+      cs_app [label="Python / 应用代码"];
+      cs_drv [label="Driver"];
+    }
+
+    subgraph cluster_cs_srv {
+      label="数据库服务器进程";
+      fontsize=10;
+      style="rounded,filled";
+      fillcolor="#F1F5F9";
+      color="#CBD5E1";
+      cs_eng [label="执行引擎", fillcolor="#EFF6FF", color="#60A5FA"];
+      cs_sto [label="库内存储"];
+    }
+
+    cs_app -> cs_drv [label="  把结果转成 DataFrame"];
+    cs_drv -> cs_eng [dir=both, label="  socket：按行序列化\n  逐批拉取结果"];
+    cs_eng -> cs_sto;
+  }
+
+  subgraph cluster_emb {
+    label="嵌入式（DuckDB）";
+    fontsize=11;
+    style="rounded,dashed";
+    color="#94A3B8";
+
+    subgraph cluster_emb_app {
+      label="应用进程（同一地址空间）";
+      fontsize=10;
+      style="rounded,filled";
+      fillcolor="#F1F5F9";
+      color="#CBD5E1";
+      emb_app [label="Python / 应用代码"];
+      emb_eng [label="DuckDB 执行引擎", fillcolor="#EFF6FF", color="#60A5FA"];
+    }
+
+    emb_files [label="Parquet / CSV / S3", fillcolor="#ECFDF5", color="#34D399"];
+    emb_db [label=".duckdb 单文件（可选）"];
+
+    emb_app -> emb_eng [dir=both, label="  列式向量直接交接\n  DataFrame 可被当成表扫描"];
+    emb_eng -> emb_files [label="  就地读取"];
+    emb_eng -> emb_db [style=dashed];
+  }
+}

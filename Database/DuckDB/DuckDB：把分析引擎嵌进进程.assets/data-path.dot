@@ -1,0 +1,68 @@
+digraph DataPath {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.35",
+    ranksep="0.55",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="订单数据的一生：从生产库到库外计算",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.16,0.08"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.2,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#B45309"
+  ];
+
+  oltp [fillcolor="#EFF6FF", color="#60A5FA", label=<
+    <B>OLTP 库</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">MySQL / PostgreSQL<BR/>行存，为单行读写优化</FONT>
+  >];
+
+  pipe [label=<
+    <B>导出链路</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">定期增量导出<BR/>CDC：binlog / WAL → Kafka → Spark / Flink<BR/>托管同步工具</FONT>
+  >];
+
+  lake [fillcolor="#ECFDF5", color="#34D399", label=<
+    <B>对象存储上的 Parquet</B><BR/>
+    <FONT POINT-SIZE="9" COLOR="#475569">列式 · 压缩 · 自带 schema 与统计量<BR/>常被 Iceberg / Delta 等湖表管理</FONT>
+  >];
+
+  subgraph cluster_compute {
+    label="谁来算";
+    fontsize=10;
+    style="rounded,dashed";
+    color="#94A3B8";
+    spark [label=<Spark 集群<BR/><FONT POINT-SIZE="9" COLOR="#475569">TB 级批处理</FONT>>];
+    dw [label=<数据仓库<BR/><FONT POINT-SIZE="9" COLOR="#475569">多用户共享，需再导入</FONT>>];
+    duck [fillcolor="#FEF3C7", color="#F59E0B", label=<<B>DuckDB</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">单机，就地读文件</FONT>>];
+  }
+
+  oltp -> pipe [label="  分钟级到 T+1 的延迟"];
+  pipe -> lake;
+  lake -> spark;
+  lake -> dw;
+  lake -> duck;
+  oltp -> duck [style=dashed, constraint=false, label="  postgres / mysql 扩展直连\n  扫描压力仍在源库"];
+}
