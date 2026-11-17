@@ -1,0 +1,41 @@
+digraph ThreeLayers {
+  graph [
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="一个同步任务的三层工作：Flink / Spark 只提供最下面一层",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [shape=plain, fontname="Noto Sans CJK SC", fontsize=11, fontcolor="#172033"];
+
+  m [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10" COLOR="#CBD5E1" BGCOLOR="#FFFFFF">
+      <TR>
+        <TD BGCOLOR="#F1F5F9"><B>层</B></TD>
+        <TD BGCOLOR="#F1F5F9"><B>做什么</B></TD>
+        <TD BGCOLOR="#F1F5F9"><B>用 SeaTunnel</B></TD>
+        <TD BGCOLOR="#F1F5F9"><B>直接用 Flink</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>连接</B></TD>
+        <TD ALIGN="LEFT">读 binlog、连 JDBC、读写 Kafka、<BR ALIGN="LEFT"/>写 Iceberg / Doris<BR ALIGN="LEFT"/></TD>
+        <TD ROWSPAN="2" BGCOLOR="#ECFDF5">SeaTunnel connector<BR/><FONT POINT-SIZE="9" COLOR="#475569">内含 Debezium、Kafka 客户端等库<BR/>用配置文件声明，不写代码</FONT></TD>
+        <TD ROWSPAN="2" BGCOLOR="#FEF3C7">自己写代码<BR/><FONT POINT-SIZE="9" COLOR="#475569">或用 Flink CDC 这类<BR/>在 Flink 上补齐这两层的项目</FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>同步语义</B></TD>
+        <TD ALIGN="LEFT">全量与增量衔接、切分并行读、<BR ALIGN="LEFT"/>精确一次、多表路由、<BR ALIGN="LEFT"/>schema 变更、类型映射<BR ALIGN="LEFT"/></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT"><B>执行</B></TD>
+        <TD ALIGN="LEFT">把任务分到机器上跑、任务间传数据、<BR ALIGN="LEFT"/>checkpoint、失败重启<BR ALIGN="LEFT"/></TD>
+        <TD BGCOLOR="#EFF6FF">Zeta（默认）<BR/><FONT POINT-SIZE="9" COLOR="#475569">或借用已有的 Flink / Spark 集群</FONT></TD>
+        <TD BGCOLOR="#EFF6FF">Flink</TD>
+      </TR>
+    </TABLE>
+  >];
+}
