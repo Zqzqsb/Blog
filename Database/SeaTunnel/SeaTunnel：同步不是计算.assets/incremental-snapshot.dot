@@ -1,0 +1,44 @@
+digraph IncrementalSnapshot {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.3",
+    ranksep="0.4",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="一个 chunk 的无锁快照：用前后两个 binlog 位点夹住一次 SELECT",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.14,0.08"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.2,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#B45309"
+  ];
+
+  low [fillcolor="#EFF6FF", color="#60A5FA", label=<<B>① 记低水位</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">当前 binlog 位点 L</FONT>>];
+  sel [label=<<B>② SELECT 一个 chunk</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">id ∈ [1, 10000)，不加锁</FONT>>];
+  high [fillcolor="#EFF6FF", color="#60A5FA", label=<<B>③ 记高水位</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">当前 binlog 位点 H</FONT>>];
+  fix [fillcolor="#FEF3C7", color="#F59E0B", label=<<B>④ 回放 [L, H] 的变更</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">只取落在本 chunk 主键范围内的事件<BR/>按主键覆盖到 SELECT 结果上</FONT>>];
+  out [fillcolor="#ECFDF5", color="#34D399", label=<<B>⑤ 输出</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">等价于位点 H 时刻的 chunk</FONT>>];
+
+  low -> sel -> high -> fix -> out;
+}

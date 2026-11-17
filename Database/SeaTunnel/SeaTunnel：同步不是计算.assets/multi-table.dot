@@ -1,0 +1,68 @@
+digraph MultiTable {
+  graph [
+    rankdir=LR,
+    bgcolor="#F8FAFC",
+    pad="0.35",
+    nodesep="0.25",
+    ranksep="0.5",
+    fontname="Noto Sans CJK SC",
+    fontsize=13,
+    fontcolor="#334155",
+    label="整库同步：每表一个作业，还是一个作业带所有表",
+    labelloc=t,
+    labeljust=l
+  ];
+
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Noto Sans CJK SC",
+    fontsize=11,
+    color="#CBD5E1",
+    fillcolor="#FFFFFF",
+    fontcolor="#172033",
+    penwidth=1.2,
+    margin="0.14,0.08"
+  ];
+
+  edge [
+    color="#64748B",
+    penwidth=1.2,
+    arrowsize=0.7,
+    fontname="Noto Sans CJK SC",
+    fontsize=9,
+    fontcolor="#B45309"
+  ];
+
+  subgraph cluster_b {
+    label="一个多表作业";
+    fontsize=11;
+    style="rounded,dashed";
+    color="#94A3B8";
+    db2 [fillcolor="#EFF6FF", color="#60A5FA", label=<<B>MySQL</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">300 张表</FONT>>];
+    reader [fillcolor="#FEF3C7", color="#F59E0B", label=<<B>一个 binlog reader</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">连接池在子任务间共享</FONT>>];
+    route [label=<按表路由<BR/><FONT POINT-SIZE="9" COLOR="#475569">SeaTunnelRow 带表标识</FONT>>];
+    s1 [label="Sink：表 1"];
+    s2 [label="Sink：表 2"];
+    sn [label="Sink：表 300"];
+    db2 -> reader [label="  读一遍"];
+    reader -> route;
+    route -> sn;
+    route -> s2;
+    route -> s1;
+  }
+  subgraph cluster_a {
+    label="每表一个作业";
+    fontsize=11;
+    style="rounded,dashed";
+    color="#94A3B8";
+    db1 [fillcolor="#EFF6FF", color="#60A5FA", label=<<B>MySQL</B><BR/><FONT POINT-SIZE="9" COLOR="#475569">300 张表</FONT>>];
+    j1 [label=<作业 1<BR/><FONT POINT-SIZE="9" COLOR="#475569">binlog 客户端 + 连接</FONT>>];
+    j2 [label=<作业 2<BR/><FONT POINT-SIZE="9" COLOR="#475569">binlog 客户端 + 连接</FONT>>];
+    jn [label=<作业 300<BR/><FONT POINT-SIZE="9" COLOR="#475569">binlog 客户端 + 连接</FONT>>];
+    db1 -> jn;
+    db1 -> j2 [label="  同一份 binlog 读 300 遍"];
+    db1 -> j1;
+  }
+
+}
